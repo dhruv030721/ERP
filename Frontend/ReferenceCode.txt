@@ -1,0 +1,73 @@
+// Header code
+ {/* <li className='mr-20'>
+                        <NavLink to="/admin/dashboard" className={({isActive})=>`${isActive ? "text-orange-500" : "text-white"}`}>Dashboard</NavLink>
+                            <ul className='bg-blue-950 text-white p-2 text-sm'>
+                                <li><NavLink>Enquiry</NavLink></li>
+                                <li><NavLink>Admission Form</NavLink></li>
+                                <li><NavLink>Student Memo Generation</NavLink></li>
+                                <li><NavLink>GR/Scholar No.</NavLink></li>
+                                <li><NavLink>Subject Enrollment</NavLink></li>
+                                <li><NavLink>Student Data Lock</NavLink></li>
+                                <li><NavLink>Student Data Block/Unblock</NavLink></li>
+                            </ul>
+                        </li>
+                        <li className='mr-20'>
+                        <NavLink to="/admin/admission" className={({isActive})=>`${isActive ? "text-orange-500" : "text-white"}`}>Admission</NavLink>
+                            <ul className='bg-blue-950 text-white p-2 text-sm'>
+                                <li><NavLink>Enquiry</NavLink></li>
+                                <li><NavLink>Admission Form</NavLink></li>
+                                <li><NavLink>Student Memo Generation</NavLink></li>
+                                <li><NavLink>GR/Scholar No.</NavLink></li>
+                                <li><NavLink>Subject Enrollment</NavLink></li>
+                                <li><NavLink>Student Data Lock</NavLink></li>
+                                <li><NavLink>Student Data Block/Unblock</NavLink></li>
+                            </ul>
+                        </li>
+                        <li className='mr-20'>
+                            <NavLink to={"admission"} className={(isActive) => `${isActive ? "text-white" : "text-orange-500"}`}>Teacher</NavLink>
+                            <ul className='bg-blue-950 text-white p-2 text-sm'>
+                                <li><NavLink>Enquiry</NavLink></li>
+                                <li><NavLink>Admission Form</NavLink></li>
+                                <li><NavLink>Student Memo Generation</NavLink></li>
+                                <li><NavLink>GR/Scholar No.</NavLink></li>
+                                <li><NavLink>Subject Enrollment</NavLink></li>
+                                <li><NavLink>Student Data Lock</NavLink></li>
+                                <li><NavLink>Student Data Block/Unblock</NavLink></li>
+                            </ul>
+                        </li>
+                        <li className='mr-20'>
+                            <NavLink to={"admission"} className={(isActive) => `${isActive ?"text-white" : "text-orange-500"}`}>Report</NavLink>
+                            <ul className='bg-blue-950 text-white p-2 text-sm'>
+                                <li><NavLink>Enquiry</NavLink></li>
+                                <li><NavLink>Admission Form</NavLink></li>
+                                <li><NavLink>Student Memo Generation</NavLink></li>
+                                <li><NavLink>GR/Scholar No.</NavLink></li>
+                                <li><NavLink>Subject Enrollment</NavLink></li>
+                                <li><NavLink>Student Data Lock</NavLink></li>
+                                <li><NavLink>Student Data Block/Unblock</NavLink></li>
+                            </ul>
+                        </li>
+                        <li className='mr-20'>
+                            <NavLink to={"admission"} className={(isActive) => `${isActive ?"text-white" : "text-orange-500"}`}>Certificates</NavLink>
+                            <ul className='bg-blue-950 text-white p-2 text-sm'>
+                                <li><NavLink>Enquiry</NavLink></li>
+                                <li><NavLink>Admission Form</NavLink></li>
+                                <li><NavLink>Student Memo Generation</NavLink></li>
+                                <li><NavLink>GR/Scholar No.</NavLink></li>
+                                <li><NavLink>Subject Enrollment</NavLink></li>
+                                <li><NavLink>Student Data Lock</NavLink></li>
+                                <li><NavLink>Student Data Block/Unblock</NavLink></li>
+                            </ul>
+                        </li>
+                        <li className='mr-20'>
+                            <NavLink to={"admission"} className={(isActive) => `${isActive ? "text-white" : "text-orange-500"}`}>Other Utility</NavLink>
+                            <ul className='bg-blue-950 text-white p-2 text-sm'>
+                                <li><NavLink>Enquiry</NavLink></li>
+                                <li><NavLink>Admission Form</NavLink></li>
+                                <li><NavLink>Student Memo Generation</NavLink></li>
+                                <li><NavLink>GR/Scholar No.</NavLink></li>
+                                <li><NavLink>Subject Enrollment</NavLink></li>
+                                <li><NavLink>Student Data Lock</NavLink></li>
+                                <li><NavLink>Student Data Block/Unblock</NavLink></li>
+                            </ul>
+                        </li> */}
