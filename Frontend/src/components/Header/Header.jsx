@@ -1,20 +1,27 @@
 import React from 'react'
-import { useState } from 'react'
 import logo from '../../assets/logo/logo.png'
 import collegeLogo from '../../assets/logo/collegeLogo.png'
-import DropDown from './DropDown'
-import DropDownBar from './DropDownBar'
+import { useNavigate } from 'react-router-dom'
 
-function Header({dropdown}) {
 
-    
+function Header() {
+
+    const navigate = useNavigate();
+
+
+    // To navigate on switchboard page
+    function logoHandler(){
+        navigate('/switchboard');
+    }
+
+
 5
     return (
         <>
             <div className='font-poppins text-black'>
                 <nav className='flex w-[100%] h-28 justify-between items-center px-10'>
                     {/* campuslogo */}
-                    <div className=''>
+                    <div className='cursor-pointer' onClick={logoHandler}>
                         <img src={logo} alt="Logo" className='w-16 ' />
                     </div>
                     {/* title */}
@@ -23,12 +30,11 @@ function Header({dropdown}) {
                         <p className='font-lexend tracking-tighter text-xl text-blue-950 text-center'>Managed By Tirupati Foundation Trust</p>
                     </div>
                     {/* college logo  */}
-                    <div>
+                    <div className='cursor-pointer' onClick={logoHandler}>
                         <img src={collegeLogo} alt="College Logo" className='w-20' />
                     </div>
                 </nav>
-
-                {dropdown? <DropDownBar /> : <div></div>}
+                <div className='bg-gradient-to-r  from-white via-black to-white h-[1px]'></div>
 
             </div>
 

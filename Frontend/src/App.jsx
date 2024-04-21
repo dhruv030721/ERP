@@ -1,14 +1,15 @@
 import React from 'react'
 import Header from './components/Header/Header'
 import { Outlet } from 'react-router-dom'
+import {Toaster} from 'react-hot-toast'
 
-function Layout() {
+function App() {
   return (
-    <>
-        <Header dropdown={true}/> 
+    <div className='font-poppins'>
+        <Header/> 
         <Outlet />
-    </>
+    </div>
   )
 }
 
-export default Layout
+export default App

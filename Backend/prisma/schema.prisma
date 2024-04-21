@@ -14,31 +14,39 @@ datasource db {
 }
 
 model Admin {
-  id            Int    @id @default(autoincrement())
+  id            Int    @default(autoincrement())
   name          String
-  employee_id   BigInt @unique
+  employee_id   BigInt @id @unique
   email         String @unique
   contactnumber BigInt
   password      String
 }
 
 model Faculty {
-  id            Int      @id @default(autoincrement())
+  id            Int           @default(autoincrement())
   name          String
-  employee_id   BigInt   @unique
-  email         String   @unique
+  employee_id   BigInt        @id @unique
+  email         String        @unique
   contactnumber BigInt
   password      String
-  subjects      String[]
+  subject       SubjectList[]
 }
 
 model Student {
-  id            Int    @id @default(autoincrement())
+  id            Int    @default(autoincrement())
   name          String
-  enrollment_no BigInt @unique
+  enrollment_no BigInt @id @unique
   email         String @unique
   contactnumber BigInt
   password      String
   semester      Int
   batch         String
+}
+
+model SubjectList {
+  id        Int      @id @default(autoincrement())
+  semester  Int
+  subject   String[]
+  Faculty   Faculty? @relation(fields: [facultyId], references: [employee_id])
+  facultyId BigInt?
 }

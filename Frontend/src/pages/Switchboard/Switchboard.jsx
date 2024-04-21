@@ -17,12 +17,11 @@ import SwitchItem from './SwitchItem';
 
 function Switchboard() {
 
-  const SwitchList = [{name: 'Settings',icon : IoSettings, color: "hover:bg-orange-100"},{name: 'Academics',icon : HiMiniAcademicCap, color:"hover:bg-blue-100"},{name: 'Fees',icon : FaIndianRupeeSign, color : "hover:bg-green-100"},{name: 'Exam',icon : PiExamFill, color: "hover:bg-purple-100"},{name: 'User',icon : FaUserCircle, color: "hover:bg-gray-100"},{name: 'Payroll',icon : FaShoppingBag, color: "hover:bg-pink-100"},{name: 'Bank Office',icon : GiHandBag, color: "hover:bg-yellow-100"},{name: 'LMS',icon : PiStudentFill, color: "hover:bg-rose-100"},{name: 'Transportation',icon : FaBusAlt,color: "hover:bg-teal-100"}]
+  const SwitchList = [{name: 'Settings',icon : IoSettings, color: "hover:bg-orange-100"},{name: 'Academics',icon : HiMiniAcademicCap, color:"hover:bg-blue-100",  url: "/academics/dashboard"},{name: 'Fees',icon : FaIndianRupeeSign, color : "hover:bg-green-100"},{name: 'Exam',icon : PiExamFill, color: "hover:bg-purple-100"},{name: 'User',icon : FaUserCircle, color: "hover:bg-gray-100"},{name: 'Payroll',icon : FaShoppingBag, color: "hover:bg-pink-100"},{name: 'Bank Office',icon : GiHandBag, color: "hover:bg-yellow-100"},{name: 'LMS',icon : PiStudentFill, color: "hover:bg-rose-100"},{name: 'Transportation',icon : FaBusAlt,color: "hover:bg-teal-100",}]
 
   return (
     <>
-      <Header dropdown={false} />
-      <div className='bg-gradient-to-r  from-white via-black to-white h-[1px]'></div>
+      <Header/>
       <div className='h-[630px] flex items-center justify-around'>
           <div className='p-8 flex flex-col items-center rounded-lg bg-transparent space-y-3 w-[30%] h-[95%]'>
             {/* Profile */}
@@ -45,7 +44,7 @@ function Switchboard() {
               <ul className='grid grid-cols-4 gap-x-10 gap-y-10 justify-center items-center'>
                 {SwitchList.map((item) => {
                   const Icon = item.icon
-                  return <SwitchItem name={item.name} icon={<Icon size={30} className='drop-shadow-lg'/>} bgcolor={item.color}/>
+                  return <SwitchItem name={item.name} icon={<Icon size={30} className='drop-shadow-lg'/>} url={item.url} bgcolor={item.color}/>
                 })}
               </ul>
             </div>
