@@ -16,9 +16,9 @@ datasource db {
 model Admin {
   id            Int    @default(autoincrement())
   name          String
-  employee_id   BigInt @id @unique
+  employee_id   String @id @unique
   email         String @unique
-  contactnumber BigInt
+  contactnumber String
   password      String
 }
 

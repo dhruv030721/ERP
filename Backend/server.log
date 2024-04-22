@@ -1,0 +1,75 @@
+22-04-2024 00:01:41 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.
+22-04-2024 00:01:55 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.
+22-04-2024 00:01:58 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.
+22-04-2024 00:02:34 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.
+22-04-2024 00:05:38 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.

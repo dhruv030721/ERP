@@ -1,15 +1,19 @@
 import React from 'react'
+import { useDispatch} from 'react-redux'
 import logo from '../assets/logo/logo.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Input } from '../components'
 import { useForm } from 'react-hook-form'
 import toast from "react-hot-toast"
 import {authServices} from './../services/index'
 import { toastDesign } from '../components/GlobalVariables'
+import { login } from '../slices/auth'
 
 function Login() {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const loginHandler = async (data) => {
         await toast.promise(
@@ -17,7 +21,8 @@ function Login() {
             {
                 loading : "Processing.........",
                 success: (response)=>  {
-                    console.log(response);
+                    dispatch(login(response.data.data));
+                    navigate('/');
                     return `${response.data.message}`;
                 },
                 error : (error) => {

@@ -3,10 +3,10 @@ import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import routes from './Utils/router';
+
 const swaggerDocument  = require('../swagger.json');
 
 dotenv.config();
-
 const prisma = new PrismaClient();
 const app: Application = express();
 const PORT = process.env.PORT || 8888;

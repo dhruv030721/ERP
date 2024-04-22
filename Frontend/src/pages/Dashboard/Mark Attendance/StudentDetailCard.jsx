@@ -4,6 +4,7 @@ function StudentDetailCard() {
   return (
     <div>
       
+      
     </div>
   )
 }

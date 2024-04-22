@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import App from './app.jsx'
-import { Dashboard, Admission, Switchboard, Login, AddStudent, MarkAttendance } from './pages/index.js'
+import { Dashboard, Switchboard, Login, AddStudent, MarkAttendance } from './pages/index.js'
 import { AdminProtected } from './components/index.js'
 import { Toaster } from 'react-hot-toast'
+import { configureStore } from '@reduxjs/toolkit'
+import rootReducer from './reducer/index.js'
+import { Provider } from 'react-redux'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,9 +25,15 @@ const router = createBrowserRouter(
   )
 )
 
+const store = configureStore({
+  reducer: rootReducer
+})
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    <Toaster />
+    <Provider store = {store}> 
+      <RouterProvider router={router} />
+      <Toaster />
+    </Provider>
   </React.StrictMode>,
 )

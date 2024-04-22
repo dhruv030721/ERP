@@ -88,7 +88,7 @@ function MarkAttendance() {
   const Subject = [
     {
       value : 'TOC',
-      label : 'TOC',
+      label : 'TOC',  
     },
     {
       value : 'OOP',

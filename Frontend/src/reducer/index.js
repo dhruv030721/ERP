@@ -5,3 +5,5 @@ import { authSlice } from "../slices"
 const rootReducer = combineReducers({
     auth: authSlice,
 })
+
+export default rootReducer;

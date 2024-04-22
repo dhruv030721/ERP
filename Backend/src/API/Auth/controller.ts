@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
+import logger from "../../Utils/logger";
 
 const prisma = new PrismaClient();
 
@@ -115,10 +116,12 @@ const login = async(req: Request, res: Response) => {
             'employee_id' : user.employee_id.toString(),
             'email' : user.email,
             'name' : user.name,
-            'contact' : user.contactnumber.toString()
+            'contact' : user.contactnumber.toString(),
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
+
+        user.password = null;
 
         if(isMatch){
             
@@ -126,7 +129,8 @@ const login = async(req: Request, res: Response) => {
 
             return res.cookie('token', token).status(200).json({
                 success : true,
-                message : "Login Successful"
+                message : "Login Successful",
+                data: user
             })
 
         } else {
@@ -139,6 +143,8 @@ const login = async(req: Request, res: Response) => {
 
         
     } catch (error) {
+        logger.error(error);
+        console.log(error);
         return res.status(400).json({
             success : false,
             message : "Internal Server Error!"
