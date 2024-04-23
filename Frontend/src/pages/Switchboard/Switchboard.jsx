@@ -40,11 +40,9 @@ function Switchboard() {
     return null
   }
 
-
   const decodedData = () => {
     const token = getCookie("token");
     if (token !== null) {
-      console.log(token);
       const data = jwtDecode(token)
       return data
     }
@@ -52,16 +50,17 @@ function Switchboard() {
   }
 
   useEffect(() => {
+    console.log("function invoked");
     (() => {
       if(!status){
         const data = decodedData();
-        setLoading(false);
-      if (data) {
-        dispatch(login(data));
-        setLoading(false);
-      }
+        if (data) {
+          dispatch(login(data));
+          setLoading(false);
+        }
       }
     })();
+    setLoading(false);
   }, [status])
 
 

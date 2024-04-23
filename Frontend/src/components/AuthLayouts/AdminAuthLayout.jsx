@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../../components/index";
 import { jwtDecode } from "jwt-decode";
-import auth, { login } from "../../slices/auth";
+import { login } from "../../slices/auth";
 
 export default function AdminProtected({ children, authentication = true }) {
 
     const navigate = useNavigate();
-    const authStatus = useSelector((state) => state.auth.status);
     const [loading, setLoading] = useState(true);
+    const authStatus = useSelector((state) => state.auth.status);
     const dispatch = useDispatch();
 
     const getCookie = (name) => {
@@ -22,10 +22,8 @@ export default function AdminProtected({ children, authentication = true }) {
                 return decodeURIComponent(cookieValue)
             }
         }
-
         return null
     }
-
 
     const decodedData = () => {
         const token = getCookie("token");
@@ -36,23 +34,28 @@ export default function AdminProtected({ children, authentication = true }) {
         return null
     }
 
-    useEffect(() => {
-        console.log(authStatus)
-        ;(() => {
-            if (!status) {
-                const data = decodedData();
-                if (data) {
-                    dispatch(login(data));
-                }
-            }
-        })();
-        if (authentication && authStatus !== authentication) {
-            navigate('/login');
-        } else if (!authentication && authStatus !== authentication) {
-            navigate("/");
+    const tokenAuth = useCallback(() => {
+        const data = decodedData();
+        if (data) {
+            dispatch(login(data));
         }
-        setLoading(false);
-    }, [authStatus, navigate, authentication])
+    }, [dispatch])
+
+    useEffect(() => {
+        if (getCookie("token")) {
+            tokenAuth();
+        } else {
+            if (authentication && !authStatus) {
+                navigate("/login");
+            } else if (!authentication && authStatus) {
+                navigate("/");
+            }
+        }
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, [authStatus, navigate])
 
     if (loading) {
         return (
@@ -61,7 +64,6 @@ export default function AdminProtected({ children, authentication = true }) {
             </>
         )
     }
-
 
     return <>{children}</>
 }
