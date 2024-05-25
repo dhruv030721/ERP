@@ -14,7 +14,7 @@ import User from '../../assets/utility/user.png'
 import SwitchItem from './SwitchItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
-import { login } from '../../slices/auth';
+import { login, logout } from '../../slices/auth';
 
 
 function Switchboard() {
@@ -49,10 +49,15 @@ function Switchboard() {
     return null
   }
 
+  const logoutHandler = () => {
+    setLoading(true);
+    dispatch(logout());
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
+
   useEffect(() => {
-    console.log("function invoked");
     (() => {
-      if(!status){
+      if (!status) {
         const data = decodedData();
         if (data) {
           dispatch(login(data));
@@ -84,7 +89,7 @@ function Switchboard() {
               <p className='text-black text-2xl font-oswald '>Coordinator Engineering</p>
               <div className='flex space-x-10'>
                 <Link ><IoSettings size={30} /></Link>
-                <Link to={`/`}><LuLogOut size={30} /></Link>
+                <Link onClick={logoutHandler}><LuLogOut size={30} /></Link>
               </div>
             </div>
             <div className='bg-gradient-to-b from-white via-black to-white h-[90%] w-[1px]'></div>

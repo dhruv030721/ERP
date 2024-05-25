@@ -54,7 +54,7 @@ export default function AdminProtected({ children, authentication = true }) {
 
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1000);
     }, [authStatus, navigate])
 
     if (loading) {
