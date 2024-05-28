@@ -13,40 +13,81 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
-  id            Int    @default(autoincrement())
-  name          String
-  employee_id   String @id @unique
-  email         String @unique
-  contactnumber String
-  password      String
-}
-
 model Faculty {
-  id            Int           @default(autoincrement())
+  id            String       @id @default(uuid())
   name          String
-  employee_id   BigInt        @id @unique
-  email         String        @unique
-  contactnumber BigInt
+  employeeId    String       @unique
+  email         String       @unique
+  contactNumber String
   password      String
-  subject       SubjectList[]
+  departments   Department[]
+  subjects      Subject[]
+  TimeTable     TimeTable[]
 }
 
 model Student {
-  id            Int    @default(autoincrement())
+  id            String     @id @default(uuid())
   name          String
-  enrollment_no BigInt @id @unique
-  email         String @unique
-  contactnumber BigInt
+  enrollmentNo  String     @unique
+  email         String     @unique
+  contactNumber String
   password      String
+  department    Department @relation(fields: [departmentId], references: [deptId])
+  departmentId  String
   semester      Int
   batch         String
 }
 
-model SubjectList {
-  id        Int      @id @default(autoincrement())
-  semester  Int
-  subject   String[]
-  Faculty   Faculty? @relation(fields: [facultyId], references: [employee_id])
-  facultyId BigInt?
+model Attendance {
+  id             String         @id @default(uuid())
+  enrollmentNo   String
+  dateAndTime    DateTime
+  subject        String
+  attendanceType AttendanceType
+}
+
+model Department {
+  deptId    String     @id @default(uuid())
+  deptName  String
+  faculty   Faculty?   @relation(fields: [facultyId], references: [employeeId])
+  facultyId String?
+  students  Student[]
+  semesters Semester[]
+  Subject   Subject[]
+}
+
+model Semester {
+  sem          Int         @id
+  department   Department? @relation(fields: [departmentId], references: [deptId])
+  departmentId String?
+  subjects     Subject[]
+}
+
+model Subject {
+  subjectId    String      @id @default(uuid())
+  subjectCode  Int         @unique
+  subjectName  String
+  faculty      Faculty?    @relation(fields: [facultyId], references: [employeeId])
+  facultyId    String?
+  semester     Semester?   @relation(fields: [semesterSem], references: [sem])
+  semesterSem  Int?
+  department   Department? @relation(fields: [departmentId], references: [deptId])
+  departmentId String?
+}
+
+enum AttendanceType {
+  PRESENT
+  ABSENT
+  HOLIDAY
+}
+
+model TimeTable {
+  id        String  @id @default(uuid())
+  day       String
+  time      String
+  subject   String
+  branch    String
+  sem       String
+  faculty   Faculty @relation(fields: [facultyId], references: [id])
+  facultyId String
 }

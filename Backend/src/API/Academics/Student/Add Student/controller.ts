@@ -21,21 +21,21 @@ const ImportStudentdata = async(req : Request, res : Response) => {
             sourceFile : file.path
         })
 
-        for(let i = 0; i < data['Sheet1'].length; i++){
-            if(i >= 1){ 
-                await prisma.student.create({
-                    data : {
-                        enrollment_no: data['Sheet1'][i]['A'],
-                        name : data['Sheet1'][i]['B'],
-                        email : data['Sheet1'][i]['C'],
-                        contactnumber : data['Sheet1'][i]['D'],
-                        semester : data['Sheet1'][i]['E'],
-                        batch : data['Sheet1'][i]['F'],
-                        password : data['Sheet1'][i]['G'],
-                    }
-                })
-            }
-        }
+        // for(let i = 0; i < data['Sheet1'].length; i++){
+        //     if(i >= 1){ 
+        //         await prisma.student.create({
+        //             data : {
+        //                 enrollment_no: data['Sheet1'][i]['A'],
+        //                 name : data['Sheet1'][i]['B'],
+        //                 email : data['Sheet1'][i]['C'],
+        //                 contactnumber : data['Sheet1'][i]['D'],
+        //                 semester : data['Sheet1'][i]['E'],
+        //                 batch : data['Sheet1'][i]['F'],
+        //                 password : data['Sheet1'][i]['G'],
+        //             }
+        //         })
+        //     }
+        // }
 
         return res.status(200).json({
             success : true,
