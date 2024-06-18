@@ -1,0 +1,56 @@
+import { Request, Response } from "express";
+import prisma from "../../../Utils/prisma"
+import { GetFormattedDate } from "../../../Utils/date"
+import excelToJson from 'convert-excel-to-json';
+
+export const ImportStudentdata = async (req: Request, res: Response) => {
+    try {
+        const file: any = req.file;
+
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "No file uploaded!"
+            });
+        }
+
+        const data = excelToJson({
+            sourceFile: file.path
+        })
+
+        console.log(data);
+
+        for (let i = 0; i < data['Sheet1'].length; i++) {
+            if (i >= 1) {
+
+                const dob = GetFormattedDate(data['Sheet1'][i]['I']);
+
+                await prisma.student.create({
+                    data: {
+                        enrollmentNo: data['Sheet1'][i]['A'].toString(),
+                        name: data['Sheet1'][i]['B'],
+                        mobileNumber: data['Sheet1'][i]['C'].toString(),
+                        email: data['Sheet1'][i]['D'],
+                        parentMobileNumber: data['Sheet1'][i]['E'].toString(),
+                        branch: data['Sheet1'][i]['F'],
+                        sem: data['Sheet1'][i]['G'],
+                        password: data['Sheet1'][i]['H'].toString(),
+                        dob: dob
+                    }
+                })
+            }
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Data Uploaded Successfully!"
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({
+            success: false,
+            message: "Internal Server Error!",
+        })
+    }
+}

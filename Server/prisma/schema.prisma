@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AttendanceType {
+  PRESENT
+  ABSENT
+  HOLIDAY
+}
+
+enum LectureType {
+  LECTURE
+  LAB
+}
+
+enum Branch {
+  CE
+  EE
+  MECH
+  CIVIL
+  CSE
+  IT
+}
+
+model Student {
+  enrollmentNo       String   @id @unique
+  name               String
+  mobileNumber       String
+  dob                DateTime
+  password           String
+  email              String
+  parentMobileNumber BigInt
+  address            String?
+  branch             Branch
+  sem                Int
+  // Optional: If a student can enroll in multiple subjects
+}
+
+model Faculty {
+  employeeId       String          @id @unique
+  name             String
+  mobileNumber     String
+  dob              DateTime?
+  password         String
+  email            String
+  address          String?
+  branch           Branch
+  sem              Int
+  // Optional: If a faculty can teach multiple subjects
+  assignedSubjects AssignSubject[]
+  TimeTable        TimeTable[]
+}
+
+model Subject {
+  code             Int             @id @unique
+  name             String
+  branch           String
+  sem              Int
+  assignedSubjects AssignSubject[]
+}
+
+model AssignSubject {
+  id          String   @id @default(uuid())
+  sem         Int
+  branch      Branch
+  subjectCode Int
+  subject     Subject  @relation(fields: [subjectCode], references: [code])
+  facultyId   String?
+  faculty     Faculty? @relation(fields: [facultyId], references: [employeeId])
+}
+
+model TimeTable {
+  id          String      @id @default(uuid())
+  time        String
+  day         String
+  subject     String
+  faculty     Faculty     @relation(fields: [facultyId], references: [employeeId])
+  facultyId   String
+  lectureType LectureType
+  batch       String? 
+}

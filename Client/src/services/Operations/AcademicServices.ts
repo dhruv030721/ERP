@@ -1,28 +1,32 @@
-import axios from 'axios';
 import { apiConnector } from '../ApiConnector';
 import { AcademicsEndpoints } from '../Apis';
 
-const { DOWNLOAD_SAMPLE_EXCEL } = AcademicsEndpoints;
+const { IMPORT_STUDENT_DATA, GET_TIMETABLE } = AcademicsEndpoints;
 
 class AcademicsServices {
-  async ImportStudentData(file: File): Promise<{ message: string }> {
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
+  async ImportStudentData(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
 
-      const response = await apiConnector({
-        method: 'post',
-        url: DOWNLOAD_SAMPLE_EXCEL,
-        bodyData: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+    const response = await apiConnector({
+      method: 'POST',
+      url: IMPORT_STUDENT_DATA,
+      bodyData: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
 
-      return { message: response.data.message };
-    } catch (error) {
-      throw error;
-    }
+    return response;
+  }
+
+  async GetTimetable(employeedId: string) {
+    const response = await apiConnector({
+      method: 'GET',
+      url: GET_TIMETABLE + employeedId
+    })
+    return response;
+
   }
 }
 

@@ -3,25 +3,25 @@ import { apiConnector } from "../ApiConnector";
 
 const { LOGIN_API } = Endpoints;
 
+interface LoginData {
+    username: string;
+    password: string;
+}
+
 class AuthServices {
-    async Login(data: { username: string; password: string }): Promise<any> {
-        try {
-            const body = {
-                employee_id: data.username,
-                password: data.password,
-            };
+    async login(data: LoginData) {
+        const body = {
+            employeeId: data.username,
+            password: data.password,
+        };
 
-            const response = await apiConnector({
-                method: "POST",
-                url: LOGIN_API,
-                bodyData: body,
-            });
+        const response = await apiConnector({
+            method: "POST",
+            url: LOGIN_API,
+            bodyData: body,
+        });
 
-            return response;
-
-        } catch (error) {
-            throw error;
-        }
+        return response;
     }
 }
 

@@ -38,7 +38,6 @@ export default function AdminProtected({
         const token = getCookie("erp_auth_token");
         if (token !== null) {
             const data = jwtDecode<UserDataType>(token);
-            console.log(data);
             return data;
         }
         return null;

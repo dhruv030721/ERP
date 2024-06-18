@@ -23,18 +23,17 @@ const AddStudent: React.FC<AddStudentProps> = () => {
   const ExcelsheetNameHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setExcelFileName(event.target.files[0].name);
-      let file = event.target.files[0];
+      const file = event.target.files[0];
       await toast.promise(
         academicServices.ImportStudentData(file),
         {
           loading: "Data Uploading.....",
-          success: (response: any) => {
+          success: (response) => {
             setExcelFileName("*Upload file in excel format");
             event.target.value = "";
-            return `${response.message}`;
+            return `${response.data.message}`;
           },
-          error: (error: any) => {
-            console.log(error);
+          error: (error) => {
             setExcelFileName("*Upload file in excel format");
             event.target.value = "";
             return `${error.response.data.message}`;

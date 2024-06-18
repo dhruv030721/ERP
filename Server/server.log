@@ -1,0 +1,196 @@
+22-04-2024 00:01:41 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.
+22-04-2024 00:01:55 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.
+22-04-2024 00:01:58 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.
+22-04-2024 00:02:34 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.
+22-04-2024 00:05:38 error: 
+Invalid `prisma.admin.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Backend\src\API\Auth\controller.ts:100:28
+
+   97 
+   98 let user : any;
+   99 
+→ 100 await prisma.admin.findFirst({
+        where: {
+          employee_id: "Dhruv0307"
+                       ~~~~~~~~~~~
+        }
+      })
+
+Invalid value for argument `employee_id`: invalid digit found in string. Expected big integer String.
+18-06-2024 11:26:03  info: Server started successfully at 4000
+18-06-2024 11:26:04  info: Database connected successfully
+18-06-2024 11:44:38  info: Server started successfully at 4000
+18-06-2024 11:44:42  info: Database connected successfully
+18-06-2024 12:14:17  info: Server started successfully at 4000
+18-06-2024 12:14:21  info: Database connected successfully
+18-06-2024 20:08:10  info: Server started successfully at 4000
+18-06-2024 20:08:13  info: Database connected successfully
+18-06-2024 20:15:41  info: User already exists: [object Object]
+18-06-2024 20:15:52  info: User already exists: [object Object]
+18-06-2024 20:56:31  info: Server started successfully at 4000
+18-06-2024 20:56:31  info: Database connected successfully
+18-06-2024 20:56:49  info: Server started successfully at 4000
+18-06-2024 20:56:49  info: Database connected successfully
+18-06-2024 20:57:07  info: Server started successfully at 4000
+18-06-2024 20:57:07  info: Database connected successfully
+18-06-2024 20:57:15  info: Server started successfully at 4000
+18-06-2024 20:57:16  info: Database connected successfully
+18-06-2024 20:57:33  info: Server started successfully at 4000
+18-06-2024 20:57:33  info: Database connected successfully
+18-06-2024 20:57:37  info: Server started successfully at 4000
+18-06-2024 20:57:37  info: Database connected successfully
+18-06-2024 20:58:34  info: Server started successfully at 4000
+18-06-2024 20:58:34  info: Database connected successfully
+18-06-2024 20:58:38  info: Server started successfully at 4000
+18-06-2024 20:58:38  info: Database connected successfully
+18-06-2024 20:58:54  info: Server started successfully at 4000
+18-06-2024 20:58:54  info: Database connected successfully
+18-06-2024 21:00:27  info: Server started successfully at 4000
+18-06-2024 21:00:28  info: Database connected successfully
+18-06-2024 21:00:41  info: Server started successfully at 4000
+18-06-2024 21:00:41  info: Database connected successfully
+18-06-2024 21:01:08  info: Server started successfully at 4000
+18-06-2024 21:01:08  info: Database connected successfully
+18-06-2024 21:01:19  info: Server started successfully at 4000
+18-06-2024 21:01:19  info: Database connected successfully
+18-06-2024 21:01:27  info: Server started successfully at 4000
+18-06-2024 21:01:27  info: Database connected successfully
+18-06-2024 21:01:53  info: Server started successfully at 4000
+18-06-2024 21:01:53  info: Database connected successfully
+18-06-2024 21:02:34  info: Server started successfully at 4000
+18-06-2024 21:02:34  info: Database connected successfully
+18-06-2024 21:15:20  info: Server started successfully at 4000
+18-06-2024 21:15:27  info: Server started successfully at 4000
+18-06-2024 21:15:27  info: Database connected successfully
+18-06-2024 21:16:45  info: Server started successfully at 4000
+18-06-2024 21:16:45  info: Database connected successfully
+18-06-2024 21:16:49  info: Server started successfully at 4000
+18-06-2024 21:16:49  info: Database connected successfully
+19-06-2024 00:36:56  info: Server started successfully at 4000
+19-06-2024 00:36:56  info: Database connected successfully
+19-06-2024 00:37:40  info: Server started successfully at 4000
+19-06-2024 00:37:40  info: Database connected successfully
+19-06-2024 00:38:13  info: Server started successfully at 4000
+19-06-2024 00:38:13  info: Database connected successfully
+19-06-2024 00:40:20  info: Server started successfully at 4000
+19-06-2024 00:40:20  info: Database connected successfully
+19-06-2024 00:40:26  info: Server started successfully at 4000
+19-06-2024 00:40:26  info: Database connected successfully
+19-06-2024 00:41:00  info: Server started successfully at 4000
+19-06-2024 00:41:01  info: Database connected successfully
+19-06-2024 00:41:20  info: Server started successfully at 4000
+19-06-2024 00:41:20  info: Database connected successfully
+19-06-2024 00:41:43  info: Server started successfully at 4000
+19-06-2024 00:41:43  info: Database connected successfully
+19-06-2024 00:42:21  info: Server started successfully at 4000
+19-06-2024 00:42:21  info: Database connected successfully
+19-06-2024 00:46:50  info: Server started successfully at 4000
+19-06-2024 00:46:50  info: Database connected successfully
+19-06-2024 01:42:44  info: Server started successfully at 4000
+19-06-2024 01:42:44  info: Database connected successfully
+19-06-2024 01:45:04  info: Server started successfully at 4000
+19-06-2024 01:45:04  info: Database connected successfully
+19-06-2024 01:49:04  info: Server started successfully at 4000
+19-06-2024 01:49:04  info: Database connected successfully
+19-06-2024 01:49:35  info: Server started successfully at 4000
+19-06-2024 01:49:35  info: Database connected successfully
+19-06-2024 01:50:09  info: Server started successfully at 4000
+19-06-2024 01:50:10  info: Database connected successfully
+19-06-2024 01:51:22  info: Server started successfully at 4000
+19-06-2024 01:51:22  info: Database connected successfully
+19-06-2024 01:51:22  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:51:22  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:52:10  info: Server started successfully at 4000
+19-06-2024 01:52:11  info: Database connected successfully
+19-06-2024 01:52:14  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:52:14  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:52:35  info: Server started successfully at 4000
+19-06-2024 01:52:35  info: Database connected successfully
+19-06-2024 01:52:37  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:52:37  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:52:56  info: Server started successfully at 4000
+19-06-2024 01:52:57  info: Database connected successfully
+19-06-2024 01:53:00  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:53:00  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:53:11  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:53:11  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:53:33  info: Server started successfully at 4000
+19-06-2024 01:53:33  info: Database connected successfully
+19-06-2024 01:53:36  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:53:36  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:53:50  info: Server started successfully at 4000
+19-06-2024 01:53:50  info: Database connected successfully
+19-06-2024 01:53:52  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:53:52  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:54:07  info: Server started successfully at 4000
+19-06-2024 01:54:07  info: Database connected successfully
+19-06-2024 01:54:12  info: Server started successfully at 4000
+19-06-2024 01:54:12  info: Database connected successfully
+19-06-2024 01:54:18  info: Server started successfully at 4000
+19-06-2024 01:54:18  info: Database connected successfully
+19-06-2024 01:54:20  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:54:21  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+19-06-2024 01:55:59  info: Server started successfully at 4000
+19-06-2024 01:55:59  info: Database connected successfully
+19-06-2024 02:01:40  info: Server started successfully at 4000
+19-06-2024 02:01:40  info: Database connected successfully
+19-06-2024 02:01:52  info: Server started successfully at 4000
+19-06-2024 02:01:53  info: Database connected successfully
+19-06-2024 02:03:27  info: Server started successfully at 4000
+19-06-2024 02:03:27  info: Database connected successfully

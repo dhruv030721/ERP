@@ -10,12 +10,12 @@ function Header() {
 
 
     // To navigate on switchboard page
-    function logoHandler(){
-        navigate('/switchboard');
+    function logoHandler() {
+        navigate('/');
     }
 
 
-5
+    5
     return (
         <>
             <div className='font-poppins text-black'>

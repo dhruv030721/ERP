@@ -21,7 +21,7 @@ const Login: React.FC = () => {
 
     const loginHandler: SubmitHandler<LoginFormInputs> = async (data) => {
         await toast.promise(
-            authServices.Login(data),
+            authServices.login(data),
             {
                 loading: "Processing.........",
                 success: (response) => {

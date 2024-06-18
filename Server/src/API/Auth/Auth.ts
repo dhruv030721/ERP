@@ -3,73 +3,79 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import logger from "../../Utils/logger";
-import { json } from "stream/consumers";
+import { GetFormattedDate } from "../../Utils/date";
 
 const prisma = new PrismaClient();
 
 const generateToken = async (payload: any) => {
     try {
-        const token = jwt.sign(payload, process.env.JWT_SECRET!, {
+        const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
             expiresIn: "1d",
         });
 
         return token;
     } catch (error: any) {
-        console.log(error);
-        throw new Error("Something Went Wrong!");
+        logger.error(error);
+        throw new Error("Something went wrong!");
     }
 };
 
 const register = async (req: Request, res: Response) => {
     try {
         const {
-            email,
+            employeeId,
             name,
-            employee_id,
+            mobileNumber,
             password,
             confirmPassword,
-            contactNumber,
+            email,
+            branch,
+            sem,
+            dob
         } = req.body;
 
-        if (!name || !employee_id || !password || !email || !contactNumber) {
+        if (!name || !employeeId || !password || !email || !mobileNumber || !branch || !sem || !dob) {
             return res.status(400).json({
                 success: false,
                 message: "Provide all required fields",
             });
         }
 
-        if (password != confirmPassword) {
+        if (password !== confirmPassword) {
             return res.status(400).json({
                 success: false,
-                message: "Password and Confirm password does not match",
+                message: "Password and confirm password do not match",
             });
         }
 
         const user = await prisma.faculty.findFirst({
             where: {
-                employeeId: employee_id,
+                employeeId: employeeId,
             },
         });
 
         if (user) {
-            console.log(user);
+            logger.info(`User already exists: ${user}`);
             return res.status(403).json({
                 success: false,
-                message: "User already exist",
+                message: "User already exists",
             });
         }
 
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
 
-        // TODO : Sent verification email
-        const newUser = await prisma.faculty.create({
+        // TODO : Send verification email
+        await prisma.faculty.create({
             data: {
+                employeeId: employeeId,
                 name,
-                email,
+                mobileNumber: mobileNumber,
                 password: hashPassword,
-                contactNumber: contactNumber,
-                employeeId: employee_id,
+                email,
+                branch,
+                sem: Number(sem),
+                dob: GetFormattedDate(dob)
             },
         });
 
@@ -77,10 +83,11 @@ const register = async (req: Request, res: Response) => {
             success: true,
             message: "User created successfully",
         });
-    } catch (error) {
-        return res.status(401).json({
+
+    } catch (error: any) {
+        logger.error(error);
+        return res.status(500).json({
             success: false,
-            error: error,
             message: "Internal Server Error!",
         });
     }
@@ -88,25 +95,20 @@ const register = async (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
     try {
-        const { employee_id, password } = req.body;
+        const { employeeId, password } = req.body;
 
-        if (!employee_id || !password) {
+        if (!employeeId || !password) {
             return res.status(400).json({
                 message: "Please provide all the required fields",
             });
         }
 
-        let user: any;
-
-        await prisma.faculty
+        const user = await prisma.faculty
             .findFirst({
                 where: {
-                    employeeId: employee_id,
+                    employeeId: employeeId,
                 },
             })
-            .then((data) => {
-                user = data;
-            });
 
         if (!user) {
             return res.status(404).json({
@@ -116,32 +118,27 @@ const login = async (req: Request, res: Response) => {
         }
         const isMatch = await bcrypt.compare(password, user.password);
 
+
         if (isMatch) {
-            const subjectData = await prisma.subject.findMany({
-                where: {
-                    facultyId: user.employeeId,
-                },
-            });
 
             const payload = {
-                employee_id: user.employeeId,
+                employeeId: user.employeeId,
                 email: user.email,
                 name: user.name,
-                contact: user.contactNumber,
-                subjectData: subjectData
+                mobileNumber: user.mobileNumber
             };
-
-            user.password = null;
-            user.employeeId = user.employeeId;
-            user.contactNumber = user.contactNumber;
-            user.subjectData = subjectData;
 
             const token = await generateToken(payload);
 
             return res.cookie("erp_auth_token", token).status(200).json({
                 success: true,
                 message: "Login Successful",
-                data: user,
+                data: {
+                    employeeId: user.employeeId,
+                    email: user.email,
+                    name: user.name,
+                    mobileNumber: user.mobileNumber,
+                },
             });
         } else {
             return res.status(400).json({
@@ -151,7 +148,6 @@ const login = async (req: Request, res: Response) => {
         }
     } catch (error) {
         logger.error(error);
-        console.log(error);
         return res.status(400).json({
             success: false,
             message: "Internal Server Error!",
@@ -159,24 +155,4 @@ const login = async (req: Request, res: Response) => {
     }
 };
 
-const sendVerificationMail = async (req: Request, res: Response) => {
-    try {
-    } catch (error) { }
-};
-
-const sendMail = async (req: Request, res: Response) => {
-    try {
-    } catch (error) {
-        return res.status(400).json({
-            success: false,
-            message: "Internal server error!",
-        });
-    }
-};
-
-const verify = async (req: Request, res: Response) => {
-    try {
-    } catch (error) { }
-};
-
-export default { register, login, sendVerificationMail, verify };
+export default { register, login };

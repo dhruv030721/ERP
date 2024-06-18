@@ -1,12 +1,14 @@
-const BASE_URl = "/api/";
+const BASE_URL = "/api/";
 
 // Authentication Endpoints
 export const Endpoints = {
-    LOGIN_API: BASE_URl + "auth/login",
+    LOGIN_API: BASE_URL + "auth/login",
 }
 
 
 // Academics Endpoints
 export const AcademicsEndpoints = {
-    DOWNLOAD_SAMPLE_EXCEL: "academics/ImportStudentdata",
+    DOWNLOAD_SAMPLE_EXCEL: BASE_URL + "academics/Download_Import_Student_Sample_file",
+    IMPORT_STUDENT_DATA: BASE_URL + "academics/ImportStudentdata",
+    GET_TIMETABLE: BASE_URL + "academics/get_timetable/"
 }
