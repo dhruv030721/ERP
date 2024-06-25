@@ -1,3 +1,5 @@
-import { GetTimeTable } from "./GetTimeTable"
+import { GetTimeTable } from "./GetTimeTable";
+import { GetStudents } from "./GetStudents";
+import { MarkAttendance } from "./MarkAttendance";
 
-export default { GetTimeTable }
+export default { GetTimeTable, GetStudents, MarkAttendance }

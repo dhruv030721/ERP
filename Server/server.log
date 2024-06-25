@@ -194,3 +194,310 @@ Invalid value for argument `employee_id`: invalid digit found in string. Expecte
 19-06-2024 02:01:53  info: Database connected successfully
 19-06-2024 02:03:27  info: Server started successfully at 4000
 19-06-2024 02:03:27  info: Database connected successfully
+19-06-2024 09:17:40  info: Server started successfully at 4000
+19-06-2024 09:17:43  info: Database connected successfully
+19-06-2024 09:30:20  info: Server started successfully at 4000
+19-06-2024 09:30:20  info: Database connected successfully
+19-06-2024 09:31:17  info: Server started successfully at 4000
+19-06-2024 09:31:17  info: Database connected successfully
+25-06-2024 09:07:57  info: Server started successfully at 4000
+25-06-2024 09:07:59  info: Database connected successfully
+25-06-2024 09:37:07  info: Server started successfully at 4000
+25-06-2024 09:37:08  info: Database connected successfully
+25-06-2024 13:21:27  info: Server started successfully at 4000
+25-06-2024 13:21:28  info: Database connected successfully
+25-06-2024 13:21:58  info: Server started successfully at 4000
+25-06-2024 13:21:58  info: Database connected successfully
+25-06-2024 13:42:59  info: Server started successfully at 4000
+25-06-2024 13:42:59  info: Database connected successfully
+25-06-2024 13:43:27  info: Server started successfully at 4000
+25-06-2024 13:43:27  info: Database connected successfully
+25-06-2024 13:43:33  info: Server started successfully at 4000
+25-06-2024 13:43:33  info: Database connected successfully
+25-06-2024 13:43:39  info: Server started successfully at 4000
+25-06-2024 13:43:39  info: Database connected successfully
+25-06-2024 13:43:59  info: Server started successfully at 4000
+25-06-2024 13:43:59  info: Database connected successfully
+25-06-2024 13:44:08  info: Server started successfully at 4000
+25-06-2024 13:44:08  info: Database connected successfully
+25-06-2024 13:44:11  info: Server started successfully at 4000
+25-06-2024 13:44:12  info: Database connected successfully
+25-06-2024 13:44:23  info: Server started successfully at 4000
+25-06-2024 13:44:23  info: Database connected successfully
+25-06-2024 13:45:08  info: Server started successfully at 4000
+25-06-2024 13:45:08  info: Database connected successfully
+25-06-2024 13:45:13  info: Server started successfully at 4000
+25-06-2024 13:45:13  info: Database connected successfully
+25-06-2024 13:46:59  info: Server started successfully at 4000
+25-06-2024 13:46:59  info: Database connected successfully
+25-06-2024 13:47:03  info: Server started successfully at 4000
+25-06-2024 13:47:03  info: Database connected successfully
+25-06-2024 13:47:11  info: Server started successfully at 4000
+25-06-2024 13:47:11  info: Database connected successfully
+25-06-2024 13:47:18  info: Server started successfully at 4000
+25-06-2024 13:47:18  info: Database connected successfully
+25-06-2024 13:49:14  info: Server started successfully at 4000
+25-06-2024 13:49:15  info: Database connected successfully
+25-06-2024 13:49:20  info: Server started successfully at 4000
+25-06-2024 13:49:20  info: Database connected successfully
+25-06-2024 13:49:38  info: Server started successfully at 4000
+25-06-2024 13:49:38  info: Database connected successfully
+25-06-2024 13:51:34  info: Server started successfully at 4000
+25-06-2024 13:51:34  info: Database connected successfully
+25-06-2024 13:52:07  info: Server started successfully at 4000
+25-06-2024 13:52:07  info: Database connected successfully
+25-06-2024 13:52:11  info: Server started successfully at 4000
+25-06-2024 13:52:11  info: Database connected successfully
+25-06-2024 13:58:36  info: Server started successfully at 4000
+25-06-2024 13:58:36  info: Database connected successfully
+25-06-2024 13:58:48  info: Server started successfully at 4000
+25-06-2024 13:58:48  info: Database connected successfully
+25-06-2024 14:04:09  info: Server started successfully at 4000
+25-06-2024 14:04:09  info: Database connected successfully
+25-06-2024 14:07:58  info: Server started successfully at 4000
+25-06-2024 14:08:02  info: Database connected successfully
+25-06-2024 14:13:00  info: Server started successfully at 4000
+25-06-2024 14:13:01  info: Database connected successfully
+25-06-2024 15:19:32  info: Server started successfully at 4000
+25-06-2024 15:19:32  info: Database connected successfully
+25-06-2024 15:19:50  info: Server started successfully at 4000
+25-06-2024 15:19:50  info: Database connected successfully
+25-06-2024 15:20:07  info: Server started successfully at 4000
+25-06-2024 15:20:07  info: Database connected successfully
+25-06-2024 15:20:35  info: Server started successfully at 4000
+25-06-2024 15:20:35  info: Database connected successfully
+25-06-2024 15:20:58  info: Server started successfully at 4000
+25-06-2024 15:20:58  info: Database connected successfully
+25-06-2024 15:21:31  info: Server started successfully at 4000
+25-06-2024 15:21:31  info: Database connected successfully
+25-06-2024 15:22:02  error: Do not know how to serialize a BigInt
+25-06-2024 15:23:31  info: Server started successfully at 4000
+25-06-2024 15:23:34  info: Database connected successfully
+25-06-2024 19:03:36  info: Server started successfully at 4000
+25-06-2024 19:03:36  info: Database connected successfully
+25-06-2024 19:09:57  info: Server started successfully at 4000
+25-06-2024 19:09:57  info: Database connected successfully
+25-06-2024 19:10:17  info: Server started successfully at 4000
+25-06-2024 19:10:17  info: Database connected successfully
+25-06-2024 20:19:33  info: Server started successfully at 4000
+25-06-2024 20:19:33  info: Database connected successfully
+25-06-2024 20:20:23  info: Server started successfully at 4000
+25-06-2024 20:20:23  info: Database connected successfully
+25-06-2024 20:20:32  info: Server started successfully at 4000
+25-06-2024 20:20:32  info: Database connected successfully
+25-06-2024 20:20:49  info: Server started successfully at 4000
+25-06-2024 20:20:50  info: Database connected successfully
+25-06-2024 20:20:59  info: Server started successfully at 4000
+25-06-2024 20:20:59  info: Database connected successfully
+25-06-2024 20:21:04  info: Server started successfully at 4000
+25-06-2024 20:21:04  info: Database connected successfully
+25-06-2024 20:21:20  info: Server started successfully at 4000
+25-06-2024 20:21:20  info: Database connected successfully
+25-06-2024 20:21:28  info: Server started successfully at 4000
+25-06-2024 20:21:28  info: Database connected successfully
+25-06-2024 20:21:31  info: Server started successfully at 4000
+25-06-2024 20:21:31  info: Database connected successfully
+25-06-2024 20:38:35  info: Server started successfully at 4000
+25-06-2024 20:38:35  info: Database connected successfully
+25-06-2024 20:39:00  info: Server started successfully at 4000
+25-06-2024 20:39:01  info: Database connected successfully
+25-06-2024 20:39:14  info: Server started successfully at 4000
+25-06-2024 20:39:14  info: Database connected successfully
+25-06-2024 20:39:30  info: Server started successfully at 4000
+25-06-2024 20:39:30  info: Database connected successfully
+25-06-2024 20:39:36  info: Server started successfully at 4000
+25-06-2024 20:39:37  info: Database connected successfully
+25-06-2024 20:40:06  info: Server started successfully at 4000
+25-06-2024 20:40:06  info: Database connected successfully
+25-06-2024 20:40:11  info: Server started successfully at 4000
+25-06-2024 20:40:11  info: Database connected successfully
+25-06-2024 20:50:03  info: Server started successfully at 4000
+25-06-2024 20:50:03  info: Database connected successfully
+25-06-2024 20:50:14  info: Server started successfully at 4000
+25-06-2024 20:50:14  info: Database connected successfully
+26-06-2024 00:00:32  info: Server started successfully at 4000
+26-06-2024 00:00:32  info: Database connected successfully
+26-06-2024 00:00:59  info: Server started successfully at 4000
+26-06-2024 00:00:59  info: Database connected successfully
+26-06-2024 00:02:27  info: Server started successfully at 4000
+26-06-2024 00:02:27  info: Database connected successfully
+26-06-2024 00:02:35  info: Server started successfully at 4000
+26-06-2024 00:02:35  info: Database connected successfully
+26-06-2024 00:03:54  info: Server started successfully at 4000
+26-06-2024 00:03:54  info: Database connected successfully
+26-06-2024 00:06:55  info: Server started successfully at 4000
+26-06-2024 00:06:55  info: Database connected successfully
+26-06-2024 00:08:50  info: Server started successfully at 4000
+26-06-2024 00:08:50  info: Database connected successfully
+26-06-2024 00:09:58  info: Server started successfully at 4000
+26-06-2024 00:09:58  info: Database connected successfully
+26-06-2024 00:13:34  info: Server started successfully at 4000
+26-06-2024 00:13:38  info: Database connected successfully
+26-06-2024 00:17:14  info: Server started successfully at 4000
+26-06-2024 00:17:15  info: Database connected successfully
+26-06-2024 00:17:32  info: Server started successfully at 4000
+26-06-2024 00:17:33  info: Database connected successfully
+26-06-2024 00:18:31  info: Server started successfully at 4000
+26-06-2024 00:18:31  info: Database connected successfully
+26-06-2024 00:22:54  info: Server started successfully at 4000
+26-06-2024 00:22:56  info: Database connected successfully
+26-06-2024 00:35:10  info: Server started successfully at 4000
+26-06-2024 00:35:12  info: Database connected successfully
+26-06-2024 00:35:25  info: Server started successfully at 4000
+26-06-2024 00:35:25  info: Database connected successfully
+26-06-2024 00:35:28  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: "Web Programming",
+                          ~~~~~~~~~~~~~~~~~
+             facultyEmployeeId: "Dhruv Godhani",
+             studentEnrollmentNo: "201240107030",
+             status: "present",
+             date: "2024-06-26 00:35:28"
+           }
+         })
+
+Argument `subjectCode`: Invalid value provided. Expected Int, provided String.
+26-06-2024 00:42:06  info: Server started successfully at 4000
+26-06-2024 00:42:06  info: Database connected successfully
+26-06-2024 00:43:53  info: Server started successfully at 4000
+26-06-2024 00:43:53  info: Database connected successfully
+26-06-2024 00:44:11  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: "Web Programming",
+                          ~~~~~~~~~~~~~~~~~
+             facultyEmployeeId: "Dhruv Godhani",
+             studentEnrollmentNo: "201240107030",
+             status: "present",
+             date: "2024-06-26 00:44:11"
+           }
+         })
+
+Argument `subjectCode`: Invalid value provided. Expected Int, provided String.
+26-06-2024 00:46:56  info: Server started successfully at 4000
+26-06-2024 00:46:56  info: Database connected successfully
+26-06-2024 00:47:02  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: "Web Programming",
+                          ~~~~~~~~~~~~~~~~~
+             facultyEmployeeId: "Dhruv Godhani",
+             studentEnrollmentNo: "201240107030",
+             status: "present",
+             date: "2024-06-26 00:47:02"
+           }
+         })
+
+Argument `subjectCode`: Invalid value provided. Expected Int, provided String.
+26-06-2024 00:48:06  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: 3160713,
+             facultyEmployeeId: "211240107021",
+             studentEnrollmentNo: "201240107030",
+             status: "present",
+                     ~~~~~~~~~
+             date: "2024-06-26 00:48:06"
+           }
+         })
+
+Invalid value for argument `status`. Expected AttendanceType.
+26-06-2024 00:49:53  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: 3160713,
+             facultyEmployeeId: "211240107021",
+             studentEnrollmentNo: "201240107030",
+             status: "Present",
+                     ~~~~~~~~~
+             date: "2024-06-26 00:49:53"
+           }
+         })
+
+Invalid value for argument `status`. Expected AttendanceType.
+26-06-2024 00:50:53  info: Server started successfully at 4000
+26-06-2024 00:50:56  info: Database connected successfully
+26-06-2024 00:50:59  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: 3160713,
+             facultyEmployeeId: "211240107021",
+             studentEnrollmentNo: "201240107030",
+             status: "Present",
+             date: "2024-06-26 00:50:58"
+                   ~~~~~~~~~~~~~~~~~~~~~
+           }
+         })
+
+Invalid value for argument `date`: input contains invalid characters. Expected ISO-8601 DateTime.
+26-06-2024 00:53:09  info: Server started successfully at 4000
+26-06-2024 00:53:09  info: Database connected successfully
+26-06-2024 00:59:24  info: Server started successfully at 4000
+26-06-2024 00:59:25  info: Database connected successfully
+26-06-2024 00:59:37  info: Server started successfully at 4000
+26-06-2024 00:59:37  info: Database connected successfully
+26-06-2024 01:00:10  info: Server started successfully at 4000
+26-06-2024 01:00:10  info: Database connected successfully
+26-06-2024 01:00:45  info: Server started successfully at 4000
+26-06-2024 01:00:45  info: Database connected successfully

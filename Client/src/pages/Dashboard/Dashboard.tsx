@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+// import React, { useEffect } from 'react';
 import SwitchItem from '../Switchboard/SwitchItem';
 import { FaUserCheck } from "react-icons/fa";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { TbReportSearch } from "react-icons/tb";
 import { FaUserEdit } from "react-icons/fa";
-import { academicServices } from '../../services';
-import toast from "react-hot-toast";
-import { useDispatch } from 'react-redux';
-import { setTimetable } from "../../slices/academics"
+// import { academicServices } from '../../services';
+// import toast from "react-hot-toast";
+// import { useDispatch, useSelector } from 'react-redux';
+// import { setTimetable } from "../../slices/academics"
+// import { RootState } from '../../slices/store';
 
 interface DashboardItem {
   name: string;
@@ -38,20 +39,6 @@ const Dashboard: React.FC = () => {
       icon: <TbReportSearch size={25} />
     }
   ];
-
-  const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await academicServices.GetTimetable();
-        dispatch(setTimetable(response.data.data));
-      } catch (error) {
-        toast.error("Failed to fetch timetable.");
-      }
-    })()
-  }, []);
 
   return (
     <div className=''>

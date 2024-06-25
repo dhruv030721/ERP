@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { BsPersonFillAdd } from "react-icons/bs";
-import Button from '@mui/material/Button';
 import { IoCloudUpload, IoCloudDownload } from "react-icons/io5";
-import { styled } from '@mui/material/styles';
+import MuiButton from "../../../../components/MuiButton.tsx"
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import axios from "axios";
@@ -15,12 +14,14 @@ interface AddStudentProps { }
 const AddStudent: React.FC<AddStudentProps> = () => {
   const [alignment, setAlignment] = useState('add-student');
   const [excelFileName, setExcelFileName] = useState("*Upload file in excel format");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);
   };
 
   const ExcelsheetNameHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
+
     if (event.target.files && event.target.files.length > 0) {
       setExcelFileName(event.target.files[0].name);
       const file = event.target.files[0];
@@ -88,34 +89,15 @@ const AddStudent: React.FC<AddStudentProps> = () => {
           <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
             <h1 className='font-bold text-red-600'>{excelFileName}</h1>
             <div>
-              <Button
-                role={undefined}
-                component="label"
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<IoCloudUpload />}
-                sx={{ backgroundColor: '#093163', color: 'white', '&:hover': { backgroundColor: '#093163' } }}
-              >
-                Upload file
-                <VisuallyHiddenInput type="file" onChange={ExcelsheetNameHandler} />
-              </Button>
+
+              <MuiButton btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} />
             </div>
           </div>
 
           <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
             <h1 className='font-bold'>Download Sample Excel</h1>
             <div>
-              <Button
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<IoCloudDownload />}
-                sx={{ backgroundColor: '#093163', color: 'white', '&:hover': { backgroundColor: '#093163' } }}
-                onClick={DownloadSampleExcelHandler}
-              >
-                Download Excel
-                <VisuallyHiddenInput type="button" />
-              </Button>
+              <MuiButton btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} />
             </div>
           </div>
         </div>
@@ -126,14 +108,3 @@ const AddStudent: React.FC<AddStudentProps> = () => {
 
 export default AddStudent;
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});

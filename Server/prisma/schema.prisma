@@ -14,9 +14,9 @@ datasource db {
 }
 
 enum AttendanceType {
-  PRESENT
-  ABSENT
-  HOLIDAY
+  Present
+  Absent
+  Leave
 }
 
 enum LectureType {
@@ -34,17 +34,18 @@ enum Branch {
 }
 
 model Student {
-  enrollmentNo       String   @id @unique
+  enrollmentNo       String       @id @unique
   name               String
   mobileNumber       String
-  dob                DateTime
+  dob                DateTime?
   password           String
   email              String
-  parentMobileNumber BigInt
+  parentMobileNumber String
   address            String?
   branch             Branch
   sem                Int
   // Optional: If a student can enroll in multiple subjects
+  Attendance         Attendance[]
 }
 
 model Faculty {
@@ -60,6 +61,7 @@ model Faculty {
   // Optional: If a faculty can teach multiple subjects
   assignedSubjects AssignSubject[]
   TimeTable        TimeTable[]
+  Attendance       Attendance[]
 }
 
 model Subject {
@@ -68,6 +70,7 @@ model Subject {
   branch           String
   sem              Int
   assignedSubjects AssignSubject[]
+  Attendance       Attendance[]
 }
 
 model AssignSubject {
@@ -88,5 +91,23 @@ model TimeTable {
   faculty     Faculty     @relation(fields: [facultyId], references: [employeeId])
   facultyId   String
   lectureType LectureType
-  batch       String? 
+  batch       String?
+  branch      Branch
+  sem         Int
+}
+
+model Attendance {
+  id                  String         @id @default(uuid())
+  time                String
+  date                DateTime
+  day                 String
+  sem                 Int
+  branch              String
+  subject             Subject        @relation(fields: [subjectCode], references: [code])
+  subjectCode         Int
+  enrollmentNo        Student        @relation(fields: [studentEnrollmentNo], references: [enrollmentNo])
+  studentEnrollmentNo String
+  facultyId           Faculty        @relation(fields: [facultyEmployeeId], references: [employeeId])
+  facultyEmployeeId   String
+  status              AttendanceType
 }

@@ -89,3 +89,142 @@ Invalid value for argument `employee_id`: invalid digit found in string. Expecte
 19-06-2024 01:53:52  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
 19-06-2024 01:54:20  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
 19-06-2024 01:54:21  error: object is not iterable (cannot read property Symbol(Symbol.iterator))
+25-06-2024 15:22:02  error: Do not know how to serialize a BigInt
+26-06-2024 00:35:28  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: "Web Programming",
+                          ~~~~~~~~~~~~~~~~~
+             facultyEmployeeId: "Dhruv Godhani",
+             studentEnrollmentNo: "201240107030",
+             status: "present",
+             date: "2024-06-26 00:35:28"
+           }
+         })
+
+Argument `subjectCode`: Invalid value provided. Expected Int, provided String.
+26-06-2024 00:44:11  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: "Web Programming",
+                          ~~~~~~~~~~~~~~~~~
+             facultyEmployeeId: "Dhruv Godhani",
+             studentEnrollmentNo: "201240107030",
+             status: "present",
+             date: "2024-06-26 00:44:11"
+           }
+         })
+
+Argument `subjectCode`: Invalid value provided. Expected Int, provided String.
+26-06-2024 00:47:02  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: "Web Programming",
+                          ~~~~~~~~~~~~~~~~~
+             facultyEmployeeId: "Dhruv Godhani",
+             studentEnrollmentNo: "201240107030",
+             status: "present",
+             date: "2024-06-26 00:47:02"
+           }
+         })
+
+Argument `subjectCode`: Invalid value provided. Expected Int, provided String.
+26-06-2024 00:48:06  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: 3160713,
+             facultyEmployeeId: "211240107021",
+             studentEnrollmentNo: "201240107030",
+             status: "present",
+                     ~~~~~~~~~
+             date: "2024-06-26 00:48:06"
+           }
+         })
+
+Invalid value for argument `status`. Expected AttendanceType.
+26-06-2024 00:49:53  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: 3160713,
+             facultyEmployeeId: "211240107021",
+             studentEnrollmentNo: "201240107030",
+             status: "Present",
+                     ~~~~~~~~~
+             date: "2024-06-26 00:49:53"
+           }
+         })
+
+Invalid value for argument `status`. Expected AttendanceType.
+26-06-2024 00:50:59  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:20:37
+
+  17 }
+  18 
+  19 for (let Student in attendance) {
+→ 20     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Wednesday",
+             sem: 6,
+             time: "09:15 AM - 11:05 AM",
+             subjectCode: 3160713,
+             facultyEmployeeId: "211240107021",
+             studentEnrollmentNo: "201240107030",
+             status: "Present",
+             date: "2024-06-26 00:50:58"
+                   ~~~~~~~~~~~~~~~~~~~~~
+           }
+         })
+
+Invalid value for argument `date`: input contains invalid characters. Expected ISO-8601 DateTime.

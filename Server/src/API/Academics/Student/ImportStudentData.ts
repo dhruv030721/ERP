@@ -18,12 +18,10 @@ export const ImportStudentdata = async (req: Request, res: Response) => {
             sourceFile: file.path
         })
 
-        console.log(data);
-
         for (let i = 0; i < data['Sheet1'].length; i++) {
             if (i >= 1) {
 
-                const dob = GetFormattedDate(data['Sheet1'][i]['I']);
+                // const dob = GetFormattedDate(data['Sheet1'][i]['I']);
 
                 await prisma.student.create({
                     data: {
@@ -35,7 +33,7 @@ export const ImportStudentdata = async (req: Request, res: Response) => {
                         branch: data['Sheet1'][i]['F'],
                         sem: data['Sheet1'][i]['G'],
                         password: data['Sheet1'][i]['H'].toString(),
-                        dob: dob
+                        // dob: dob
                     }
                 })
             }
