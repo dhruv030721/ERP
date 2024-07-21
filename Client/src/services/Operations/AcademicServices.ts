@@ -45,6 +45,10 @@ class AcademicsServices {
 
 
   async MarkAttendance(lectureDetails: any, attendance: any) {
+    // Create a new Date object to avoid mutating the original date
+    const date = new Date(lectureDetails.date);
+    date.setUTCHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
+
     const body = {
       sem: lectureDetails.sem,
       branch: lectureDetails.branch,
@@ -52,20 +56,18 @@ class AcademicsServices {
       time: lectureDetails.time,
       day: lectureDetails.day,
       facultyId: lectureDetails.facultyId,
-      attendance: attendance
-    }
+      attendance: attendance,
+      date: date.toISOString() // Convert date to ISO string if needed
+    };
 
     const response = await apiConnector({
       method: 'POST',
       url: MARK_ATTENDANCE,
       bodyData: body,
-    })
+    });
 
     return response;
-
   }
-
-
 }
 
 const academicServices = new AcademicsServices();

@@ -52,7 +52,8 @@ const MarkAttendance = () => {
             branch: branch,
             subject: subject,
             day: day,
-            facultyId: facultyId
+            facultyId: facultyId,
+            date: dateValue
         })
         await toast.promise(
             academicServices.GetStudents({ sem, branch }),
@@ -129,7 +130,7 @@ const MarkAttendance = () => {
                             <DateCalendar value={dateValue} onChange={DateHandler} />
                         </LocalizationProvider>
                     </div>
-                    <div className='bg-gradient-to-b from-white via-black to-white max-h-96 w-[1px]'></div>
+                    <div className='bg-gradient-to-b from-white via-zinc-400 to-a max-h-96 w-[1px]'></div>
                     <section>
                         <div>
                             <h1 className='text-l font-bold'>Day: {dayName}</h1>
@@ -142,7 +143,7 @@ const MarkAttendance = () => {
                                 TimetableData[dayName]?.map((session: any, index: any) => (
                                     <div
                                         key={index}
-                                        className={`cursor-pointer border rounded-lg border-zinc-700 px-8 py-2 flex flex-col justify-center ${selectedSession === index ? 'bg-blue-100' : 'hover:bg-blue-50'}`}
+                                        className={`cursor-pointer border rounded-lg border-zinc-400 shadow px-8 py-2 flex flex-col justify-center ${selectedSession === index ? 'bg-blue-100' : 'hover:bg-blue-50'}`}
                                         onClick={() => selectLectureHandler(index, session.sem, session.branch, session.subjectCode, session.time, session.day, session.facultyId)}
                                     >
                                         <h1>Sem: {session.sem}</h1>
@@ -160,7 +161,7 @@ const MarkAttendance = () => {
                     <h1 className='text-2xl '>Students : </h1>
                     {selectedSession && studentData.length === 0 ? (
                         <h1>No lecture selected!</h1>
-                    ) :  studentData.length > 0 ? (
+                    ) : studentData.length > 0 ? (
                         <>
                             <div className='flex gap-y-3 flex-col'>
                                 {studentData.map((student: any) => (

@@ -7,5 +7,13 @@ export const GetFormattedDate = (date: string): string => {
 }
 
 export const getISTDateAndTime = (): string => {
-    return moment().tz('Asia/Kolkata').toISOString();
+    return moment().tz('Asia/Kolkata').format('YYYY-MM-DDTHH:mm:ss.SSSZ');
 }
+
+
+export const getUTCTime = (): Date => {
+    return new Date();
+}
+
+
+// export const MonthDateRange = (): 

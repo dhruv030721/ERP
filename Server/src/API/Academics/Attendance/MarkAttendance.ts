@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import prisma from "../../../Utils/prisma";
 import logger from "../../../Utils/logger";
-import { getISTDateAndTime } from "../../../Utils/date";
+import { getISTDateAndTime, getUTCTime } from "../../../Utils/date";
 
 export const MarkAttendance = async (req: Request, res: Response) => {
     try {
-        const { subject, facultyId, time, day, attendance, branch, sem } = req.body;
+        const { subject, facultyId, time, day, attendance, branch, sem, date } = req.body;
 
-        const date = getISTDateAndTime();
 
         if (!subject || !facultyId || !time || !day || !attendance || !branch || !sem) {
             return res.status(403).json({

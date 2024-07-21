@@ -228,3 +228,26 @@ D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\
          })
 
 Invalid value for argument `date`: input contains invalid characters. Expected ISO-8601 DateTime.
+22-07-2024 01:40:20  error: 
+Invalid `prisma.attendance.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\MarkAttendance.ts:19:37
+
+  16 }
+  17 
+  18 for (let Student in attendance) {
+→ 19     await prisma.attendance.create({
+           data: {
+             branch: "CE",
+             day: "Tuesday",
+             sem: 6,
+             time: "11:15 AM - 12:10 PM",
+             subjectCode: 3160713,
+             facultyEmployeeId: "211240107021",
+             studentEnrollmentNo: "201240107030",
+             status: "Present",
+         +   date: DateTime
+           }
+         })
+
+Argument `date` is missing.
+22-07-2024 01:46:26  error: date.setHours is not a function

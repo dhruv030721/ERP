@@ -9,7 +9,7 @@ const StudentAttendanceCard = ({ List, attendance, onAttendanceChange }: any) =>
 
     return (
         <div className=''>
-            <div key={List.enrollmentNo} className='flex border border-zinc-700 rounded-md py-3 px-5 justify-between items-center'>
+            <div key={List.enrollmentNo} className='flex border border-zinc-400 shadow rounded-md py-3 px-5 justify-between items-center'>
                 <div className='flex w-[60%]'>
                     <h1 className='w-[20%]'>{List.enrollmentNo}</h1>
                     <h1 className='w-[80%] truncate'>{List.name}</h1>
@@ -45,3 +45,4 @@ const StudentAttendanceCard = ({ List, attendance, onAttendanceChange }: any) =>
 }
 
 export default StudentAttendanceCard;
+ 

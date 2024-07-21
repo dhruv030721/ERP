@@ -1,4 +1,3 @@
-import React from 'react'
 import logo from '../../assets/logo/logo.png'
 import collegeLogo from '../../assets/logo/collegeLogo.png'
 import { useNavigate } from 'react-router-dom'
@@ -34,7 +33,7 @@ function Header() {
                         <img src={collegeLogo} alt="College Logo" className='w-20' />
                     </div>
                 </nav>
-                <div className='bg-gradient-to-r  from-white via-black to-white h-[1px]'></div>
+                <div className='bg-gradient-to-r  from-white via-zinc-400 to-white h-[1px]'></div>
 
             </div>
 

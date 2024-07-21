@@ -104,11 +104,11 @@ const Switchboard: React.FC = () => {
               <Link to="/" onClick={logoutHandler}><LuLogOut size={30} /></Link>
             </div>
           </div>
-          <div className='bg-gradient-to-b from-white via-black to-white h-[90%] w-[1px]'></div>
+          <div className='bg-gradient-to-b from-white via-zinc-400 to-white h-[90%] w-[1px]'></div>
           <div className='rounded-lg w-[60%] h-[95%] flex flex-col space-y-5 p-5 font-poppins'>
             {/* Switchboard Option */}
             <h2 className='font-black text-xl text-center'>Switchboard</h2>
-            <div className='bg-gradient-to-r from-white via-black to-white h-[1px]'></div>
+            {/* <div className='bg-gradient-to-r from-white via-zinc-400 to-white h-[1px]'></div> */}
             <div className='px-10'>
               <ul className='grid grid-cols-4 gap-x-10 gap-y-10 justify-center items-center'>
                 {SwitchList.map((item) => {
