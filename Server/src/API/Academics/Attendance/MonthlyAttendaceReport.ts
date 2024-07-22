@@ -61,12 +61,8 @@ export const MonthlyAttendanceReport = async (req: Request, res: Response) => {
         // Extract unique dates from attendance data
         const uniqueDates = Array.from(new Set(AttendanceData.map(record => format(record.date, 'yyyy-MM-dd'))));
 
-        console.log(uniqueDates);
-
         // Filter days to include only those with attendance records
         const days = uniqueDates.map(dateStr => new Date(dateStr));
-
-        console.log(days);
 
         const StudentData = await prisma.student.findMany({
             where: {
@@ -130,10 +126,15 @@ export const MonthlyAttendanceReport = async (req: Request, res: Response) => {
             doc.rect(dayColumnLeft + (index * columnWidth), tableTop, columnWidth, rowHeight).stroke();
         });
 
+        doc.font("Helvetica-Bold").fontSize(fontSize).text("%", dayColumnLeft + (days.length * columnWidth), verticalCenter, { width: columnWidth, align: 'center' });
+        doc.rect(dayColumnLeft + (days.length * columnWidth), tableTop, columnWidth, rowHeight).stroke();
+
         tableTop += rowHeight;
 
         // Add attendance data
         const pageHeight = doc.page.height - doc.page.margins.bottom;
+
+        const total_present: { [key: string]: number } = {};
 
         // Creating student enrollment no and name row
         StudentData.forEach((data) => {
@@ -148,20 +149,50 @@ export const MonthlyAttendanceReport = async (req: Request, res: Response) => {
             doc.font("Helvetica").fontSize(fontSize).text(`${name[0] + " " + name[name.length - 1]}`, nameColumnLeft + 10, verticalCenter, { width: 150, align: 'left' });
             doc.rect(nameColumnLeft, tableTop, 150, rowHeight).stroke();
 
+            let totalday = days.length;
+            let presentDay = 0;
             // Add attendance marks for each day
             days.forEach((day, index) => {
-                const attendanceRecord = groupedData[data.enrollmentNo]?.find((record: any) => format(record.date, 'yyyy-MM-dd') === format(day, 'yyyy-MM-dd'));
+                const formattedDay = format(day, 'yyyy-MM-dd');
+                const attendanceRecord = groupedData[data.enrollmentNo]?.find((record: any) => format(record.date, 'yyyy-MM-dd') === formattedDay);
                 const attendanceMark = attendanceRecord ? (attendanceRecord.status === "Present" ? 'P' : 'A') : 'A'; // Example: 'P' for present, 'A' for absent
+
+                if (attendanceMark == 'P') {
+                    presentDay++;
+                    if (!total_present[formattedDay]) total_present[formattedDay] = 0;
+                    total_present[formattedDay]++;
+                }
                 doc.font("Helvetica").fontSize(fontSize).text(attendanceMark, dayColumnLeft + (index * columnWidth), verticalCenter, { width: columnWidth, align: 'center' });
                 doc.rect(dayColumnLeft + (index * columnWidth), tableTop, columnWidth, rowHeight).stroke();
             });
+
+            let average = (presentDay / totalday) * 100;
+
+            doc.font("Helvetica").fontSize(fontSize).text(`${average}%`, dayColumnLeft + (days.length * columnWidth), verticalCenter, { width: columnWidth, align: 'center' });
+            doc.rect(dayColumnLeft + (days.length * columnWidth), tableTop, columnWidth, rowHeight).stroke();
 
             tableTop += rowHeight;
             doc.moveDown();
         });
 
+        // Calculate new verticalCenter for the "Total Present" row
+        verticalCenter = tableTop + (rowHeight / 2) - (textHeight / 2) + 2;
+
+        doc.font("Helvetica").fontSize(fontSize).text(`Total Present:`, enrollmentColumnLeft, verticalCenter, { width: 250, align: 'center' });
+        doc.rect(enrollmentColumnLeft, tableTop, 250, rowHeight).stroke();
+
+        days.forEach((day, index) => {
+            const formattedDay = format(day, 'yyyy-MM-dd');
+            const total_present_record = total_present[formattedDay] || 0; // Default to 0 if no presents on that day
+
+            doc.font("Helvetica").fontSize(fontSize).text(`${total_present_record}`, dayColumnLeft + (index * columnWidth), verticalCenter, { width: columnWidth, align: 'center' });
+            doc.rect(dayColumnLeft + (index * columnWidth), tableTop, columnWidth, rowHeight).stroke();
+        });
+
         // Finalize the PDF and end the stream
         doc.end();
+
+
 
         // Wait for the file to be fully written
         fileStream.on('finish', () => {
