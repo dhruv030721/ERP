@@ -21,6 +21,7 @@ interface TimeTable {
 interface AcademicState {
     Timetable: TimeTable | null;
     StudentData: StudentData | null;
+    SubjectData: SubjectData | null;
 }
 
 interface StudentData {
@@ -29,9 +30,17 @@ interface StudentData {
     mobileNumber: string,
 }
 
+interface SubjectData {
+    code: number,
+    name: string,
+    branch: string,
+    sem: number
+}
+
 const initialState: AcademicState = {
     Timetable: null,
-    StudentData: null
+    StudentData: null,
+    SubjectData: null
 };
 
 const academicSlice = createSlice({
@@ -44,13 +53,16 @@ const academicSlice = createSlice({
 
         setStudentData: (state, action: PayloadAction<StudentData>) => {
             state.StudentData = action.payload;
-            console.log(state.StudentData);
         },
 
+        setSubjectData: (state, action: PayloadAction<SubjectData>) => {
+            state.SubjectData = action.payload;
+
+        }
     },
 });
 
-export const { setTimetable, setStudentData } = academicSlice.actions;
+export const { setTimetable, setStudentData, setSubjectData } = academicSlice.actions;
 
 
 export default academicSlice.reducer;

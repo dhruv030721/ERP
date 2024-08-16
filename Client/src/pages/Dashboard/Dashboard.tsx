@@ -1,14 +1,9 @@
-// import React, { useEffect } from 'react';
 import SwitchItem from '../Switchboard/SwitchItem';
 import { FaUserCheck } from "react-icons/fa";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { TbReportSearch } from "react-icons/tb";
 import { FaUserEdit } from "react-icons/fa";
-// import { academicServices } from '../../services';
-// import toast from "react-hot-toast";
-// import { useDispatch, useSelector } from 'react-redux';
-// import { setTimetable } from "../../slices/academics"
-// import { RootState } from '../../slices/store';
+import { ImBook } from "react-icons/im";
 
 interface DashboardItem {
   name: string;
@@ -37,6 +32,11 @@ const Dashboard: React.FC = () => {
       name: "Attendance Report",
       route: "/academics/attendance_report",
       icon: <TbReportSearch size={25} />
+    },
+    {
+      name: "Subject",
+      route: "/academics/add_subject",
+      icon: <ImBook size={25} />
     }
   ];
 

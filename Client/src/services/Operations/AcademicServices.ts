@@ -69,36 +69,43 @@ class AcademicsServices {
     return response;
   }
 
+  async GetSubjects() {
+    const response = await apiConnector({
+      method: 'GET',
+      url: AcademicsEndpoints.GET_SUBJECTS
+    })
+
+
+    return response;
+  }
+
 
   async DownloadReport(subjectCode: number, sem: number, month: number) {
-    try {
-      const response: any = apiConnector({
-        method: 'GET',
-        url: `${AcademicsEndpoints.DOWNLOAD_REPORT + '/' + subjectCode + '/' + sem + '/' + month}`
-      })
+    const response: any = await apiConnector({
+      method: 'GET',
+      url: `${AcademicsEndpoints.DOWNLOAD_REPORT + '/' + subjectCode + '/' + sem + '/' + month}`
+    })
 
-      // Create a new Blob object using the response data
-      const blob = new Blob([response.data], { type: 'application/pdf' });
+    // Create a new Blob object using the response data
+    const blob = new Blob([response.data], { type: 'application/pdf' });
 
-      // Create a link element
-      const link = document.createElement('a');
+    // Create a link element
+    const link = document.createElement('a');
 
-      // Set the download attribute with a filename
-      link.href = window.URL.createObjectURL(blob);
-      link.download = 'MonthlyAttendanceReport.pdf';
+    // Set the download attribute with a filename
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'MonthlyAttendanceReport.pdf';
 
-      // Append the link to the body
-      document.body.appendChild(link);
+    // Append the link to the body
+    document.body.appendChild(link);
 
-      // Programmatically click the link to trigger the download
-      link.click();
+    // Programmatically click the link to trigger the download
+    link.click();
 
-      // Clean up and remove the link
-      link.parentNode.removeChild(link);
-    } catch (error) {
-      console.error('Error downloading the report:', error);
-    }
-  };
+    // Clean up and remove the link
+    link.parentNode?.removeChild(link);
+
+  }
 }
 
 const academicServices = new AcademicsServices();

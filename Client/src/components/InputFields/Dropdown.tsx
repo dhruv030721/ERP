@@ -4,13 +4,14 @@ import MenuItem from '@mui/material/MenuItem';
 
 interface DropdownProps {
     label: string;
-    defaultValue: string;
+    defaultValue: string | undefined;
     helperText: string;
     List: { value: string; label: string }[];
     dropdownHandler: (value: string) => void;
+    width?: string | number; 
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, List, dropdownHandler }) => {
+const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, List, dropdownHandler, width }) => {
     return (
         <div>
             <TextField
@@ -20,9 +21,9 @@ const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, Li
                 defaultValue={defaultValue}
                 helperText={helperText}
                 onChange={(event) => {
-                    console.log(event.target.value);
                     dropdownHandler(event.target.value);
                 }}
+                sx={{ width: width || 'auto' }} 
             >
                 {List.map((option) => (
                     <MenuItem key={option.value} value={option.value}>

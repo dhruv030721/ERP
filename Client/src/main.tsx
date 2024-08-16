@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import App from './App'
-import { Dashboard, Switchboard, Login, AddStudent, MarkAttendance, AttendanceReport } from './pages'
+import { Dashboard, Switchboard, Login, AddStudent, MarkAttendance, AttendanceReport, Subject } from './pages'
 import { AdminProtected } from './components'
 import { Toaster } from 'react-hot-toast'
 import store from './slices/store'
@@ -18,6 +18,7 @@ const router = createBrowserRouter(
         <Route path='mark_attendance' element={<MarkAttendance />} />
         <Route path='add_student' element={<AddStudent />} />
         <Route path='attendance_report' element={<AttendanceReport />} />
+        <Route path='add_subject' element={<Subject />} />
       </Route>
       <Route path='/login' element={<Login />} />
     </>

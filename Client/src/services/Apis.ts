@@ -13,5 +13,6 @@ export const AcademicsEndpoints = {
     GET_TIMETABLE: BASE_URL + "academics/get_timetable/",
     GET_STUDENTS: BASE_URL + "academics/get_students",
     MARK_ATTENDANCE: BASE_URL + "academics/mark_attendance",
-    DOWNLOAD_REPORT: BASE_URL + "academics/attendance_report"
+    DOWNLOAD_REPORT: BASE_URL + "academics/attendance_report",
+    GET_SUBJECTS: BASE_URL + "academics/get_subjects"
 }

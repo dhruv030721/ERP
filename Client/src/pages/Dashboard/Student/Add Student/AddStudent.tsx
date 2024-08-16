@@ -7,7 +7,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import axios from "axios";
 import toast from "react-hot-toast";
 import { academicServices } from '../../../../services';
-import { toastDesign } from '../../../../components/GlobalVariables';
+import { toastDesign, } from '../../../../components/GlobalVariables';
 
 interface AddStudentProps { }
 
@@ -16,7 +16,8 @@ const AddStudent: React.FC<AddStudentProps> = () => {
   const [excelFileName, setExcelFileName] = useState("*Upload file in excel format");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
+  const handleChange = (_event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
+    console.log(newAlignment);
     setAlignment(newAlignment);
   };
 
@@ -90,14 +91,14 @@ const AddStudent: React.FC<AddStudentProps> = () => {
             <h1 className='font-bold text-red-600'>{excelFileName}</h1>
             <div>
 
-              <MuiButton btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} />
+              <MuiButton color='rgb(23,37,84)' btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} />
             </div>
           </div>
 
           <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
             <h1 className='font-bold'>Download Sample Excel</h1>
             <div>
-              <MuiButton btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} />
+              <MuiButton color='rgb(23,37,84)' btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} />
             </div>
           </div>
         </div>

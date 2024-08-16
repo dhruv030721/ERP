@@ -3,7 +3,7 @@ import path from "path";
 
 
 
-export const DownloadImportStudentSampleFile = async(req: Request, res: Response) => {
+export const DownloadAddSubjectSampleFile = async(req: Request, res: Response) => {
     try {
         const file = path.join(__dirname, "../../../DemoFiles/student_data.xlsx");
         res.download(file);
