@@ -1,7 +1,6 @@
-import { Endpoints } from "../Apis";
+import { AuthEndpoints } from "../Apis";
 import { apiConnector } from "../ApiConnector";
 
-const { LOGIN_API } = Endpoints;
 
 interface LoginData {
     username: string;
@@ -17,9 +16,20 @@ class AuthServices {
 
         const response = await apiConnector({
             method: "POST",
-            url: LOGIN_API,
+            url: AuthEndpoints.LOGIN_API,
             bodyData: body,
         });
+
+        return response;
+    }
+
+
+    async register(data: any) {
+        const response = await apiConnector({
+            method: 'POST',
+            url: AuthEndpoints.REGISTER,
+            bodyData: data
+        })
 
         return response;
     }

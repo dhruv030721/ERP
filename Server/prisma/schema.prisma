@@ -26,35 +26,35 @@ enum LectureType {
 
 model Student {
   enrollmentNo       String       @id @unique
-  name               String
+  first_name         String
+  middle_name        String
+  last_name          String
   mobileNumber       String
   dob                DateTime?
   password           String
+  gender             String
   email              String
   parentMobileNumber String
   address            String?
   branch             Branch       @relation(fields: [branchId], references: [id])
   sem                Int
-  // Optional: If a student can enroll in multiple subjects
   Attendance         Attendance[]
   branchId           String
 }
 
 model Faculty {
   employeeId       String          @id @unique
-  name             String
+  first_name       String
+  middle_name      String
+  last_name        String
   mobileNumber     String
   dob              DateTime?
-  password         String
+  password         String?
+  gender           String
   email            String
-  address          String?
-  branch           Branch          @relation(fields: [branchId], references: [id])
-  sem              Int
-  // Optional: If a faculty can teach multiple subjects
   assignedSubjects AssignSubject[]
   TimeTable        TimeTable[]
   Attendance       Attendance[]
-  branchId         String
 }
 
 model Subject {
@@ -112,7 +112,6 @@ model Branch {
   id            String          @id
   name          String
   Student       Student[]
-  Faculty       Faculty[]
   AssignSubject AssignSubject[]
   TimeTable     TimeTable[]
   Subject       Subject[]

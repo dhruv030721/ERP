@@ -1,7 +1,10 @@
 import Header from "./Header/Header";
-import AdminProtected from "./AuthLayouts/AdminAuthLayout";
+import AuthProtected from "./AuthLayouts/AuthLayout";
 import Dropdown from "./InputFields/Dropdown";
 import Input from "./InputFields/Input";
 import Loading from "./Loading";
+import MuiButton from "./MuiButton";
+import BasicDatePicker from "./InputFields/DatePicker";
 
-export { Header, AdminProtected, Dropdown, Input, Loading };
+
+export { Header, AuthProtected, Dropdown, Input, Loading, MuiButton, BasicDatePicker };

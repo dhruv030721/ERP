@@ -26,13 +26,16 @@ export const ImportStudentdata = async (req: Request, res: Response) => {
                 await prisma.student.create({
                     data: {
                         enrollmentNo: data['Sheet1'][i]['A'].toString(),
-                        name: data['Sheet1'][i]['B'],
-                        mobileNumber: data['Sheet1'][i]['C'].toString(),
-                        email: data['Sheet1'][i]['D'],
-                        parentMobileNumber: data['Sheet1'][i]['E'].toString(),
-                        branch: data['Sheet1'][i]['F'],
-                        sem: data['Sheet1'][i]['G'],
-                        password: data['Sheet1'][i]['H'].toString(),
+                        first_name: data['Sheet1'][i]['B'].toString(),
+                        middle_name: data['Sheet1'][i]['C'].toString(),
+                        last_name: data['Sheet1'][i]['D'].toString(),
+                        mobileNumber: data['Sheet1'][i]['E'].toString(),
+                        email: data['Sheet1'][i]['F'],
+                        parentMobileNumber: data['Sheet1'][i]['G'].toString(),
+                        branch: data['Sheet1'][i]['H'],
+                        sem: data['Sheet1'][i]['I'],
+                        password: data['Sheet1'][i]['J'].toString(),
+                        gender: data['Sheet1'][i]['K'].toString(),
                         // dob: dob
                     }
                 })

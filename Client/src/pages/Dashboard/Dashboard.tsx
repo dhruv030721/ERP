@@ -4,6 +4,9 @@ import { BsPersonFillAdd } from "react-icons/bs";
 import { TbReportSearch } from "react-icons/tb";
 import { FaUserEdit } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
+import { FaBusinessTime } from "react-icons/fa";
+import { FaBookOpenReader } from "react-icons/fa6";
+
 
 interface DashboardItem {
   name: string;
@@ -16,11 +19,16 @@ const Dashboard: React.FC = () => {
     {
       name: "Mark Attendance",
       route: "/academics/mark_attendance",
-      icon: <FaUserCheck size={25}/>
+      icon: <FaUserCheck size={25} />
     },
     {
       name: "Add Student",
       route: "/academics/add_student",
+      icon: <BsPersonFillAdd size={25} />
+    },
+    {
+      name: "Add Faculty",
+      route: "/academics/add_faculty",
       icon: <BsPersonFillAdd size={25} />
     },
     {
@@ -37,6 +45,16 @@ const Dashboard: React.FC = () => {
       name: "Subject",
       route: "/academics/add_subject",
       icon: <ImBook size={25} />
+    },
+    {
+      name: "Assign Subject",
+      route: "/academics/add_subject",
+      icon: <FaBookOpenReader size={25} />
+    },
+    {
+      name: "Manage TimeTable",
+      route: "/academics/add_subject",
+      icon: <FaBusinessTime size={25} />
     }
   ];
 

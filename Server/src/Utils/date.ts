@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 
 export const GetFormattedDate = (date: string): string => {
-    const [day, month, year] = date.split('-').map(Number);
+    const [year, month, day] = date.split('-').map(Number);
     const dob = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
     return dob.toISOString();
 }

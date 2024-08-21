@@ -1,8 +1,9 @@
 const BASE_URL = "/api/";
 
 // Authentication Endpoints
-export const Endpoints = {
+export const AuthEndpoints = {
     LOGIN_API: BASE_URL + "auth/login",
+    REGISTER : BASE_URL + "auth/register"
 }
 
 
@@ -15,4 +16,10 @@ export const AcademicsEndpoints = {
     MARK_ATTENDANCE: BASE_URL + "academics/mark_attendance",
     DOWNLOAD_REPORT: BASE_URL + "academics/attendance_report",
     GET_SUBJECTS: BASE_URL + "academics/get_subjects"
+}
+
+
+// Faculty Services Endpoints
+export const FacultyServicesEndpoints = {
+
 }

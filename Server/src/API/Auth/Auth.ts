@@ -24,29 +24,22 @@ const register = async (req: Request, res: Response) => {
     try {
         const {
             employeeId,
-            name,
             mobileNumber,
-            password,
-            confirmPassword,
             email,
-            branch,
-            sem,
+            first_name,
+            middle_name,
+            last_name,
+            gender,
             dob
         } = req.body;
 
-        if (!name || !employeeId || !password || !email || !mobileNumber || !branch || !sem || !dob) {
+        if (!first_name || !middle_name || !last_name || !employeeId || !email || !mobileNumber || !dob) {
             return res.status(400).json({
                 success: false,
                 message: "Provide all required fields",
             });
         }
 
-        if (password !== confirmPassword) {
-            return res.status(400).json({
-                success: false,
-                message: "Password and confirm password do not match",
-            });
-        }
 
         const user = await prisma.faculty.findFirst({
             where: {
@@ -62,19 +55,16 @@ const register = async (req: Request, res: Response) => {
             });
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(password, salt);
-
         // TODO : Send verification email
         await prisma.faculty.create({
             data: {
                 employeeId: employeeId,
-                name,
+                first_name,
+                middle_name,
+                last_name,
+                gender,
                 mobileNumber: mobileNumber,
-                password: hashPassword,
                 email,
-                branch,
-                sem: Number(sem),
                 dob: GetFormattedDate(dob)
             },
         });
@@ -116,15 +106,22 @@ const login = async (req: Request, res: Response) => {
                 message: "User not found!",
             });
         }
+        if (!user.password) {
+            return res.status(401).json({
+                success: false,
+                message: "User not registered!"
+            })
+        }
         const isMatch = await bcrypt.compare(password, user.password);
 
+        const username = user.first_name + " " + user.last_name;
 
         if (isMatch) {
 
             const payload = {
                 employeeId: user.employeeId,
                 email: user.email,
-                name: user.name,
+                name: username,
                 mobileNumber: user.mobileNumber
             };
 
@@ -136,7 +133,7 @@ const login = async (req: Request, res: Response) => {
                 data: {
                     employeeId: user.employeeId,
                     email: user.email,
-                    name: user.name,
+                    name: username,
                     mobileNumber: user.mobileNumber,
                 },
             });
@@ -154,5 +151,9 @@ const login = async (req: Request, res: Response) => {
         });
     }
 };
+
+const UpdatePassword = async (req: Request, res: Response) => {
+
+}
 
 export default { register, login };

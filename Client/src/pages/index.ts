@@ -6,5 +6,6 @@ import AddStudent from "./Dashboard/Student/Add Student/AddStudent.jsx";
 import MarkAttendance from './Dashboard/Mark Attendance/MarkAttendance.tsx';
 import AttendanceReport from "./Dashboard/Attendance Report/AttendanceReport.tsx";
 import Subject from "./Dashboard/Subject/Subject.tsx"
+import AddFaculty from "./Dashboard/Faculty/AddFaculty.tsx";
 
-export { Switchboard, Dashboard, Admission, Login, AddStudent, MarkAttendance, AttendanceReport, Subject };
+export { Switchboard, Dashboard, Admission, Login, AddStudent, MarkAttendance, AttendanceReport, Subject, AddFaculty };
