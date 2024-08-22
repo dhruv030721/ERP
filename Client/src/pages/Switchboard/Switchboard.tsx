@@ -97,7 +97,7 @@ const Switchboard: React.FC = () => {
               <img src={User} alt="User Image" className='rounded-full object-fill border-2' />
             </div>
             <h4 className='text-blue-950 text-xl font-bold tracking-wide font-oswald'>Welcome, {userData?.name || "Guest"}</h4>
-            <h4 className='text-blue-950 text-l font-bold tracking-wide font-oswald'>Employee ID: {userData?.employeeId || "N/A"}</h4>
+            {/* <h4 className='text-blue-950 text-l font-bold tracking-wide font-oswald'>Employee ID: {userData?.employeeId || "N/A"}</h4> */}
             <p className='text-black text-2xl font-oswald'>Coordinator Engineering</p>
             <div className='flex space-x-10'>
               <Link to="/settings"><IoSettings size={30} /></Link>

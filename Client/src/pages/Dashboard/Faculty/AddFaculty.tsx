@@ -63,7 +63,6 @@ const AddFaculty = () => {
 
             <div className="">
                 <form className="grid grid-cols-3 gap-20 items-center" onSubmit={handleSubmit(AddFacultyHandler)}>
-                    <Input label="Employee Id" type="text" {...register("employeeId")} />
                     <Input label="First name" type="text" {...register("first_name")} />
                     <Input label="Middle name" type="text" {...register("middle_name")} />
                     <Input label="Last name" type="text" {...register("last_name")} />

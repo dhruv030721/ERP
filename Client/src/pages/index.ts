@@ -7,5 +7,6 @@ import MarkAttendance from './Dashboard/Mark Attendance/MarkAttendance.tsx';
 import AttendanceReport from "./Dashboard/Attendance Report/AttendanceReport.tsx";
 import Subject from "./Dashboard/Subject/Subject.tsx"
 import AddFaculty from "./Dashboard/Faculty/AddFaculty.tsx";
+import GeneratePassword from "./GeneratePassword.tsx";
 
-export { Switchboard, Dashboard, Admission, Login, AddStudent, MarkAttendance, AttendanceReport, Subject, AddFaculty };
+export { Switchboard, Dashboard, Admission, Login, AddStudent, MarkAttendance, AttendanceReport, Subject, AddFaculty, GeneratePassword };

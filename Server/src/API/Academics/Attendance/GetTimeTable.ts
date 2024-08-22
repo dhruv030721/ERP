@@ -4,9 +4,9 @@ import logger from "../../../Utils/logger";
 
 export const GetTimeTable = async (req: Request, res: Response) => {
     try {
-        const { employeeId } = req.params;
+        const { mobileNumber } = req.params;
 
-        if (!employeeId) {
+        if (!mobileNumber) {
             return res.status(403).json({
                 success: false,
                 message: "Please provide valid details!"
@@ -15,7 +15,7 @@ export const GetTimeTable = async (req: Request, res: Response) => {
 
         const timeTable = await prisma.timeTable.findMany({
             where: {
-                facultyId: employeeId
+                facultyId: mobileNumber
             }
         });
 
@@ -24,7 +24,7 @@ export const GetTimeTable = async (req: Request, res: Response) => {
         for (const item of timeTable) {
             const day = item.day;
             const subject: any = await prisma.subject.findFirst({ where: { code: parseInt(item.subject) } });
-            const faculty: any = await prisma.faculty.findFirst({ where: { employeeId: item.facultyId } });
+            const faculty: any = await prisma.faculty.findFirst({ where: { mobileNumber: item.facultyId } });
 
             if (!groupedByDay[day]) {
                 groupedByDay[day] = [];

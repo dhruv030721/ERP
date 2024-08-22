@@ -43,11 +43,10 @@ model Student {
 }
 
 model Faculty {
-  employeeId       String          @id @unique
   first_name       String
   middle_name      String
   last_name        String
-  mobileNumber     String
+  mobileNumber     String          @id @unique
   dob              DateTime?
   password         String?
   gender           String
@@ -74,7 +73,7 @@ model AssignSubject {
   subjectCode Int
   subject     Subject  @relation(fields: [subjectCode], references: [code])
   facultyId   String?
-  faculty     Faculty? @relation(fields: [facultyId], references: [employeeId])
+  faculty     Faculty? @relation(fields: [facultyId], references: [mobileNumber])
   branchId    String
 }
 
@@ -83,7 +82,7 @@ model TimeTable {
   time        String
   day         String
   subject     String
-  faculty     Faculty     @relation(fields: [facultyId], references: [employeeId])
+  faculty     Faculty     @relation(fields: [facultyId], references: [mobileNumber])
   facultyId   String
   lectureType LectureType
   batch       String?
@@ -103,7 +102,7 @@ model Attendance {
   subjectCode         Int
   enrollmentNo        Student        @relation(fields: [studentEnrollmentNo], references: [enrollmentNo])
   studentEnrollmentNo String
-  facultyId           Faculty        @relation(fields: [facultyEmployeeId], references: [employeeId])
+  facultyId           Faculty        @relation(fields: [facultyEmployeeId], references: [mobileNumber])
   facultyEmployeeId   String
   status              AttendanceType
 }

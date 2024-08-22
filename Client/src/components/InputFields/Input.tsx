@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         return (
             <div className={`flex flex-col font-bold ${divclassName}`}>
                 <label htmlFor={id} className={`${labelclassName}`}>{label}</label>
-                <input type={type} id={id} className={`outline-none border-b-2 border-gray-300 text-sm mt-3 ${className}`} ref={ref} {...props} />
+                <input type={type} id={id} className={`outline-none border-b-2 border-gray-300 text-sm mt-3 w-full ${className}`} ref={ref} {...props} />
             </div>
         );
     }

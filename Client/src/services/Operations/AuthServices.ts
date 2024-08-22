@@ -1,16 +1,10 @@
 import { AuthEndpoints } from "../Apis";
 import { apiConnector } from "../ApiConnector";
 
-
-interface LoginData {
-    username: string;
-    password: string;
-}
-
 class AuthServices {
-    async login(data: LoginData) {
+    async login(data: any) {
         const body = {
-            employeeId: data.username,
+            mobileNumber: data.username,
             password: data.password,
         };
 
@@ -30,6 +24,18 @@ class AuthServices {
             url: AuthEndpoints.REGISTER,
             bodyData: data
         })
+
+        return response;
+    }
+
+    async generate_password(data: any) {
+        const response = await apiConnector({
+            method: "POST",
+            url: AuthEndpoints.GENERATE_PASSWORD,
+            bodyData: data
+        })
+
+        console.log(response)
 
         return response;
     }

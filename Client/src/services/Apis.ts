@@ -3,7 +3,8 @@ const BASE_URL = "/api/";
 // Authentication Endpoints
 export const AuthEndpoints = {
     LOGIN_API: BASE_URL + "auth/login",
-    REGISTER : BASE_URL + "auth/register"
+    REGISTER: BASE_URL + "auth/register",
+    GENERATE_PASSWORD: BASE_URL + "auth/generate_password"
 }
 
 
