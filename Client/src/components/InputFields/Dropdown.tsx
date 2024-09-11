@@ -6,9 +6,9 @@ interface DropdownProps {
     label: string;
     defaultValue: string | undefined;
     helperText: string;
-    List: { value: string; label: string }[];
+    List: { value: string; label: string }[] | null;
     dropdownHandler: (value: string) => void;
-    width?: string | number; 
+    width?: string | number;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, List, dropdownHandler, width }) => {
@@ -23,13 +23,14 @@ const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, Li
                 onChange={(event) => {
                     dropdownHandler(event.target.value);
                 }}
-                sx={{ width: width || 'auto' }} 
+                sx={{ width: width || 'auto' }}
+                color='warning'
             >
-                {List.map((option) => (
+                {List != null ? (List.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
                         {option.label}
                     </MenuItem>
-                ))}
+                ))) : null}
             </TextField>
         </div>
     );

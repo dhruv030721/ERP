@@ -2,6 +2,7 @@ import { Router } from 'express'
 import AddStudent from './Student/index'
 import Subject from "./Subject/index"
 import Attedance from "./Attendance/index"
+import Faculty from "./Faculty/index"
 import upload from '../../Utils/upload';
 
 const router = Router();
@@ -10,6 +11,8 @@ const router = Router();
 router.get('/get_subjects', Attedance.GetSubjects);
 router.get('/get_timetable/:employeeId', Attedance.GetTimeTable);
 router.post('/get_students', Attedance.GetStudents)
+router.get('/get_faculty', Faculty.GetFaculty)
+router.get('/get_branch', Attedance.GetBranch)
 
 
 // <- Data Importing using Excel ->

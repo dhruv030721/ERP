@@ -20,9 +20,11 @@ interface MuiButtonProps {
   eventHandler: (event: any) => void;
   color: string,
   fileInputRef?: React.RefObject<HTMLInputElement>;
+  width?: string;
+  height?: string;
 }
 
-function MuiButton({ btnName, type, icon, eventHandler, color, fileInputRef }: MuiButtonProps) {
+function MuiButton({ btnName, type, icon, eventHandler, color, fileInputRef, width, height }: MuiButtonProps) {
   const handleClick = () => {
     if (type === 'file' && fileInputRef?.current) {
       fileInputRef.current.click();
@@ -38,7 +40,7 @@ function MuiButton({ btnName, type, icon, eventHandler, color, fileInputRef }: M
         variant="contained"
         tabIndex={-1}
         startIcon={icon}
-        sx={{ backgroundColor: color, '&:hover': { backgroundColor: color } }}
+        sx={{ backgroundColor: color, '&:hover': { backgroundColor: color }, width: width, height: height }}
         onClick={handleClick}
       >
         {btnName}

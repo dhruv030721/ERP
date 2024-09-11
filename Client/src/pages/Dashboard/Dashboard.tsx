@@ -48,12 +48,12 @@ const Dashboard: React.FC = () => {
     },
     {
       name: "Assign Subject",
-      route: "/academics/add_subject",
+      route: "/academics/assign_subject",
       icon: <FaBookOpenReader size={25} />
     },
     {
       name: "Manage TimeTable",
-      route: "/academics/add_subject",
+      route: "/academics/manage_timetable",
       icon: <FaBusinessTime size={25} />
     }
   ];

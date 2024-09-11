@@ -45,7 +45,7 @@ const AttendanceReport = () => {
         { value: "9", label: "9" },
         { value: "10", label: "10" },
         { value: "11", label: "11" },
-        { value: "21", label: "12" },
+        { value: "12", label: "12" },
     ]
 
     const handleSemChange = (value: string) => {
@@ -96,6 +96,7 @@ const AttendanceReport = () => {
     return (
         <div className="p-10">
             <h1 className="font-semibold text-lg">Download Attendance Report:</h1>
+            <p className="text-gray-500">Here, you can download attendance report for subject based on month</p>
             <div className="flex gap-x-10 items-center">
                 <div className="mt-10">
                     <Dropdown
@@ -114,7 +115,7 @@ const AttendanceReport = () => {
                         defaultValue={selectedSubject?.value}
                         helperText="Subject"
                         dropdownHandler={handleSubjectChange}
-                        width={200}
+                        width={400}
                     />
                 </div>
                 <div className="mt-10">
@@ -127,8 +128,8 @@ const AttendanceReport = () => {
                         width={200}
                     />
                 </div>
-                <div className="mt-10">
-                    <MuiButton btnName="Download Report" color="rgb(23,37,84)" type="submit" icon={<IoCloudDownload />} eventHandler={DownloadHandler} />
+                <div className="mt-5">
+                    <MuiButton btnName="Download Report" color="rgb(23,37,84)" type="submit" icon={<IoCloudDownload />} eventHandler={DownloadHandler} width="220px" height="50px" />
                 </div>
 
             </div>

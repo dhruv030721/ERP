@@ -1,7 +1,7 @@
 import { apiConnector } from '../ApiConnector';
 import { AcademicsEndpoints } from '../Apis';
 
-const { IMPORT_STUDENT_DATA, GET_TIMETABLE, GET_STUDENTS, MARK_ATTENDANCE } = AcademicsEndpoints;
+const { IMPORT_STUDENT_DATA, GET_TIMETABLE, GET_STUDENTS, MARK_ATTENDANCE, IMPORT_SUBJECT_DATA } = AcademicsEndpoints;
 
 class AcademicsServices {
   async ImportStudentData(file: File) {
@@ -11,6 +11,22 @@ class AcademicsServices {
     const response = await apiConnector({
       method: 'POST',
       url: IMPORT_STUDENT_DATA,
+      bodyData: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    return response;
+  }
+
+  async ImportSubjectData(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await apiConnector({
+      method: 'POST',
+      url: IMPORT_SUBJECT_DATA,
       bodyData: formData,
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -105,6 +121,25 @@ class AcademicsServices {
     // Clean up and remove the link
     link.parentNode?.removeChild(link);
 
+  }
+
+
+  async GetFaculty() {
+    const response: any = await apiConnector({
+      method: "GET",
+      url: `${AcademicsEndpoints.GET_FACULTY}`
+    })
+
+    return response;
+  }
+
+  async GetBranch() {
+    const response: any = await apiConnector({
+      method: "GET",
+      url: `${AcademicsEndpoints.GET_BRANCH}`
+    })
+
+    return response;
   }
 }
 

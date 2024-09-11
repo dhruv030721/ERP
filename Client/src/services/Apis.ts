@@ -12,11 +12,14 @@ export const AuthEndpoints = {
 export const AcademicsEndpoints = {
     DOWNLOAD_SAMPLE_EXCEL: BASE_URL + "academics/Download_Import_Student_Sample_file",
     IMPORT_STUDENT_DATA: BASE_URL + "academics/ImportStudentdata",
+    IMPORT_SUBJECT_DATA: BASE_URL + "academics/ImportSubjectdata",
     GET_TIMETABLE: BASE_URL + "academics/get_timetable/",
     GET_STUDENTS: BASE_URL + "academics/get_students",
     MARK_ATTENDANCE: BASE_URL + "academics/mark_attendance",
     DOWNLOAD_REPORT: BASE_URL + "academics/attendance_report",
-    GET_SUBJECTS: BASE_URL + "academics/get_subjects"
+    GET_SUBJECTS: BASE_URL + "academics/get_subjects",
+    GET_FACULTY: BASE_URL + "academics/get_faculty",
+    GET_BRANCH: BASE_URL + "academics/get_branch",
 }
 
 

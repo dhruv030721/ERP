@@ -52,7 +52,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'import_student_demo_excel.xlsx');
+      link.setAttribute('download', 'student_data.xlsx');
       document.body.appendChild(link);
       link.click();
       toast.success("File Download Successfully", toastDesign);

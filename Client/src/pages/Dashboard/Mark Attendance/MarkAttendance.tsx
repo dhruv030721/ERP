@@ -114,7 +114,7 @@ const MarkAttendance = () => {
                 dispatch(setTimetable(response.data.data));
                 setLoading(false);
             } catch (error) {
-                toast.error("Failed to fetch timetable.");
+                toast.error("Failed to fetch timetable.", toastDesign);
             }
         })();
     }, [dispatch, employeeId]);

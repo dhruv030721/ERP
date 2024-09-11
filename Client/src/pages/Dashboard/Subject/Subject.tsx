@@ -27,7 +27,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
             setExcelFileName(event.target.files[0].name);
             const file = event.target.files[0];
             await toast.promise(
-                academicServices.ImportStudentData(file),
+                academicServices.ImportSubjectData(file),
                 {
                     loading: "Data Uploading.....",
                     success: (response) => {
@@ -52,7 +52,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'import_student_demo_excel.xlsx');
+            link.setAttribute('download', 'add_subject.xlsx');
             document.body.appendChild(link);
             link.click();
             toast.success("File Download Successfully", toastDesign);
@@ -63,9 +63,12 @@ const AddStudent: React.FC<AddStudentProps> = () => {
 
     return (
         <div className='mx-10 flex flex-col'>
-            <div className='flex space-x-5 p-10'>
-                <BsPersonFillAdd size={30} />
-                <h1 className='font-bold text-xl'>Subject</h1>
+            <div className='flex-col space-y-2 px-2 py-7'>
+                <div className='flex gap-x-5'>
+                    <BsPersonFillAdd size={30} />
+                    <h1 className='font-bold text-xl'>Subject</h1>
+                </div>
+                <p className='text-gray-500'>Here, you can add subject by using excel format sheet.</p>
             </div>
 
             <div className='mt-5'>
@@ -87,14 +90,14 @@ const AddStudent: React.FC<AddStudentProps> = () => {
                         <h1 className='font-bold text-red-600'>{excelFileName}</h1>
                         <div>
 
-                            <MuiButton color='rgb(23,37,84)' btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} />
+                            <MuiButton color='rgb(23,37,84)' btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} width='200px' height='50px' />
                         </div>
                     </div>
 
                     <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
                         <h1 className='font-bold'>Download Sample Excel</h1>
                         <div>
-                            <MuiButton color='rgb(23,37,84)' btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} />
+                            <MuiButton color='rgb(23,37,84)' btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} width='300px' height="50px" />
                         </div>
                     </div>
                 </div>
