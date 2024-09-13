@@ -2,7 +2,8 @@ import { useEffect, useState } from "react"
 import { Dropdown, Loading, MuiButton } from "../../../components"
 import { academicServices } from "../../../services";
 import { IoPersonAdd } from "react-icons/io5";
-
+import toast from "react-hot-toast";
+import { toastDesign } from "../../../components/GlobalVariables";
 
 interface Option {
     value: string;
@@ -22,10 +23,10 @@ const AssignSubject = () => {
         { value: "8", label: "8" },
     ];
 
-    const [selectedFaculty, setFaculty] = useState<string | undefined>(undefined);
-    const [selectedSem, setSem] = useState<string | undefined>(undefined)
-    const [selectedSubject, setSubject] = useState<string | undefined>(undefined);
-    const [selectedBranch, setBranch] = useState<string | undefined>(undefined);
+    const [selectedFaculty, setFaculty] = useState<string>('');
+    const [selectedSem, setSem] = useState<string>('')
+    const [selectedSubject, setSubject] = useState<string>('');
+    const [selectedBranch, setBranch] = useState<string>('');
     const [loading, setLoading] = useState<boolean | null>(true);
     const [facultiesData, setFacultiesData] = useState<Option[]>([]);
     const [branchData, setBranchData] = useState<Option[]>([]);
@@ -55,12 +56,35 @@ const AssignSubject = () => {
         setBranch(value);
     }
 
+    const AssignHandler = async () => {
+        const assign_subject_data: object = {
+            'branch': selectedBranch,
+            'sem': Number(selectedSem),
+            'subject': selectedSubject,
+            'faculty': selectedFaculty
+        }
+        await toast.promise(
+            academicServices.AssignSubject(assign_subject_data),
+            {
+                loading: "Processing...",
+                success: (response) => {
+                    console.log(response)
+                    return `${response.data.message}`
+                },
+                error: (error) => {
+                    console.log(error)
+                    return `${error.response.data.message}`
+                }
+            },
+            toastDesign
+        )
+    }
+
     useEffect(() => {
         (async () => {
             let facultyData = await academicServices.GetFaculty();
             let branchData = await academicServices.GetBranch();
             const subjectData = await academicServices.GetSubjects();
-            console.log(subjectData.data.data);
 
 
             facultyData = facultyData.data.data.map((data: any) => {
@@ -90,7 +114,7 @@ const AssignSubject = () => {
 
     return (
         <div className="p-10">
-            <h1 className="font-bold text-2xl">Assign Faculty</h1>
+            <h1 className="font-bold text-2xl">Assign Subject</h1>
             <p className="text-gray-500">Assign faculty members to subjects for the semester.</p>
             <div className="flex mt-10 gap-x-10">
                 <div>
@@ -134,7 +158,7 @@ const AssignSubject = () => {
                     />
                 </div>
                 <div className="">
-                    <MuiButton btnName="Assign" color="rgb(23,37,84)" type="submit" icon={<IoPersonAdd />} eventHandler={() => { }} width="150px" height="50px" />
+                    <MuiButton btnName="Assign" color="rgb(23,37,84)" type="submit" icon={<IoPersonAdd />} eventHandler={AssignHandler} width="150px" height="50px" />
                 </div>
             </div>
         </div>

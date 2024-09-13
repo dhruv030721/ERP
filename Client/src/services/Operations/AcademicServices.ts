@@ -123,7 +123,6 @@ class AcademicsServices {
 
   }
 
-
   async GetFaculty() {
     const response: any = await apiConnector({
       method: "GET",
@@ -137,6 +136,16 @@ class AcademicsServices {
     const response: any = await apiConnector({
       method: "GET",
       url: `${AcademicsEndpoints.GET_BRANCH}`
+    })
+
+    return response;
+  }
+
+  async AssignSubject(AssignSubjectData: any) {
+    const response = await apiConnector({
+      method: "POST",
+      url: `${AcademicsEndpoints.ASSIGN_SUBJECT}`,
+      bodyData: AssignSubjectData
     })
 
     return response;

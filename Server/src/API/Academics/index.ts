@@ -27,6 +27,7 @@ router.get("/Download_Add_Subject_Sample_file", Subject.DownloadAddSubjectSample
 // router.post("/AddStudent", AddStudent.AddNewStudent);
 router.post('/mark_attendance', Attedance.MarkAttendance);
 router.get('/attendance_report/:subject_code/:sem/:month', Attedance.MonthlyAttendanceReport);
+router.post('/assign_subject', Subject.AssignSubject)
 
 
 // <- Faculty Routes ->

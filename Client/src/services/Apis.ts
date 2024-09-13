@@ -20,6 +20,7 @@ export const AcademicsEndpoints = {
     GET_SUBJECTS: BASE_URL + "academics/get_subjects",
     GET_FACULTY: BASE_URL + "academics/get_faculty",
     GET_BRANCH: BASE_URL + "academics/get_branch",
+    ASSIGN_SUBJECT: BASE_URL + "academics/assign_subject"
 }
 
 

@@ -33,7 +33,7 @@ const AddFaculty = () => {
     ]
     const [dob, setDob] = useState(null);
     const [gender, setGender] = useState('male');
-    const { register, handleSubmit } = useForm<RegisterFacultyInputs>();
+    const { register, handleSubmit, reset } = useForm<RegisterFacultyInputs>();
 
     const AddFacultyHandler: SubmitHandler<RegisterFacultyInputs> = async (data) => {
         data.dob = dob;
@@ -44,6 +44,7 @@ const AddFaculty = () => {
             {
                 loading: "Processing.........",
                 success: (response) => {
+                    reset();
                     return `${response.data.message}`
                 },
                 error: (error) => {

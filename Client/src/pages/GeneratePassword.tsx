@@ -16,7 +16,7 @@ interface GeneratePasswordForm {
 
 const GeneratePassword = () => {
 
-    const { register, handleSubmit } = useForm<GeneratePasswordForm>();
+    const { register, handleSubmit, reset } = useForm<GeneratePasswordForm>();
     const { token }: any = useParams();
 
     // Decode and check the expiration
@@ -24,7 +24,7 @@ const GeneratePassword = () => {
 
     try {
         const decodedToken: any = jwtDecode(token);
-        const currentTime = Math.floor(Date.now() / 1000); 
+        const currentTime = Math.floor(Date.now() / 1000);
 
         if (decodedToken.exp < currentTime) {
             throw new Error("Token is expired");
@@ -46,6 +46,7 @@ const GeneratePassword = () => {
             {
                 loading: "Processing.........",
                 success: (response) => {
+                    reset();
                     return `${response.data.message}`;
                 },
                 error: (error) => {
@@ -62,9 +63,9 @@ const GeneratePassword = () => {
             <div className="flex flex-col justify-center items-center h-96 gap-y-10">
                 <h1 className="text-2xl">Generate Password</h1>
                 <form className="flex flex-col justify-center items-center gap-y-5" onSubmit={handleSubmit(GeneratePasswordHandler)}>
-                    <Input label="Password" className="w-80" {...register("password")} type="password" />
-                    <Input label="Confirm Password" className="w-80" {...register("confirmpassword")} type="password" />
-                    <button className="bg-orange-500 rounded-md py-3 text-white font-bold w-80" type="submit">Generate Password</button>
+                    <Input label="Password" className="w-96" {...register("password")} type="password" />
+                    <Input label="Confirm Password" className="w-96" {...register("confirmpassword")} type="password" />
+                    <button className="bg-orange-500 rounded-md py-3 text-white font-bold w-96" type="submit">Generate Password</button>
                 </form>
             </div>
         </div>
