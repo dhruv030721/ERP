@@ -62,9 +62,9 @@ const GeneratePassword = () => {
             <Header />
             <div className="flex flex-col justify-center items-center h-96 gap-y-10">
                 <h1 className="text-2xl">Generate Password</h1>
-                <form className="flex flex-col justify-center items-center gap-y-5" onSubmit={handleSubmit(GeneratePasswordHandler)}>
-                    <Input label="Password" className="w-96" {...register("password")} type="password" />
-                    <Input label="Confirm Password" className="w-96" {...register("confirmpassword")} type="password" />
+                <form className="flex flex-col justify-center items-center gap-y-5 w-96" onSubmit={handleSubmit(GeneratePasswordHandler)}>
+                    <Input label="Password" divclassName="w-full" {...register("password")} type="password" />
+                    <Input label="Confirm Password" divclassName="w-full"   {...register("confirmpassword")} type="password" />
                     <button className="bg-orange-500 rounded-md py-3 text-white font-bold w-96" type="submit">Generate Password</button>
                 </form>
             </div>

@@ -13,7 +13,7 @@ router.get('/get_timetable/:employeeId', Attedance.GetTimeTable);
 router.post('/get_students', Attedance.GetStudents)
 router.get('/get_faculty', Faculty.GetFaculty)
 router.get('/get_branch', Attedance.GetBranch)
-
+router.post('/get_assign_subject', Subject.GetAssignSubject)
 
 // <- Data Importing using Excel ->
 router.post("/ImportStudentdata", upload.single('file'), AddStudent.ImportStudentdata);

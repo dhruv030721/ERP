@@ -13,6 +13,13 @@ export const AssignSubject = async (req: Request, res: Response) => {
 
         const { branch, faculty, sem, subject }: assignSubject = req.body;
 
+        if (!branch || !faculty || !sem || !subject) {
+            return res.status(400).json({
+                success: false,
+                message: "Validation failed, Provide all fields!"
+            })
+        }
+
         const AssignSubjectToFaculty = await prisma.assignSubject.findFirst({
             where: {
                 branchId: branch,

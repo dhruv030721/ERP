@@ -143,7 +143,9 @@ const login = async (req: Request, res: Response) => {
 
             const token = await generateToken(payload);
 
-            return res.cookie("erp_auth_token", token).status(200).json({
+            return res.cookie("erp_auth_token", token, {
+                maxAge: 24 * 60 * 60 * 1000
+            }).status(200).json({
                 success: true,
                 message: "Login Successful",
                 data: {
