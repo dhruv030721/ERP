@@ -96,7 +96,7 @@ const AttendanceReport = () => {
     return (
         <div className="p-10">
             <h1 className="font-semibold text-lg">Download Attendance Report:</h1>
-            <p className="text-gray-500">Here, you can download attendance report for subject based on month</p>
+            <p className="text-gray-500">"Here, you can download attendance report for subject based on month"</p>
             <div className="flex gap-x-10 items-center">
                 <div className="mt-10">
                     <Dropdown

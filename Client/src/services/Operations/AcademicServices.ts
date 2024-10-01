@@ -150,6 +150,26 @@ class AcademicsServices {
 
     return response;
   }
+
+  async GetAssignSubject(facultyId: any) {
+    const response = await apiConnector({
+      method: "GET",
+      url: `${AcademicsEndpoints.GET_ASSIGN_SUBJECT}/${facultyId}`,
+    })
+
+    return response;
+  }
+
+  async DownloadTimeTableSampleFile() {
+    const response = await apiConnector({
+      method: "GET",
+      url: `${AcademicsEndpoints.DOWNLOAD_TIMETABLE_SAMPLE_FILE}`
+    })
+
+    return response;
+  }
+
+
 }
 
 const academicServices = new AcademicsServices();

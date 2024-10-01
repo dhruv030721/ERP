@@ -67,14 +67,15 @@ model Subject {
 }
 
 model AssignSubject {
-  id          String   @id @default(uuid())
+  id          String      @id @default(uuid())
   sem         Int
-  branch      Branch   @relation(fields: [branchId], references: [id])
+  branch      Branch      @relation(fields: [branchId], references: [id])
   subjectCode Int
-  subject     Subject  @relation(fields: [subjectCode], references: [code])
+  subject     Subject     @relation(fields: [subjectCode], references: [code])
   facultyId   String?
-  faculty     Faculty? @relation(fields: [facultyId], references: [mobileNumber])
+  faculty     Faculty?    @relation(fields: [facultyId], references: [mobileNumber])
   branchId    String
+  type        LectureType @default(LECTURE)
 }
 
 model TimeTable {

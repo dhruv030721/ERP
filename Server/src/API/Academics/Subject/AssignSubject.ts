@@ -5,13 +5,14 @@ interface assignSubject {
     sem: number,
     branch: string,
     subject: number,
-    faculty: string
+    faculty: string,
+    type: any
 }
 
 export const AssignSubject = async (req: Request, res: Response) => {
     try {
 
-        const { branch, faculty, sem, subject }: assignSubject = req.body;
+        const { branch, faculty, sem, subject, type }: assignSubject = req.body;
 
         if (!branch || !faculty || !sem || !subject) {
             return res.status(400).json({
@@ -41,6 +42,7 @@ export const AssignSubject = async (req: Request, res: Response) => {
                 branchId: branch,
                 subjectCode: subject,
                 facultyId: faculty,
+                type
             }
         })
 

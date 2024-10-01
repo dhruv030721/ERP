@@ -17,7 +17,6 @@ const AddStudent: React.FC<AddStudentProps> = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (_event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
-    console.log(newAlignment);
     setAlignment(newAlignment);
   };
 

@@ -3,7 +3,7 @@ import prisma from "../../../Utils/prisma";
 
 export const GetAssignSubject = async (req: Request, res: Response) => {
     try {
-        const { facultyId } = req.body;
+        const { facultyId } = req.params;
 
         if (!facultyId) {
             return res.status(400).json({
@@ -17,7 +17,7 @@ export const GetAssignSubject = async (req: Request, res: Response) => {
                 facultyId
             },
             include: {
-                subject: true
+                subject: true,
             }
         })
 

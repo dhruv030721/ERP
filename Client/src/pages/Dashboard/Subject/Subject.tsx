@@ -68,7 +68,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
                     <BsPersonFillAdd size={30} />
                     <h1 className='font-bold text-xl'>Subject</h1>
                 </div>
-                <p className='text-gray-500'>Here, you can add subject by using excel format sheet.</p>
+                <p className='text-gray-500'>"Here, you can add subject by using excel format sheet."</p>
             </div>
 
             <div className='mt-5'>
@@ -89,7 +89,6 @@ const AddStudent: React.FC<AddStudentProps> = () => {
                     <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
                         <h1 className='font-bold text-red-600'>{excelFileName}</h1>
                         <div>
-
                             <MuiButton color='rgb(23,37,84)' btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} width='200px' height='50px' />
                         </div>
                     </div>

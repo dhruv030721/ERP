@@ -4,6 +4,7 @@ import Subject from "./Subject/index"
 import Attedance from "./Attendance/index"
 import Faculty from "./Faculty/index"
 import upload from '../../Utils/upload';
+import Timetable from "./TimeTable/index"
 
 const router = Router();
 
@@ -13,7 +14,7 @@ router.get('/get_timetable/:employeeId', Attedance.GetTimeTable);
 router.post('/get_students', Attedance.GetStudents)
 router.get('/get_faculty', Faculty.GetFaculty)
 router.get('/get_branch', Attedance.GetBranch)
-router.post('/get_assign_subject', Subject.GetAssignSubject)
+router.get('/get_assign_subject/:facultyId', Subject.GetAssignSubject)
 
 // <- Data Importing using Excel ->
 router.post("/ImportStudentdata", upload.single('file'), AddStudent.ImportStudentdata);
@@ -22,6 +23,7 @@ router.post("/ImportSubjectdata", upload.single('file'), Subject.AddSubject);
 // <- Download sample file -> 
 router.get("/Download_Import_Student_Sample_file", AddStudent.DownloadImportStudentSampleFile);
 router.get("/Download_Add_Subject_Sample_file", Subject.DownloadAddSubjectSampleFile)
+router.get('/Download_Timetable_Sample_file', Timetable.DownloadTimeTableSampleFile);
 
 
 // router.post("/AddStudent", AddStudent.AddNewStudent);

@@ -6,6 +6,10 @@ import { FaUserEdit } from "react-icons/fa";
 import { ImBook } from "react-icons/im";
 import { FaBusinessTime } from "react-icons/fa";
 import { FaBookOpenReader } from "react-icons/fa6";
+import { useEffect } from 'react';
+import { academicServices } from '../../services';
+import { useDispatch } from 'react-redux';
+import { setBranchData } from '../../slices/academics';
 
 
 interface DashboardItem {
@@ -15,6 +19,9 @@ interface DashboardItem {
 }
 
 const Dashboard: React.FC = () => {
+
+  const dispatch = useDispatch();
+
   const DashboardItems: DashboardItem[] = [
     {
       name: "Mark Attendance",
@@ -57,6 +64,13 @@ const Dashboard: React.FC = () => {
       icon: <FaBusinessTime size={25} />
     }
   ];
+
+  useEffect(() => {
+    (async () => {
+      const response = await academicServices.GetBranch();
+      dispatch(setBranchData(response.data.data));
+    })();
+  }, [])
 
   return (
     <div className=''>
