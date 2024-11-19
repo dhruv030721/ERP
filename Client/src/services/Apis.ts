@@ -22,7 +22,8 @@ export const AcademicsEndpoints = {
     GET_BRANCH: BASE_URL + "academics/get_branch",
     ASSIGN_SUBJECT: BASE_URL + "academics/assign_subject",
     GET_ASSIGN_SUBJECT: BASE_URL + "academics/get_assign_subject",
-    DOWNLOAD_TIMETABLE_SAMPLE_FILE: BASE_URL + "academics/Download_Timetable_Sample_file"
+    DOWNLOAD_TIMETABLE_SAMPLE_FILE: BASE_URL + "academics/Download_Timetable_Sample_file",
+    SET_TIMETABLE: BASE_URL + "academics/set_timetable"
 }
 
 

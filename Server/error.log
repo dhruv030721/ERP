@@ -252,3 +252,89 @@ D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\Attendance\
 Argument `date` is missing.
 22-07-2024 01:46:26  error: date.setHours is not a function
 22-08-2024 19:00:46  error: Missing credentials for "PLAIN"
+06-10-2024 13:58:06  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 13:58:46  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 13:59:43  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 14:54:53  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 14:55:25  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 14:55:54  error: Cannot read properties of undefined (reading '1')
+06-10-2024 15:05:27  error: Cannot read properties of undefined (reading '0')
+06-10-2024 15:05:52  error: Cannot read properties of undefined (reading '0')
+06-10-2024 15:06:15  error: 
+Invalid `prisma.timeTable.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\TimeTable\SetTimeTable.ts:25:40
+
+  22 console.log(data);
+  23 
+  24 for (let i = 0; i < data['Timetable_6sem'].length; i++) {
+→ 25         await prisma.timeTable.create({
+               data: {
+                 time: "09:15 AM - 10:10 AM",
+                 day: "Monday",
+                 subject: 3160707,
+                          ~~~~~~~
+                 facultyId: 211240107066,
+                 lectureType: "09:15 AM - 10:10 AM",
+                 batch: "09:15 AM - 10:10 AM",
+                 branchId: "09:15 AM - 10:10 AM",
+                 sem: "09:15 AM - 10:10 AM"
+               }
+             })
+
+Argument `subject`: Invalid value provided. Expected String, provided Int.
+06-10-2024 15:06:37  error: 
+Invalid `prisma.timeTable.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\TimeTable\SetTimeTable.ts:25:40
+
+  22 console.log(data);
+  23 
+  24 for (let i = 0; i < data['Timetable_6sem'].length; i++) {
+→ 25         await prisma.timeTable.create({
+               data: {
+                 time: "09:15 AM - 10:10 AM",
+                 day: "Monday",
+                 subject: "3160707",
+                 facultyId: 211240107066,
+                            ~~~~~~~~~~~~
+                 lectureType: "09:15 AM - 10:10 AM",
+                 batch: "09:15 AM - 10:10 AM",
+                 branchId: "09:15 AM - 10:10 AM",
+                 sem: "09:15 AM - 10:10 AM"
+               }
+             })
+
+Argument `facultyId`: Invalid value provided. Expected String, provided Int.
+06-10-2024 15:06:52  error: 
+Invalid `prisma.timeTable.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\TimeTable\SetTimeTable.ts:25:40
+
+  22 console.log(data);
+  23 
+  24 for (let i = 0; i < data['Timetable_6sem'].length; i++) {
+→ 25         await prisma.timeTable.create({
+               data: {
+                 time: "09:15 AM - 10:10 AM",
+                 day: "Monday",
+                 subject: "3160707",
+                 facultyId: "211240107066",
+                 lectureType: "09:15 AM - 10:10 AM",
+                              ~~~~~~~~~~~~~~~~~~~~~
+                 batch: "09:15 AM - 10:10 AM",
+                 branchId: "09:15 AM - 10:10 AM",
+                 sem: "09:15 AM - 10:10 AM"
+               }
+             })
+
+Invalid value for argument `lectureType`. Expected LectureType.
+06-10-2024 15:07:29  error: Cannot read properties of undefined (reading 'toString')
+06-10-2024 15:07:48  error: Cannot read properties of undefined (reading 'toString')
+06-10-2024 15:08:36  error: Cannot read properties of undefined (reading 'toString')
+06-10-2024 15:09:46  error: 
+Invalid `prisma.timeTable.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\TimeTable\SetTimeTable.ts:25:36
+
+  22 console.log(data);
+  23 
+  24 for (let i = 0; i < data['Timetable_6sem'].length; i++) {
+→ 25     await prisma.timeTable.create(
+Foreign key constraint failed on the field: `TimeTable_branchId_fkey (index)`

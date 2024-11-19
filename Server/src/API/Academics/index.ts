@@ -19,6 +19,7 @@ router.get('/get_assign_subject/:facultyId', Subject.GetAssignSubject)
 // <- Data Importing using Excel ->
 router.post("/ImportStudentdata", upload.single('file'), AddStudent.ImportStudentdata);
 router.post("/ImportSubjectdata", upload.single('file'), Subject.AddSubject);
+router.post("/set_timetable", upload.single('file'), Timetable.SetTimeTable);
 
 // <- Download sample file -> 
 router.get("/Download_Import_Student_Sample_file", AddStudent.DownloadImportStudentSampleFile);

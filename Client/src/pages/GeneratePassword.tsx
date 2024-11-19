@@ -33,8 +33,12 @@ const GeneratePassword = () => {
         mobileNumber = decodedToken.mobileNumber;
 
     } catch (error) {
-        toast.error("Invalid or expired token");
-        return null;
+        toast.error("Invalid or expired token", toastDesign);
+        return (
+            <div className="h-screen flex justify-center items-center">
+                <h1 className="font-poppins text-center text-4xl">Link Expired!</h1>
+            </div>
+        );
     }
 
     const GeneratePasswordHandler: SubmitHandler<GeneratePasswordForm> = async (data) => {

@@ -56,7 +56,7 @@ const ManageTimetable = () => {
             setExcelFileName(event.target.files[0].name);
             const file = event.target.files[0];
             await toast.promise(
-                academicServices.ImportSubjectData(file),
+                academicServices.SetTimetable(file),
                 {
                     loading: "Data Uploading.....",
                     success: (response) => {
@@ -69,7 +69,8 @@ const ManageTimetable = () => {
                         event.target.value = "";
                         return `${error.response.data.message}`
                     }
-                }
+                },
+                toastDesign
             );
         }
     }

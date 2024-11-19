@@ -1462,3 +1462,189 @@ Argument `date` is missing.
 01-10-2024 14:43:18  info: Database connected successfully
 01-10-2024 14:47:18  info: Server started successfully at 4000
 01-10-2024 14:47:18  info: Database connected successfully
+02-10-2024 09:28:18  info: Server started successfully at 4000
+02-10-2024 09:28:18  info: Database connected successfully
+02-10-2024 09:30:49  info: Server started successfully at 4000
+02-10-2024 09:30:49  info: Database connected successfully
+02-10-2024 09:31:25  info: Server started successfully at 4000
+02-10-2024 09:31:25  info: Database connected successfully
+02-10-2024 09:31:35  info: Server started successfully at 4000
+02-10-2024 09:31:36  info: Database connected successfully
+02-10-2024 09:31:47  info: Server started successfully at 4000
+02-10-2024 09:31:48  info: Database connected successfully
+02-10-2024 09:32:23  info: Server started successfully at 4000
+02-10-2024 09:32:23  info: Database connected successfully
+02-10-2024 09:32:34  info: Server started successfully at 4000
+02-10-2024 09:32:34  info: Database connected successfully
+02-10-2024 09:32:53  info: Server started successfully at 4000
+02-10-2024 09:32:53  info: Database connected successfully
+02-10-2024 09:33:04  info: Server started successfully at 4000
+02-10-2024 09:33:04  info: Database connected successfully
+02-10-2024 09:33:32  info: Server started successfully at 4000
+02-10-2024 09:33:32  info: Database connected successfully
+02-10-2024 09:33:39  info: Server started successfully at 4000
+02-10-2024 09:33:39  info: Database connected successfully
+02-10-2024 09:33:56  info: Server started successfully at 4000
+02-10-2024 09:33:56  info: Database connected successfully
+02-10-2024 09:34:20  info: Server started successfully at 4000
+02-10-2024 09:34:20  info: Database connected successfully
+02-10-2024 09:34:32  info: Server started successfully at 4000
+02-10-2024 09:34:32  info: Database connected successfully
+02-10-2024 09:34:47  info: Server started successfully at 4000
+02-10-2024 09:34:48  info: Database connected successfully
+02-10-2024 09:34:56  info: Server started successfully at 4000
+02-10-2024 09:34:56  info: Database connected successfully
+02-10-2024 09:35:30  info: Server started successfully at 4000
+02-10-2024 09:35:30  info: Database connected successfully
+02-10-2024 09:36:00  info: Server started successfully at 4000
+02-10-2024 09:36:00  info: Database connected successfully
+02-10-2024 09:36:26  info: Server started successfully at 4000
+02-10-2024 09:36:26  info: Database connected successfully
+02-10-2024 09:37:51  info: Server started successfully at 4000
+02-10-2024 09:37:51  info: Database connected successfully
+02-10-2024 09:42:50  info: Server started successfully at 4000
+02-10-2024 09:42:50  info: Database connected successfully
+02-10-2024 09:42:58  info: Server started successfully at 4000
+02-10-2024 09:42:58  info: Database connected successfully
+02-10-2024 09:43:11  info: Server started successfully at 4000
+02-10-2024 09:43:11  info: Database connected successfully
+02-10-2024 09:43:18  info: Server started successfully at 4000
+02-10-2024 09:43:18  info: Database connected successfully
+02-10-2024 09:43:26  info: Server started successfully at 4000
+02-10-2024 09:43:26  info: Database connected successfully
+04-10-2024 11:47:47  info: Server started successfully at 4000
+04-10-2024 11:47:47  info: Database connected successfully
+06-10-2024 08:55:36  info: Server started successfully at 4000
+06-10-2024 08:55:37  info: Database connected successfully
+06-10-2024 13:33:26  info: Server started successfully at 4000
+06-10-2024 13:33:27  info: Database connected successfully
+06-10-2024 13:54:47  info: Server started successfully at 4000
+06-10-2024 13:54:47  info: Database connected successfully
+06-10-2024 13:57:20  info: Server started successfully at 4000
+06-10-2024 13:57:20  info: Database connected successfully
+06-10-2024 13:57:35  info: Server started successfully at 4000
+06-10-2024 13:57:35  info: Database connected successfully
+06-10-2024 13:57:43  info: Server started successfully at 4000
+06-10-2024 13:57:43  info: Database connected successfully
+06-10-2024 13:57:59  info: Server started successfully at 4000
+06-10-2024 13:57:59  info: Database connected successfully
+06-10-2024 13:58:06  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 13:58:42  info: Server started successfully at 4000
+06-10-2024 13:58:42  info: Database connected successfully
+06-10-2024 13:58:46  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 13:59:02  info: Server started successfully at 4000
+06-10-2024 13:59:02  info: Database connected successfully
+06-10-2024 13:59:43  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 14:00:36  info: Server started successfully at 4000
+06-10-2024 14:00:37  info: Database connected successfully
+06-10-2024 14:54:53  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 14:55:19  info: Server started successfully at 4000
+06-10-2024 14:55:19  info: Database connected successfully
+06-10-2024 14:55:25  error: Cannot read properties of undefined (reading 'length')
+06-10-2024 14:55:50  info: Server started successfully at 4000
+06-10-2024 14:55:50  info: Database connected successfully
+06-10-2024 14:55:54  error: Cannot read properties of undefined (reading '1')
+06-10-2024 14:56:23  info: Server started successfully at 4000
+06-10-2024 14:56:23  info: Database connected successfully
+06-10-2024 15:05:27  error: Cannot read properties of undefined (reading '0')
+06-10-2024 15:05:49  info: Server started successfully at 4000
+06-10-2024 15:05:50  info: Database connected successfully
+06-10-2024 15:05:52  error: Cannot read properties of undefined (reading '0')
+06-10-2024 15:06:06  info: Server started successfully at 4000
+06-10-2024 15:06:06  info: Database connected successfully
+06-10-2024 15:06:11  info: Server started successfully at 4000
+06-10-2024 15:06:12  info: Database connected successfully
+06-10-2024 15:06:15  error: 
+Invalid `prisma.timeTable.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\TimeTable\SetTimeTable.ts:25:40
+
+  22 console.log(data);
+  23 
+  24 for (let i = 0; i < data['Timetable_6sem'].length; i++) {
+→ 25         await prisma.timeTable.create({
+               data: {
+                 time: "09:15 AM - 10:10 AM",
+                 day: "Monday",
+                 subject: 3160707,
+                          ~~~~~~~
+                 facultyId: 211240107066,
+                 lectureType: "09:15 AM - 10:10 AM",
+                 batch: "09:15 AM - 10:10 AM",
+                 branchId: "09:15 AM - 10:10 AM",
+                 sem: "09:15 AM - 10:10 AM"
+               }
+             })
+
+Argument `subject`: Invalid value provided. Expected String, provided Int.
+06-10-2024 15:06:34  info: Server started successfully at 4000
+06-10-2024 15:06:34  info: Database connected successfully
+06-10-2024 15:06:37  error: 
+Invalid `prisma.timeTable.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\TimeTable\SetTimeTable.ts:25:40
+
+  22 console.log(data);
+  23 
+  24 for (let i = 0; i < data['Timetable_6sem'].length; i++) {
+→ 25         await prisma.timeTable.create({
+               data: {
+                 time: "09:15 AM - 10:10 AM",
+                 day: "Monday",
+                 subject: "3160707",
+                 facultyId: 211240107066,
+                            ~~~~~~~~~~~~
+                 lectureType: "09:15 AM - 10:10 AM",
+                 batch: "09:15 AM - 10:10 AM",
+                 branchId: "09:15 AM - 10:10 AM",
+                 sem: "09:15 AM - 10:10 AM"
+               }
+             })
+
+Argument `facultyId`: Invalid value provided. Expected String, provided Int.
+06-10-2024 15:06:48  info: Server started successfully at 4000
+06-10-2024 15:06:48  info: Database connected successfully
+06-10-2024 15:06:52  error: 
+Invalid `prisma.timeTable.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\TimeTable\SetTimeTable.ts:25:40
+
+  22 console.log(data);
+  23 
+  24 for (let i = 0; i < data['Timetable_6sem'].length; i++) {
+→ 25         await prisma.timeTable.create({
+               data: {
+                 time: "09:15 AM - 10:10 AM",
+                 day: "Monday",
+                 subject: "3160707",
+                 facultyId: "211240107066",
+                 lectureType: "09:15 AM - 10:10 AM",
+                              ~~~~~~~~~~~~~~~~~~~~~
+                 batch: "09:15 AM - 10:10 AM",
+                 branchId: "09:15 AM - 10:10 AM",
+                 sem: "09:15 AM - 10:10 AM"
+               }
+             })
+
+Invalid value for argument `lectureType`. Expected LectureType.
+06-10-2024 15:07:27  info: Server started successfully at 4000
+06-10-2024 15:07:27  info: Database connected successfully
+06-10-2024 15:07:29  error: Cannot read properties of undefined (reading 'toString')
+06-10-2024 15:07:42  info: Server started successfully at 4000
+06-10-2024 15:07:43  info: Database connected successfully
+06-10-2024 15:07:48  error: Cannot read properties of undefined (reading 'toString')
+06-10-2024 15:08:33  info: Server started successfully at 4000
+06-10-2024 15:08:33  info: Database connected successfully
+06-10-2024 15:08:36  error: Cannot read properties of undefined (reading 'toString')
+06-10-2024 15:08:53  info: Server started successfully at 4000
+06-10-2024 15:08:53  info: Database connected successfully
+06-10-2024 15:09:41  info: Server started successfully at 4000
+06-10-2024 15:09:41  info: Database connected successfully
+06-10-2024 15:09:46  error: 
+Invalid `prisma.timeTable.create()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\TimeTable\SetTimeTable.ts:25:36
+
+  22 console.log(data);
+  23 
+  24 for (let i = 0; i < data['Timetable_6sem'].length; i++) {
+→ 25     await prisma.timeTable.create(
+Foreign key constraint failed on the field: `TimeTable_branchId_fkey (index)`
+06-10-2024 15:10:04  info: Server started successfully at 4000
+06-10-2024 15:10:05  info: Database connected successfully

@@ -1,3 +1,4 @@
+
 import { apiConnector } from '../ApiConnector';
 import { AcademicsEndpoints } from '../Apis';
 
@@ -164,6 +165,24 @@ class AcademicsServices {
     const response = await apiConnector({
       method: "GET",
       url: `${AcademicsEndpoints.DOWNLOAD_TIMETABLE_SAMPLE_FILE}`
+    })
+
+    return response;
+  }
+
+  async SetTimetable(file: File) {
+
+    const formData = new FormData();
+
+    formData.append('file', file);
+
+    const response = await apiConnector({
+      method: "POST",
+      url: `${AcademicsEndpoints.SET_TIMETABLE}`,
+      bodyData: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
 
     return response;
