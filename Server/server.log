@@ -1648,3 +1648,5 @@ D:\Programming\Web_Development_Projects\ERP\Server\src\API\Academics\TimeTable\S
 Foreign key constraint failed on the field: `TimeTable_branchId_fkey (index)`
 06-10-2024 15:10:04  info: Server started successfully at 4000
 06-10-2024 15:10:05  info: Database connected successfully
+19-11-2024 19:27:58  info: Server started successfully at 4000
+19-11-2024 19:27:59  info: Database connected successfully

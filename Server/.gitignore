@@ -3,3 +3,4 @@ node_modules
 .env
 db.sql
 prisma/migrations
+sever.log
