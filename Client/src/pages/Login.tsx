@@ -39,48 +39,91 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className='flex overflow-hidden'>
-            {/* media */}
-            <div className='w-[50%] h-[100vh] relative flex justify-center items-center'>
-                <div className='bg-orangeCircle w-[150%] h-[100%] object-fill opacity-55 bg-center bg-no-repeat z-0 absolute right-0 top-20'></div>
-                <div className='bg-blueCircle w-[100%] h-[100%] object-fill bg-no-repeat z-10 absolute left-40 bottom-20'></div>
-                <div className='w-[50%] h-[70%] bg-black-500 relative z-20 rounded-md bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-80 shadow-xl'>
-                    <img src={logo} alt="College Logo" className='w-72 z-30 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' />
+        <div className='flex flex-col md:flex-row min-h-screen overflow-hidden'>
+            {/* Media Section */}
+            <div className='w-full md:w-1/2 h-[30vh] md:h-screen relative flex justify-center items-center'>
+                {/* Background Circles - Hidden on small screens */}
+                <div className='hidden md:block bg-orangeCircle w-[150%] h-[100%] object-fill opacity-55 bg-center bg-no-repeat z-0 absolute right-0 top-20'></div>
+                <div className='hidden md:block bg-blueCircle w-[100%] h-[100%] object-fill bg-no-repeat z-10 absolute left-40 bottom-20'></div>
+                
+                {/* Logo Container */}
+                <div className='w-[80%] md:w-[50%] h-full md:h-[70%] relative z-20 rounded-md bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-80 shadow-xl flex justify-center items-center'>
+                    <img 
+                        src={logo} 
+                        alt="College Logo" 
+                        className='w-40 md:w-72 z-30'
+                    />
                 </div>
             </div>
-            {/* form */}
-            <div className='w-[50%] relative flex justify-center items-center font-poppins'>
-                <div className='w-[50%] h-[70%] bg-black-500 relative z-0 rounded-md bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-80'>
-                    <div className='flex flex-col z-10'>
-                        <h1 className='font-poppins text-4xl font-extrabold text-center'>Welcome to SPCE Admin</h1>
-                        <p className='font-poppins font-bold text-xl text-center mt-10'>Login Here</p>
-                        <form className='flex flex-col space-y-3 mt-10' onSubmit={handleSubmit(loginHandler)}>
-                            <Input
-                                label="Username"
-                                type="text"
-                                {...register("username", { required: true })}
-                            />
-                            {errors.username && <p className='text-red-500 font-bold'>*Please check the username</p>}
-                            <Input
-                                label="Password"
-                                type="password"
-                                {...register("password", {
-                                    required: true,
-                                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                                })}
-                            />
-                            {errors.password && <p className='text-red-500 font-bold'>*Please check the password</p>}
-                            <button className='bg-orange-400 rounded-md py-3 text-white font-bold hover:bg-orange-500' type="submit">Login &rarr;</button>
+
+            {/* Form Section */}
+            <div className='w-full md:w-1/2 p-4 md:p-0 flex justify-center items-center font-poppins'>
+                <div className='w-full max-w-md md:w-[70%] lg:w-[50%] p-6 md:p-8 bg-white md:bg-transparent rounded-lg md:rounded-md  md:bg-clip-padding md:backdrop-filter md:backdrop-blur-3xl md:bg-opacity-80'>
+                    <div className='flex flex-col z-10 space-y-6'>
+                        {/* Header */}
+                        <h1 className='font-poppins text-2xl md:text-3xl lg:text-4xl font-extrabold text-center'>
+                            Welcome to SPCE Admin
+                        </h1>
+                        <p className='font-poppins font-bold text-lg md:text-xl text-center'>
+                            Login Here
+                        </p>
+
+                        {/* Form */}
+                        <form 
+                            className='flex flex-col space-y-4' 
+                            onSubmit={handleSubmit(loginHandler)}
+                        >
+                            <div className='space-y-1'>
+                                <Input
+                                    label="Username"
+                                    type="text"
+                                    {...register("username", { required: true })}
+                                />
+                                {errors.username && 
+                                    <p className='text-red-500 text-sm font-bold'>
+                                        *Please check the username
+                                    </p>
+                                }
+                            </div>
+
+                            <div className='space-y-1'>
+                                <Input
+                                    label="Password"
+                                    type="password"
+                                    {...register("password", {
+                                        required: true,
+                                        pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                    })}
+                                />
+                                {errors.password && 
+                                    <p className='text-red-500 text-sm font-bold'>
+                                        *Please check the password
+                                    </p>
+                                }
+                            </div>
+
+                            <button 
+                                className='bg-orange-400 rounded-md py-2.5 md:py-3 text-white font-bold hover:bg-orange-500 transition-colors duration-200'
+                                type="submit"
+                            >
+                                Login &rarr;
+                            </button>
                         </form>
-                        <div className='flex justify-end'>
-                            <Link to="forgotpassword" className='text-orange-500 underline font-bold mt-5 text-md hover:scale-105 duration-100'>forgot password?</Link>
+
+                        {/* Footer Links */}
+                        <div className='flex justify-end pt-2'>
+                            <Link 
+                                to="forgotpassword" 
+                                className='text-orange-500 underline font-bold text-sm md:text-md hover:scale-105 duration-100'
+                            >
+                                forgot password?
+                            </Link>
                         </div>
-                        {/* <Link to="registeradmin" className='text-orange-500 font-bold text-center mt-5 hover:scale-105 duration-75'>Register new Admin?</Link> */}
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-//
+
 export default Login;

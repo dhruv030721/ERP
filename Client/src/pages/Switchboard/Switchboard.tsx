@@ -68,8 +68,8 @@ const Switchboard: React.FC = () => {
   const logoutHandler = () => {
     setLoading(true);
     dispatch(logout());
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    setLoading(false); // Make sure to reset loading state after logout
+    document.cookie = 'erp_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const Switchboard: React.FC = () => {
           dispatch(login(data));
         }
       }
-      setLoading(false); // Ensure loading state is reset after checking auth status
+      setLoading(false);
     })();
   }, [status, dispatch, decodedData]);
 
@@ -90,30 +90,44 @@ const Switchboard: React.FC = () => {
       {loading ? (
         <Loading message='' size={"max-w-[20%]"} />
       ) : (
-        <div className='h-[630px] flex items-center justify-around'>
-          <div className='p-8 flex flex-col items-center rounded-lg bg-transparent space-y-3 w-[30%] h-[95%]'>
-            {/* Profile */}
-            <div className='w-[35%]'>
+        <div className='p-4 md:h-[630px] flex flex-col md:flex-row md:items-center md:justify-around'>
+          {/* Profile Section */}
+          <div className='w-full md:w-[30%] p-4 md:p-8 flex flex-col items-center rounded-lg bg-transparent space-y-3 md:h-[95%]'>
+            <div className='w-[120px] md:w-[35%]'>
               <img src={User} alt="User Image" className='rounded-full object-fill border-2' />
             </div>
-            <h4 className='text-blue-950 text-xl font-bold tracking-wide font-oswald'>Welcome, {userData?.name || "Guest"}</h4>
-            {/* <h4 className='text-blue-950 text-l font-bold tracking-wide font-oswald'>Employee ID: {userData?.employeeId || "N/A"}</h4> */}
-            <p className='text-black text-2xl font-oswald'>Coordinator Engineering</p>
-            <div className='flex space-x-10'>
-              <Link to="/settings"><IoSettings size={30} /></Link>
-              <Link to="/" onClick={logoutHandler}><LuLogOut size={30} /></Link>
+            <h4 className='text-blue-950 text-lg md:text-xl font-bold tracking-wide font-oswald text-center'>
+              Welcome, {userData?.name || "Guest"}
+            </h4>
+            <p className='text-black text-xl md:text-2xl font-oswald text-center'>Coordinator Engineering</p>
+            <div className='flex space-x-6 md:space-x-10'>
+              <Link to="/settings"><IoSettings size={25} className="md:text-3xl" /></Link>
+              <Link to="/" onClick={logoutHandler}><LuLogOut size={25} className="md:text-3xl" /></Link>
             </div>
           </div>
-          <div className='bg-gradient-to-b from-white via-zinc-400 to-white h-[90%] w-[1px]'></div>
-          <div className='rounded-lg w-[60%] h-[95%] flex flex-col space-y-5 p-5 font-poppins'>
-            {/* Switchboard Option */}
-            <h2 className='font-black text-xl text-center'>Switchboard</h2>
-            {/* <div className='bg-gradient-to-r from-white via-zinc-400 to-white h-[1px]'></div> */}
-            <div className='px-10'>
-              <ul className='grid grid-cols-4 gap-x-10 gap-y-10 justify-center items-center'>
+
+          {/* Divider - Hidden on mobile */}
+          <div className='hidden md:block bg-gradient-to-b from-white via-zinc-400 to-white h-[90%] w-[1px]'></div>
+
+          {/* Mobile Divider */}
+          <div className='my-6 md:hidden bg-gradient-to-r from-white via-zinc-400 to-white h-[1px] w-full'></div>
+
+          {/* Switchboard Section */}
+          <div className='w-full md:w-[60%] rounded-lg md:h-[95%] flex flex-col space-y-5 p-2 md:p-5 font-poppins'>
+            <h2 className='font-black text-lg md:text-xl text-center'>Switchboard</h2>
+            <div className='px-2 md:px-10'>
+              <ul className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-x-10 md:gap-y-10 justify-center items-center'>
                 {SwitchList.map((item) => {
                   const Icon = item.icon;
-                  return <SwitchItem name={item.name} key={item.name} icon={<Icon size={30} className='drop-shadow-lg' />} url={item.url} bgcolor={item.bgcolor} />;
+                  return (
+                    <SwitchItem 
+                      name={item.name} 
+                      key={item.name} 
+                      icon={<Icon size={25} className='drop-shadow-lg md:text-3xl' />} 
+                      url={item.url} 
+                      bgcolor={item.bgcolor} 
+                    />
+                  );
                 })}
               </ul>
             </div>
