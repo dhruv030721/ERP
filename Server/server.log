@@ -1650,3 +1650,53 @@ Foreign key constraint failed on the field: `TimeTable_branchId_fkey (index)`
 06-10-2024 15:10:05  info: Database connected successfully
 19-11-2024 19:27:58  info: Server started successfully at 4000
 19-11-2024 19:27:59  info: Database connected successfully
+22-11-2024 17:06:31  info: Server started successfully at 4000
+22-11-2024 17:06:31  info: Database connected successfully
+22-11-2024 17:08:34  info: Server started successfully at 4000
+22-11-2024 17:08:35  info: Database connected successfully
+22-11-2024 17:08:54  error: 
+Invalid `.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Auth\Auth.ts:114:14
+
+  111 }
+  112 
+  113 const user = await prisma.faculty
+→ 114     .findFirst(
+The table `public.Faculty` does not exist in the current database.
+22-11-2024 17:09:48  info: Server started successfully at 4000
+22-11-2024 17:09:50  info: Database connected successfully
+22-11-2024 17:09:58  error: 
+Invalid `.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Auth\Auth.ts:114:14
+
+  111 }
+  112 
+  113 const user = await prisma.faculty
+→ 114     .findFirst(
+The table `public.Faculty` does not exist in the current database.
+22-11-2024 17:11:07  info: Server started successfully at 4000
+22-11-2024 17:11:09  info: Database connected successfully
+22-11-2024 17:11:13  error: 
+Invalid `.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Auth\Auth.ts:114:14
+
+  111 }
+  112 
+  113 const user = await prisma.faculty
+→ 114     .findFirst(
+The table `public.Faculty` does not exist in the current database.
+22-11-2024 17:11:39  error: 
+Invalid `.findFirst()` invocation in
+D:\Programming\Web_Development_Projects\ERP\Server\src\API\Auth\Auth.ts:114:14
+
+  111 }
+  112 
+  113 const user = await prisma.faculty
+→ 114     .findFirst(
+The table `public.Faculty` does not exist in the current database.
+22-11-2024 17:12:25  info: Server started successfully at 4000
+22-11-2024 17:12:25  info: Database connected successfully
+22-11-2024 17:24:31  info: Server started successfully at 4000
+22-11-2024 17:24:32  info: Database connected successfully
+22-11-2024 17:30:21  info: Server started successfully at 4000
+22-11-2024 17:30:21  info: Database connected successfully
