@@ -1,4 +1,4 @@
-const BASE_URL = "/api/";
+const BASE_URL = "http://37.27.81.8:4000/api/";
 
 // Authentication Endpoints
 export const AuthEndpoints = {
