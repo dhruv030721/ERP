@@ -23,7 +23,7 @@ const Login: React.FC = () => {
         await toast.promise(
             authServices.login(data),
             {
-                loading: "Processing.........",
+                loading: "Processing",
                 success: (response) => {
                     dispatch(login(response.data.data));
                     navigate('/');

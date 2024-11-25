@@ -1,4 +1,6 @@
 const BASE_URL = "http://37.27.81.8:4000/api/";
+// const BASE_URL = "http://localhost:4000/api/";
+
 
 // Authentication Endpoints
 export const AuthEndpoints = {

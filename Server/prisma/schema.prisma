@@ -14,9 +14,14 @@ datasource db {
 }
 
 enum AttendanceType {
-  Present
-  Absent
-  Leave
+  PRESENT
+  ABSENT
+  LEAVE
+}
+
+enum Gender {
+  MALE
+  FEMALE
 }
 
 enum LectureType {
@@ -24,22 +29,37 @@ enum LectureType {
   LAB
 }
 
+enum UserRole {
+  ADMIN
+  STUDENT
+  FACULTY
+}
+
+model User {
+  id      String    @id @default(uuid())
+  role    UserRole
+  user_id String    @unique
+  Student Student[] @relation("student_user")
+  Faculty Faculty[] @relation("faculty_user")
+}
+
 model Student {
-  enrollmentNo       String       @id @unique
+  enrollmentNo       String       @unique
   first_name         String
   middle_name        String
   last_name          String
-  mobileNumber       String
+  mobileNumber       String       @id
   dob                DateTime?
   password           String
   gender             String
   email              String
   parentMobileNumber String
   address            String?
-  branch             Branch       @relation(fields: [branchId], references: [id])
+  branch             Branch       @relation("student_branch", fields: [branchId], references: [id])
   sem                Int
-  Attendance         Attendance[]
+  Attendance         Attendance[] @relation("attendance_enrollmentno")
   branchId           String
+  User               User?        @relation("student_user", fields: [mobileNumber], references: [user_id])
 }
 
 model Faculty {
@@ -51,29 +71,30 @@ model Faculty {
   password         String?
   gender           String
   email            String
-  assignedSubjects AssignSubject[]
-  TimeTable        TimeTable[]
-  Attendance       Attendance[]
+  assignedSubjects AssignSubject[] @relation("assignsubject_faculty")
+  TimeTable        TimeTable[]     @relation("timetable_facultyid")
+  Attendance       Attendance[]    @relation("attendance_facultyid")
+  User             User?           @relation("faculty_user", fields: [mobileNumber], references: [user_id])
 }
 
 model Subject {
   code             Int             @id @unique
   name             String
-  branch           Branch          @relation(fields: [branchId], references: [id])
+  branch           Branch          @relation("subject_branch", fields: [branchId], references: [id])
   sem              Int
-  assignedSubjects AssignSubject[]
-  Attendance       Attendance[]
+  assignedSubjects AssignSubject[] @relation("assignsubject_subject")
+  Attendance       Attendance[]    @relation("attendance_subject")
   branchId         String
 }
 
 model AssignSubject {
   id          String      @id @default(uuid())
   sem         Int
-  branch      Branch      @relation(fields: [branchId], references: [id])
+  branch      Branch      @relation("assignsubject_branch", fields: [branchId], references: [id])
   subjectCode Int
-  subject     Subject     @relation(fields: [subjectCode], references: [code])
+  subject     Subject     @relation("assignsubject_subject", fields: [subjectCode], references: [code])
   facultyId   String?
-  faculty     Faculty?    @relation(fields: [facultyId], references: [mobileNumber])
+  faculty     Faculty?    @relation("assignsubject_faculty", fields: [facultyId], references: [mobileNumber])
   branchId    String
   type        LectureType @default(LECTURE)
 }
@@ -83,11 +104,11 @@ model TimeTable {
   time        String
   day         String
   subject     String
-  faculty     Faculty     @relation(fields: [facultyId], references: [mobileNumber])
+  faculty     Faculty     @relation("timetable_facultyid", fields: [facultyId], references: [mobileNumber])
   facultyId   String
   lectureType LectureType
   batch       String?
-  branch      Branch      @relation(fields: [branchId], references: [id])
+  branch      Branch      @relation("timetable_branch", fields: [branchId], references: [id])
   sem         Int
   branchId    String
 }
@@ -99,11 +120,11 @@ model Attendance {
   day                 String
   sem                 Int
   branch              String
-  subject             Subject        @relation(fields: [subjectCode], references: [code])
+  subject             Subject        @relation("attendance_subject", fields: [subjectCode], references: [code])
   subjectCode         Int
-  enrollmentNo        Student        @relation(fields: [studentEnrollmentNo], references: [enrollmentNo])
+  enrollmentNo        Student        @relation("attendance_enrollmentno", fields: [studentEnrollmentNo], references: [enrollmentNo])
   studentEnrollmentNo String
-  facultyId           Faculty        @relation(fields: [facultyEmployeeId], references: [mobileNumber])
+  facultyId           Faculty        @relation("attendance_facultyid", fields: [facultyEmployeeId], references: [mobileNumber])
   facultyEmployeeId   String
   status              AttendanceType
 }
@@ -111,8 +132,8 @@ model Attendance {
 model Branch {
   id            String          @id
   name          String
-  Student       Student[]
-  AssignSubject AssignSubject[]
-  TimeTable     TimeTable[]
-  Subject       Subject[]
+  Student       Student[]       @relation("student_branch")
+  AssignSubject AssignSubject[] @relation("assignsubject_branch")
+  TimeTable     TimeTable[]     @relation("timetable_branch")
+  Subject       Subject[]       @relation("subject_branch")
 }

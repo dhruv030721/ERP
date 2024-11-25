@@ -42,7 +42,7 @@ const AddFaculty = () => {
         await toast.promise(
             authServices.register(data),
             {
-                loading: "Processing.........",
+                loading: "Processing",
                 success: (response) => {
                     reset();
                     return `${response.data.message}`

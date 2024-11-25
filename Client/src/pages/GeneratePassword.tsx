@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { toastDesign } from "../components/GlobalVariables";
 import { useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"; // Fix the import (it's a default export)
+import { useNavigate } from "react-router-dom";
 
 interface GeneratePasswordForm {
     password: string;
@@ -18,7 +19,7 @@ const GeneratePassword = () => {
 
     const { register, handleSubmit, reset } = useForm<GeneratePasswordForm>();
     const { token }: any = useParams();
-
+    const navigate = useNavigate()
     // Decode and check the expiration
     let mobileNumber: string | undefined;
 
@@ -48,9 +49,10 @@ const GeneratePassword = () => {
         await toast.promise(
             authServices.generate_password(data),
             {
-                loading: "Processing.........",
+                loading: "Processing",
                 success: (response) => {
                     reset();
+                    navigate('/');
                     return `${response.data.message}`;
                 },
                 error: (error) => {
