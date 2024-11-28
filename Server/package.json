@@ -5,7 +5,8 @@
   "main": "src/app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec ts-node src/app.ts",
+    "start": "node dist/index.js",
+    "dev": "npx tsc",
     "prisma:generate": "prisma generate",
     "postinstall": "prisma generate"
   },
