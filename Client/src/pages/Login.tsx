@@ -61,10 +61,10 @@ const Login: React.FC = () => {
                 <div className='w-full max-w-md md:w-[70%] lg:w-[50%] p-6 md:p-8 bg-white md:bg-transparent rounded-lg md:rounded-md  md:bg-clip-padding md:backdrop-filter md:backdrop-blur-3xl md:bg-opacity-80'>
                     <div className='flex flex-col z-10 space-y-6'>
                         {/* Header */}
-                        <h1 className='font-poppins text-2xl md:text-3xl lg:text-4xl font-extrabold text-center'>
+                        <h1 className=' text-2xl md:text-3xl lg:text-4xl text-center'>
                             Welcome to SPCE Admin
                         </h1>
-                        <p className='font-poppins font-bold text-lg md:text-xl text-center'>
+                        <p className=' font-semibold text-lg md:text-xl text-center'>
                             Login Here
                         </p>
 
@@ -77,6 +77,7 @@ const Login: React.FC = () => {
                                 <Input
                                     label="Username"
                                     type="text"
+                                    placeholder='Enter your registered mobile number here'
                                     {...register("username", { required: true })}
                                 />
                                 {errors.username && 
@@ -85,11 +86,11 @@ const Login: React.FC = () => {
                                     </p>
                                 }
                             </div>
-
                             <div className='space-y-1'>
                                 <Input
                                     label="Password"
                                     type="password"
+                                    placeholder='Enter your password here'
                                     {...register("password", {
                                         required: true,
                                         pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,

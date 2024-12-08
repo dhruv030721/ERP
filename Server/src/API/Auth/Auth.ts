@@ -5,6 +5,7 @@ import jwt, { Secret } from "jsonwebtoken";
 import logger from "../../Utils/logger";
 import { GetFormattedDate } from "../../Utils/date";
 import SendMail from "./SendMail";
+import Faculty from "../Academics/Faculty";
 
 const prisma = new PrismaClient();
 
@@ -66,6 +67,14 @@ const register = async (req: Request, res: Response) => {
         const response: any = await SendMail({ to: email, title: mail_title, body })
 
         if (response) {
+            
+            await prisma.user.create({
+                data: {
+                    user_id: mobileNumber,
+                    role: "ADMIN"
+                }
+            });
+            
             await prisma.faculty.create({
                 data: {
                     first_name,
@@ -77,6 +86,7 @@ const register = async (req: Request, res: Response) => {
                     dob: GetFormattedDate(dob)
                 },
             });
+
             return res.status(200).json({
                 success: true,
                 message: "User created successfully",

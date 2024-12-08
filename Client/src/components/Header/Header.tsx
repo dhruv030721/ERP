@@ -10,7 +10,7 @@ function Header() {
     }
 
     return (
-        <div className='font-poppins text-black'>
+        <div className=' text-black'>
             {/* Main Navigation */}
             <nav className='flex flex-col sm:flex-row w-full min-h-[80px] sm:h-28 justify-center sm:justify-between items-center px-4 sm:px-6 md:px-10 py-4 sm:py-0 gap-4 sm:gap-0'>
                 {/* Logo Container for Mobile - This will contain both logos side by side */}
@@ -45,10 +45,10 @@ function Header() {
 
                 {/* Title Section */}
                 <div className='flex flex-col'>
-                    <h1 className='font-black tracking-normal text-xl sm:text-2xl md:text-3xl lg:text-4xl text-orange-700 text-center px-2'>
+                    <h1 className='font-poppins font-semibold tracking-normal text-xl sm:text-2xl md:text-3xl lg:text-4xl text-orange-700 text-center px-2'>
                         SARDAR PATEL COLLEGE OF ENGINEERING
                     </h1>
-                    <p className='font-lexend tracking-tighter text-sm sm:text-base md:text-lg lg:text-xl text-blue-950 text-center px-2'>
+                    <p className='font-karla font-semibold tracking-tighter text-sm sm:text-base md:text-lg lg:text-xl text-blue-950 text-center px-2'>
                         Managed By Tirupati Foundation Trust
                     </p>
                 </div>

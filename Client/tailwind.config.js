@@ -11,6 +11,7 @@ export default {
         oswald: ["Oswald"],
         bebas: ["Bebas Neue"],
         lexend: ["Lexend"],
+        DmSans: ["DM Sans"]
       },
       backgroundImage: () => ({
         blueCircle: "url('./assets/decoration/blue.png')",

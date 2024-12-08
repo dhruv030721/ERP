@@ -37,7 +37,7 @@ enum UserRole {
 
 model User {
   id      String    @id @default(uuid())
-  role    UserRole
+  role    UserRole 
   user_id String    @unique
   Student Student[] @relation("student_user")
   Faculty Faculty[] @relation("faculty_user")

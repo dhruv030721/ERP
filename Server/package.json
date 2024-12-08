@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
-    "dev": "npx tsc",
+    "dev-build": "npx tsc",
+    "dev": "nodemon --exec ts-node src/app.ts",
     "prisma:generate": "prisma generate",
     "postinstall": "prisma generate"
   },
@@ -49,7 +50,7 @@
     "@types/nodemailer": "^6.4.15",
     "@types/swagger-ui-express": "^4.1.6",
     "path": "^0.12.7",
-    "prisma": "^5.18.0",
+    "prisma": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.2"
   }
