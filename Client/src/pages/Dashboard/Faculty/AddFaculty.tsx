@@ -68,49 +68,44 @@ const AddFaculty = () => {
           className="grid grid-cols-3  gap-20 items-center"
           onSubmit={handleSubmit(AddFacultyHandler)}
         >
-          <div className = "gap-y-5 flex flex-col w-full">
-            <Controller
-              name="first_name"
-              control={control}
-              defaultValue=""
-              render={({ field }) => <MaterialInput label="First Name" {...field} />}
-            />
-            <Controller
-              name="middle_name"
-              control={control}
-              defaultValue=""
-              render={({ field }) => <MaterialInput label="Middle Name" {...field} />}
-            />
-            <Controller
-              name="last_name"
-              control={control}
-              defaultValue=""
-              render={({ field }) => <MaterialInput label="Last Name" {...field} />}
-            />
-            <Controller
-              name="mobileNumber"
-              control={control}
-              defaultValue=""
-              render={({ field }) => <MaterialInput label="Mobile Number" {...field} />}
-            />
-          </div>
-          <div className="h-full flex justify-center items-center"><div className="bg-gray-500 h-full w-[0.5px]"></div></div>
-          <div className="gap-y-5 flex flex-col w-full">
-            <Controller
-              name="email"
-              control={control}
-              defaultValue=""
-              render={({ field }) => <MaterialInput label="Email" {...field} />}
-            />
-            <BasicDatePicker label="Date of Birth" value={dob} setValue={setDob} />
-            <RowRadioButtonsGroup fields={fields} value={gender} setValue={setGender} />
-            <button
-              className="bg-blue-950 rounded-md py-3 text-white font-bold"
-              type="submit"
-            >
-              Add Faculty
-            </button>
-          </div>
+          <Controller
+            name="first_name"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <MaterialInput label="First Name" {...field} />}
+          />
+          <Controller
+            name="middle_name"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <MaterialInput label="Middle Name" {...field} />}
+          />
+          <Controller
+            name="last_name"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <MaterialInput label="Last Name" {...field} />}
+          />
+          <Controller
+            name="mobileNumber"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <MaterialInput label="Mobile Number" {...field} />}
+          />
+          <Controller
+            name="email"
+            control={control}
+            defaultValue=""
+            render={({ field }) => <MaterialInput label="Email" {...field} />}
+          />
+          <BasicDatePicker label="Date of Birth" value={dob} setValue={setDob} />
+          <RowRadioButtonsGroup fields={fields} value={gender} setValue={setGender} />
+          <button
+            className="bg-blue-950 rounded-md py-3 text-white font-bold"
+            type="submit"
+          >
+            Add Faculty
+          </button>
         </form>
       </div>
     </div>

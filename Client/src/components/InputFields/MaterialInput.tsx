@@ -8,9 +8,9 @@ const MaterialInput: React.FC<MaterialInputProps> = ({ label, ...props }) => {
   return (
     <TextField
       label={label}
-      variant="outlined" // Specify the variant explicitly
-      fullWidth // Optional: Ensures the input spans the full width
-      {...props} // Spread any additional valid props
+      variant="outlined" 
+      fullWidth 
+      {...props} 
     />
   );
 };
