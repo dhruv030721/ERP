@@ -4,3 +4,6 @@ node_modules
 db.sql
 prisma/migrations
 sever.log
+error.log
+server.key
+server.cert
