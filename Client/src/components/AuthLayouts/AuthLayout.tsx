@@ -60,10 +60,7 @@ export default function AuthProtected({
                 navigate("/");
             }
         }
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 1000);
+        setLoading(false);
     }, [authStatus, navigate, tokenAuth, authentication]);
 
     if (loading) {
