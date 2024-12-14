@@ -27,6 +27,11 @@ const Dashboard: React.FC = () => {
       icon: <FaUserCheck size={25} className="md:text-3xl" />
     },
     {
+      name: "Proxy Attendance",
+      route: "/academics/proxy_attendance",
+      icon: <FaUserCheck size={25} className="md:text-3xl" />
+    },
+    {
       name: "Add Student",
       route: "/academics/add_student",
       icon: <BsPersonFillAdd size={25} className="md:text-3xl" />

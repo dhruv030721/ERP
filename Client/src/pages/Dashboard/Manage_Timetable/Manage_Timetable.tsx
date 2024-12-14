@@ -28,7 +28,7 @@ const ManageTimetable = () => {
         { value: "8", label: "8" },
     ];
 
-    const [alignment, setAlignment] = useState('view-timetable');
+    const [alignment, setAlignment] = useState('upload-timetable');
     const [selectedBranch, setBranch] = useState('');
     const [selectedSem, setSem] = useState('');
     const [branchData, setBranchData] = useState<Option[]>([]);
@@ -119,8 +119,8 @@ const ManageTimetable = () => {
                     exclusive
                     onChange={handleChange}
                     aria-label="Platform">
-                    <ToggleButton value="view-timetable"><p className="normal-case font-bold font-poppins">View Timetable</p></ToggleButton>
                     <ToggleButton value="upload-timetable"><p className="normal-case font-bold font-poppins">Upload Timetable</p></ToggleButton>
+                    <ToggleButton value="view-timetable"><p className="normal-case font-bold font-poppins">View Timetable</p></ToggleButton>
                 </ToggleButtonGroup>
             </div>
 
