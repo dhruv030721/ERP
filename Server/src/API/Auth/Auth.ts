@@ -74,7 +74,7 @@ const register = async (req: Request, res: Response) => {
             await prisma.user.create({
                 data: {
                     user_id: mobileNumber,
-                    role: "ADMIN"
+                    role: "FACULTY"
                 }
             });
 

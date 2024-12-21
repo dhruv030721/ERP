@@ -7,3 +7,4 @@ sever.log
 error.log
 server.key
 server.cert
+dist
