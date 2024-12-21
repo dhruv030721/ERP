@@ -48,7 +48,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
 
     const DownloadSampleExcelHandler = async () => {
         try {
-            const response = await axios.get('/api/academics/Download_Add_Subject_Sample_file', { responseType: 'blob' });
+            const response = await axios.get('https://res.cloudinary.com/dij4vwbs6/raw/upload/v1734803119/ERP/Sample%20Files/add_subject', { responseType: 'blob' });
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;

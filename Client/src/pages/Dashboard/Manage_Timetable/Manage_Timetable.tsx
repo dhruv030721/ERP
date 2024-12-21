@@ -77,20 +77,34 @@ const ManageTimetable = () => {
 
     const DownloadSampleExcelHandler = async () => {
         try {
-            const response = await axios.get('/api/academics/Download_Timetable_Sample_file',
-                { responseType: 'blob' });
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            // Ensure the response type is set to 'blob' for binary data
+            const response = await axios.get('https://res.cloudinary.com/dij4vwbs6/raw/upload/v1734803628/ERP/Sample%20Files/timetable', {
+                responseType: 'blob', // Set response type to 'blob'
+            });
+
+            // Create a URL object for the downloaded file
+            const url = window.URL.createObjectURL(response.data);
+
+            // Create a temporary anchor element for download
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'timetable_sample_file.xlsx');
+            link.setAttribute('download', 'timetable_sample_file.xlsx'); // Set the download filename
             document.body.appendChild(link);
             link.click();
-            toast.success("File Download Successfully!", toastDesign)
+
+            // Clean up the temporary anchor
+            link.remove();
+
+            // Success toast notification
+            toast.success("File downloaded successfully!", toastDesign);
         } catch (error: any) {
-            console.log(error);
-            toast.error(error.response.data.data);
+            console.error("Error during file download:", error);
+
+            // Error toast notification
+            toast.error(error.response?.data?.message || "Failed to download file!");
         }
-    }
+    };
+
 
     useEffect(() => {
         (async () => {
