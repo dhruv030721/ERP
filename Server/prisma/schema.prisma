@@ -37,10 +37,17 @@ enum UserRole {
 
 model User {
   id      String    @id @default(uuid())
-  role    UserRole 
+  role    UserRole
   user_id String    @unique
   Student Student[] @relation("student_user")
   Faculty Faculty[] @relation("faculty_user")
+}
+
+model Token {
+  id      String    @id @unique
+  Student Student[] @relation("student_user_token")
+  Faculty Faculty[] @relation("faculty_user_token")
+  token   String
 }
 
 model Student {
@@ -60,6 +67,8 @@ model Student {
   Attendance         Attendance[] @relation("attendance_enrollmentno")
   branchId           String
   User               User?        @relation("student_user", fields: [mobileNumber], references: [user_id])
+  Token              Token?       @relation("student_user_token", fields: [tokenId], references: [id])
+  tokenId            String?
 }
 
 model Faculty {
@@ -75,6 +84,8 @@ model Faculty {
   TimeTable        TimeTable[]     @relation("timetable_facultyid")
   Attendance       Attendance[]    @relation("attendance_facultyid")
   User             User?           @relation("faculty_user", fields: [mobileNumber], references: [user_id])
+  tokenId          String?
+  Token            Token?          @relation("faculty_user_token", fields: [tokenId], references: [id])
 }
 
 model Subject {

@@ -65,9 +65,11 @@ const register = async (req: Request, res: Response) => {
 
         const mail_title = "Generate your ERP account password!";
         const templatePath = path.resolve(__dirname, "../../EmailTemplates/GeneratePassoword.ejs")
-        const body = await ejs.renderFile(templatePath, {user_token})
+        const body = await ejs.renderFile(templatePath, { user_token })
 
         const response: any = await SendMail({ to: email, title: mail_title, body })
+
+        console.log(GetFormattedDate(dob))
 
         if (response) {
 
@@ -77,6 +79,13 @@ const register = async (req: Request, res: Response) => {
                     role: "FACULTY"
                 }
             });
+
+            await prisma.token.create({
+                data: {
+                    id: mobileNumber,
+                    token: user_token
+                }
+            })
 
             await prisma.faculty.create({
                 data: {
@@ -155,8 +164,8 @@ const login = async (req: Request, res: Response) => {
 
             return res
                 .cookie("erp_auth_token", token, {
-                    httpOnly: true, // Prevents JavaScript from accessing the cookie
-                    secure: process.env.NODE_ENV === "production", // Ensures the cookie is only sent over HTTPS in production
+                    httpOnly: true,
+                    secure: true,
                     sameSite: "lax", // Adjusts cross-origin policy; use 'strict' or 'none' if needed
                     maxAge: 24 * 60 * 60 * 1000, // 1 day
                 })
@@ -233,6 +242,13 @@ const UpdatePassword = async (req: Request, res: Response) => {
             },
             data: {
                 password: hashedPassword
+            }
+        })
+
+        // To Expire Link
+        await prisma.token.delete({
+            where: {
+                id: mobileNumber
             }
         })
 
