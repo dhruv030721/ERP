@@ -47,11 +47,11 @@ const Login: React.FC = () => {
                 <div className='hidden md:block bg-blueCircle w-[100%] h-[100%] object-fill bg-no-repeat z-10 absolute left-40 bottom-20'></div>
 
                 {/* Logo Container */}
-                <div className='w-[80%] md:w-[50%] h-full md:h-[70%] relative z-20 rounded-md bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-80 shadow-xl flex justify-center items-center'>
+                <div className='w-[80%] md:w-[50%] h-full md:h-[70%] relative z-20 rounded-md bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-80 md:shadow-xl flex justify-center items-center'>
                     <img
                         src={logo}
                         alt="College Logo"
-                        className='w-40 md:w-72 z-30'
+                        className='w-24 md:w-72 z-30 '
                     />
                 </div>
             </div>
@@ -77,7 +77,7 @@ const Login: React.FC = () => {
                                 <Input
                                     label="Username"
                                     type="text"
-                                    placeholder='Enter your registered mobile number here'
+                                    placeholder='Enter your mobile number'
                                     {...register("username", { required: true })}
                                 />
                                 {errors.username &&
@@ -90,7 +90,7 @@ const Login: React.FC = () => {
                                 <Input
                                     label="Password"
                                     type="password"
-                                    placeholder='Enter your password here'
+                                    placeholder='Enter your password'
                                     {...register("password", {
                                         required: true,
                                         pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
