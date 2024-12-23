@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../../../Utils/prisma";
 import logger from "../../../Utils/logger";
-import { getISTDateAndTime, getUTCTime } from "../../../Utils/date";
+
 
 export const MarkAttendance = async (req: Request, res: Response) => {
     try {

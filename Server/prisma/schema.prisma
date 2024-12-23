@@ -35,6 +35,12 @@ enum UserRole {
   FACULTY
 }
 
+enum Batch {
+  A
+  B
+  C
+}
+
 model User {
   id      String    @id @default(uuid())
   role    UserRole
@@ -108,6 +114,7 @@ model AssignSubject {
   faculty     Faculty?    @relation("assignsubject_faculty", fields: [facultyId], references: [mobileNumber])
   branchId    String
   type        LectureType @default(LECTURE)
+  batch       Batch
 }
 
 model TimeTable {

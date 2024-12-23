@@ -18,8 +18,6 @@ export const AddSubject = async (req: Request, res: Response) => {
             sourceFile: file.path
         })
 
-        console.log(data)
-
         for (let i = 1; i < data['Sheet1'].length; i++) {
             if (await prisma.subject.findUnique({
                 where: {
