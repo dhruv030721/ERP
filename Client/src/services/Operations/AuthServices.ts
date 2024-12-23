@@ -34,8 +34,15 @@ class AuthServices {
             url: AuthEndpoints.GENERATE_PASSWORD,
             bodyData: data
         })
+        return response;
+    }
 
-        console.log(response)
+    async generate_password_token_verification(mobileNumber: string) {
+        const response = await apiConnector({
+            method: "POST",
+            url: AuthEndpoints.GENERATE_PASSWORD_TOKEN_VERIFICATION,
+            bodyData: { mobileNumber }
+        })
 
         return response;
     }

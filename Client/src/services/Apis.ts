@@ -6,7 +6,8 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const AuthEndpoints = {
     LOGIN_API: BASE_URL + "auth/login",
     REGISTER: BASE_URL + "auth/register",
-    GENERATE_PASSWORD: BASE_URL + "auth/generate_password"
+    GENERATE_PASSWORD: BASE_URL + "auth/generate_password",
+    GENERATE_PASSWORD_TOKEN_VERIFICATION: BASE_URL + "auth/generate_password_link_verification"
 }
 
 

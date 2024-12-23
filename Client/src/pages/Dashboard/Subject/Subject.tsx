@@ -29,7 +29,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
             await toast.promise(
                 academicServices.ImportSubjectData(file),
                 {
-                    loading: "Data Uploading.....",
+                    loading: "Data Uploading",
                     success: (response) => {
                         setExcelFileName("*Upload file in excel format");
                         event.target.value = "";

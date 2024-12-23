@@ -45,12 +45,12 @@ const Login: React.FC = () => {
                 {/* Background Circles - Hidden on small screens */}
                 <div className='hidden md:block bg-orangeCircle w-[150%] h-[100%] object-fill opacity-55 bg-center bg-no-repeat z-0 absolute right-0 top-20'></div>
                 <div className='hidden md:block bg-blueCircle w-[100%] h-[100%] object-fill bg-no-repeat z-10 absolute left-40 bottom-20'></div>
-                
+
                 {/* Logo Container */}
                 <div className='w-[80%] md:w-[50%] h-full md:h-[70%] relative z-20 rounded-md bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-80 shadow-xl flex justify-center items-center'>
-                    <img 
-                        src={logo} 
-                        alt="College Logo" 
+                    <img
+                        src={logo}
+                        alt="College Logo"
                         className='w-40 md:w-72 z-30'
                     />
                 </div>
@@ -69,8 +69,8 @@ const Login: React.FC = () => {
                         </p>
 
                         {/* Form */}
-                        <form 
-                            className='flex flex-col space-y-4' 
+                        <form
+                            className='flex flex-col space-y-4'
                             onSubmit={handleSubmit(loginHandler)}
                         >
                             <div className='space-y-1'>
@@ -80,7 +80,7 @@ const Login: React.FC = () => {
                                     placeholder='Enter your registered mobile number here'
                                     {...register("username", { required: true })}
                                 />
-                                {errors.username && 
+                                {errors.username &&
                                     <p className='text-red-500 text-sm font-bold'>
                                         *Please check the username
                                     </p>
@@ -93,17 +93,17 @@ const Login: React.FC = () => {
                                     placeholder='Enter your password here'
                                     {...register("password", {
                                         required: true,
-                                        pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                        pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
                                     })}
                                 />
-                                {errors.password && 
+                                {errors.password &&
                                     <p className='text-red-500 text-sm font-bold'>
                                         *Please check the password
                                     </p>
                                 }
                             </div>
 
-                            <button 
+                            <button
                                 className='bg-orange-400 rounded-md py-2.5 md:py-3 text-white font-bold hover:bg-orange-500 transition-colors duration-200'
                                 type="submit"
                             >
@@ -113,8 +113,8 @@ const Login: React.FC = () => {
 
                         {/* Footer Links */}
                         <div className='flex justify-end pt-2'>
-                            <Link 
-                                to="forgotpassword" 
+                            <Link
+                                to="forgotpassword"
                                 className='text-orange-500 underline font-bold text-sm md:text-md hover:scale-105 duration-100'
                             >
                                 forgot password?

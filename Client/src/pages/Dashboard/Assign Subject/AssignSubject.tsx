@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react"
 import { Dropdown, Loading, MuiButton } from "../../../components"
-import { academicServices } from "../../../services";
-import { IoPersonAdd } from "react-icons/io5";
-import toast from "react-hot-toast";
-import { toastDesign } from "../../../components/GlobalVariables";
-import { useSelector } from "react-redux";
-import { FaLongArrowAltRight } from "react-icons/fa";
-
+import { academicServices } from "../../../services"
+import { IoPersonAdd } from "react-icons/io5"
+import toast from "react-hot-toast"
+import { toastDesign } from "../../../components/GlobalVariables"
+import { useSelector } from "react-redux"
+import { FaLongArrowAltRight } from "react-icons/fa"
 
 interface Option {
-    value: string;
-    label: string;
+    value: string
+    label: string
 }
 
 const AssignSubject = () => {
-
     const semData: Option[] = [
         { value: "1", label: "1" },
         { value: "2", label: "2" },
@@ -24,73 +22,158 @@ const AssignSubject = () => {
         { value: "6", label: "6" },
         { value: "7", label: "7" },
         { value: "8", label: "8" },
-    ];
+    ]
 
     const types: Option[] = [
         { value: "LECTURE", label: "Lecture" },
         { value: "LAB", label: "Lab" }
     ]
 
-    const [selectedFaculty, setFaculty] = useState<string>('');
-    const [selectedSem, setSem] = useState<string>('')
-    const [selectedSubject, setSubject] = useState<string>('');
-    const [selectedBranch, setBranch] = useState<string>('');
-    const [selectedType, setType] = useState<string>('');
-    const [loading, setLoading] = useState<boolean | null>(true);
-    const [facultiesData, setFacultiesData] = useState<Option[]>([]);
-    const [branchData, setBranchData] = useState<Option[]>([]);
-    const [subjectData, setSubjectData] = useState<Option[]>([]);
-    const [filteredSubjects, setFilteredSubject] = useState<Option[]>([]);
-    const [AssignedSubject, setAssignedSubject] = useState<any>([]);
-    const { mobileNumber } = useSelector((state: any) => state.auth.userData);
+    const batch: Option[] = [
+        { value: "A", label: "A" },
+        { value: "B", label: "B" },
+        { value: "C", label: "C" }
+    ]
 
-    const handleFacultyChange = (value: string) => {
-        setFaculty(value);
+    // Form state
+    const [selectedFaculty, setFaculty] = useState<string>('')
+    const [selectedSem, setSem] = useState<string>('')
+    const [selectedSubject, setSubject] = useState<string>('')
+    const [selectedBranch, setBranch] = useState<string>('')
+    const [selectedType, setType] = useState<string>('')
+    const [selectedBatch, setBatch] = useState<string>('')
+
+    // Dropdown enable states
+    const [isSemEnabled, setSemEnabled] = useState(false)
+    const [isSubjectEnabled, setSubjectEnabled] = useState(false)
+    const [isFacultyEnabled, setFacultyEnabled] = useState(false)
+    const [isTypeEnabled, setTypeEnabled] = useState(false)
+    const [isBatchEnabled, setBatchEnabled] = useState(false)
+
+    // Data loading states
+    const [loading, setLoading] = useState<boolean | null>(true)
+    const [facultiesData, setFacultiesData] = useState<Option[]>([])
+    const [branchData, setBranchData] = useState<Option[]>([])
+    const [subjectData, setSubjectData] = useState<Option[]>([])
+    const [filteredSubjects, setFilteredSubject] = useState<Option[]>([])
+    const [AssignedSubject, setAssignedSubject] = useState<any>([])
+
+    const { mobileNumber } = useSelector((state: any) => state.auth.userData)
+
+    // Validation function
+    const isFormValid = (): boolean => {
+        if (!selectedBranch || !selectedSem || !selectedSubject || !selectedFaculty || !selectedType) {
+            return false
+        }
+        // Additional validation for LAB type
+        if (selectedType === "LAB" && !selectedBatch) {
+            return false
+        }
+        return true
+    }
+
+    const handleBranchChange = (value: string) => {
+        setBranch(value)
+        setSemEnabled(true)
+        // Reset dependent fields
+        setSem('')
+        setSubject('')
+        setFaculty('')
+        setType('')
+        setBatch('')
+        setSubjectEnabled(false)
+        setFacultyEnabled(false)
+        setTypeEnabled(false)
+        setBatchEnabled(false)
     }
 
     const handleSemChange = (value: string) => {
-        const filtered = subjectData.filter((data: any) => data.sem == value && data.branchId == selectedBranch).map((data: any) => {
-            return {
-                value: data.code,
-                label: data.name
-            }
-        })
+        const filtered = subjectData.filter((data: any) =>
+            data.sem == value && data.branchId == selectedBranch
+        ).map((data: any) => ({
+            value: data.code,
+            label: data.name
+        }))
         setFilteredSubject(filtered)
-        setSem(value);
+        setSem(value)
+        setSubjectEnabled(true)
+        // Reset dependent fields
+        setSubject('')
+        setFaculty('')
+        setType('')
+        setBatch('')
+        setFacultyEnabled(false)
+        setTypeEnabled(false)
+        setBatchEnabled(false)
     }
 
     const handleSubjectChange = (value: string) => {
         setSubject(value)
+        setFacultyEnabled(true)
+        // Reset dependent fields
+        setFaculty('')
+        setType('')
+        setBatch('')
+        setTypeEnabled(false)
+        setBatchEnabled(false)
     }
 
-    const handleBranchChange = (value: string) => {
-        setBranch(value);
+    const handleFacultyChange = (value: string) => {
+        setFaculty(value)
+        setTypeEnabled(true)
+        // Reset dependent fields
+        setType('')
+        setBatch('')
+        setBatchEnabled(false)
     }
 
     const handleTypeChange = (value: string) => {
-        setType(value);
+        setType(value)
+        setBatchEnabled(value === "LAB")
+        if (value !== "LAB") {
+            setBatch('')
+        }
+    }
+
+    const handleBatchChange = (value: string) => {
+        setBatch(value)
     }
 
     const AssignHandler = async () => {
-        const assign_subject_data: object = {
-            'branch': selectedBranch,
-            'sem': Number(selectedSem),
-            'subject': selectedSubject,
-            'faculty': selectedFaculty,
-            'type': selectedType
+        if (!isFormValid()) {
+            toast.error("Please fill all required fields", toastDesign)
+            return
         }
+
+        const assign_subject_data = {
+            branch: selectedBranch,
+            sem: Number(selectedSem),
+            subject: selectedSubject,
+            faculty: selectedFaculty,
+            type: selectedType,
+            batch: selectedType === "LAB" ? selectedBatch : null
+        }
+
         await toast.promise(
             academicServices.AssignSubject(assign_subject_data),
             {
-                loading: "Processing...",
+                loading: "Processing",
                 success: (response) => {
-                    console.log(response)
-                    return `${response.data.message}`
+                    // Reset form after successful assignment
+                    setBranch('')
+                    setSem('')
+                    setSubject('')
+                    setFaculty('')
+                    setType('')
+                    setBatch('')
+                    setSemEnabled(false)
+                    setSubjectEnabled(false)
+                    setFacultyEnabled(false)
+                    setTypeEnabled(false)
+                    setBatchEnabled(false)
+                    return response.data.message
                 },
-                error: (error) => {
-                    console.log(error)
-                    return `${error.response.data.message}`
-                }
+                error: (error) => error.response.data.message
             },
             toastDesign
         )
@@ -98,37 +181,39 @@ const AssignSubject = () => {
 
     useEffect(() => {
         (async () => {
-            let facultyData = await academicServices.GetFaculty();
-            let branchData = await academicServices.GetBranch();
-            const subjectData = await academicServices.GetSubjects();
-            const AssignedSubject = await academicServices.GetAssignSubject(mobileNumber);
+            try {
+                const [facultyResponse, branchResponse, subjectResponse, assignedSubjectResponse] =
+                    await Promise.all([
+                        academicServices.GetFaculty(),
+                        academicServices.GetBranch(),
+                        academicServices.GetSubjects(),
+                        academicServices.GetAssignSubject(mobileNumber)
+                    ])
 
-
-            facultyData = facultyData.data.data.map((data: any) => {
-                return {
+                const facultyData = facultyResponse.data.data.map((data: any) => ({
                     value: data.mobileNumber,
                     label: `${data.first_name} ${data.last_name}`
-                }
-            })
-            branchData = branchData.data.data.map((data: any) => {
-                return {
+                }))
+
+                const branchData = branchResponse.data.data.map((data: any) => ({
                     value: data.id,
                     label: `${data.id} - ${data.name}`
-                }
-            })
-            setFacultiesData(facultyData);
-            setBranchData(branchData);
-            setSubjectData(subjectData.data.data);
-            setAssignedSubject(AssignedSubject.data.data);
-            console.log(AssignedSubject.data.data)
-            setLoading(false);
-        })();
+                }))
+
+                setFacultiesData(facultyData)
+                setBranchData(branchData)
+                setSubjectData(subjectResponse.data.data)
+                setAssignedSubject(assignedSubjectResponse.data.data)
+            } catch (error) {
+                toast.error("Error loading data", toastDesign)
+            } finally {
+                setLoading(false)
+            }
+        })()
     }, [])
 
     if (loading) {
-        return (
-            <Loading message='' size='max-w-[20%]' />
-        )
+        return <Loading message="" size="max-w-[20%]" />
     }
 
     return (
@@ -140,7 +225,7 @@ const AssignSubject = () => {
                     <div>
                         <Dropdown
                             List={branchData}
-                            label={"Branch"}
+                            label="Branch"
                             defaultValue={selectedBranch}
                             helperText="Branch"
                             dropdownHandler={handleBranchChange}
@@ -150,55 +235,78 @@ const AssignSubject = () => {
                     <div>
                         <Dropdown
                             List={semData}
-                            label={"Sem"}
+                            label="Sem"
                             defaultValue={selectedSem}
                             helperText="Sem"
                             dropdownHandler={handleSemChange}
                             width={200}
+                            disabled={!isSemEnabled}
                         />
                     </div>
                     <div>
                         <Dropdown
                             List={filteredSubjects}
-                            label={"Subject"}
+                            label="Subject"
                             defaultValue={selectedSubject}
                             helperText="Subject"
                             dropdownHandler={handleSubjectChange}
                             width={350}
+                            disabled={!isSubjectEnabled}
                         />
                     </div>
                     <div>
                         <Dropdown
                             List={facultiesData}
-                            label={"Faculty"}
+                            label="Faculty"
                             defaultValue={selectedFaculty}
                             helperText="Faculty"
                             dropdownHandler={handleFacultyChange}
                             width={200}
+                            disabled={!isFacultyEnabled}
                         />
                     </div>
                     <div>
                         <Dropdown
                             List={types}
-                            label={"Type"}
+                            label="Type"
                             defaultValue={selectedType}
                             helperText="Type"
                             dropdownHandler={handleTypeChange}
                             width={200}
+                            disabled={!isTypeEnabled}
+                        />
+                    </div>
+                    <div>
+                        <Dropdown
+                            List={batch}
+                            label="Batch"
+                            defaultValue={selectedBatch}
+                            helperText="Batch"
+                            dropdownHandler={handleBatchChange}
+                            width={200}
+                            disabled={!isBatchEnabled}
                         />
                     </div>
                 </div>
-                <div className="">
-                    <MuiButton btnName="Assign" color="rgb(23,37,84)" type="submit" icon={<IoPersonAdd />} eventHandler={AssignHandler} width="150px" height="50px" />
+                <div>
+                    <MuiButton
+                        btnName="Assign"
+                        color="rgb(23,37,84)"
+                        type="submit"
+                        icon={<IoPersonAdd />}
+                        eventHandler={AssignHandler}
+                        width="150px"
+                        height="50px"
+                    />
                 </div>
             </div>
             <div className="flex flex-col mt-10 gap-y-5">
                 <h1 className="text-xl font-bold">Assigned Subjects : </h1>
                 {AssignedSubject.map((data: any) => (
-                    <div className="flex items-center justify-center gap-x-5 border-zinc-300 border  shadow-sm rounded-md p-3 w-fit">
+                    <div key={`${data.subject.code}-${data.type}-${data.batch}`} className="flex items-center justify-center gap-x-5 border-zinc-300 border shadow-sm rounded-md p-3 w-fit">
                         <h1 className="font-semibold">Sem : {data.subject.sem}</h1>
                         <FaLongArrowAltRight />
-                        <h1 className="font-semibold">Subject : {data.subject.name} - {data.type}</h1>
+                        <h1 className="font-semibold">Subject : {data.subject.name} : ({data.type} - {data.batch})</h1>
                     </div>
                 ))}
             </div>

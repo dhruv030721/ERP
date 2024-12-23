@@ -90,14 +90,14 @@ const AddStudent: React.FC<AddStudentProps> = () => {
             <h1 className='font-bold text-red-600'>{excelFileName}</h1>
             <div>
 
-              <MuiButton color='rgb(23,37,84)' btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} />
+              <MuiButton color='rgb(23,37,84)' btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} width='200px' height='50px' />
             </div>
           </div>
 
           <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
             <h1 className='font-bold'>Download Sample Excel</h1>
             <div>
-              <MuiButton color='rgb(23,37,84)' btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} />
+              <MuiButton color='rgb(23,37,84)' btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} width='300px' height='50px'/>
             </div>
           </div>
         </div>

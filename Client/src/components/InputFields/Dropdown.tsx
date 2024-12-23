@@ -9,9 +9,10 @@ interface DropdownProps {
     List: { value: string; label: string }[] | null;
     dropdownHandler: (value: string) => void;
     width?: string | number;
+    disabled?: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, List, dropdownHandler, width }) => {
+const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, List, dropdownHandler, width, disabled }) => {
     return (
         <div>
             <TextField
@@ -20,6 +21,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, Li
                 label={label}
                 defaultValue={defaultValue}
                 helperText={helperText}
+                disabled={disabled}
                 onChange={(event) => {
                     dropdownHandler(event.target.value);
                 }}

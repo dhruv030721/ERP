@@ -48,7 +48,7 @@ function Header() {
                     <h1 className='font-poppins font-semibold tracking-normal text-xl sm:text-2xl md:text-3xl lg:text-4xl text-orange-700 text-center px-2'>
                         SARDAR PATEL COLLEGE OF ENGINEERING
                     </h1>
-                    <p className='font-karla font-semibold tracking-tighter text-sm sm:text-base md:text-lg lg:text-xl text-blue-950 text-center px-2'>
+                    <p className='font-poppins font-semibold tracking-tighter text-sm sm:text-base md:text-lg lg:text-xl text-blue-950 text-center px-2'>
                         Managed By Tirupati Foundation Trust
                     </p>
                 </div>
