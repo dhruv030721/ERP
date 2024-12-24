@@ -15,9 +15,11 @@ interface Option {
 
 const AttendanceReport = () => {
     const [selectedSem, setSelectedSem] = useState<Option | null>(null);
-    const [selectedSubject, setSelectedSubject] = useState<Option | null>(null);
     const [subjectData, setSubjectDataState] = useState<Option[]>([]);
+    const [branchData, setBranchDataState] = useState<Option[]>([]);
     const [selectedMonth, setMonth] = useState<Option | null>(null);
+    const [selectedBranch, setBranch] = useState<string>('');
+    const [selectedSubject, setSelectedSubject] = useState<string>('');
     const dispatch = useDispatch();
     const SubjectData: any = useSelector((state: RootState) => state.academic.SubjectData);
     const [loading, setLoading] = useState<boolean>(true);
@@ -32,8 +34,8 @@ const AttendanceReport = () => {
         { value: "7", label: "7" },
         { value: "8", label: "8" },
     ];
-
     const month: Option[] = [
+        { value: "whole sem", label: "whole sem" },
         { value: "1", label: "1" },
         { value: "2", label: "2" },
         { value: "3", label: "3" },
@@ -57,31 +59,53 @@ const AttendanceReport = () => {
                 label: sub.name
             };
         });
-        setSelectedSubject(null);
+        setSelectedSubject('');
         setSubjectDataState(filteredSubjects);
     };
 
     const handleSubjectChange = (value: string) => {
-        setSelectedSubject(subjectData.find(option => option.value === value) || null);
+        setSelectedSubject(value)
     };
 
     const handleMonthChange = (value: string) => {
         setMonth(month.find(option => option.value == value) || null);
     }
 
+    const handleBranchChange = (value: string) => {
+        setBranch(value);
+        const filteredSubjects = SubjectData.filter((subject: any) => subject.branchId == value).map((sub: any) => {
+            return {
+                value: sub.code,
+                label: sub.name
+            };
+        });
+        setSelectedSubject('');
+        setSubjectDataState(filteredSubjects);
+    }
+
     useEffect(() => {
         (async () => {
             try {
-                const response = await academicServices.GetSubjects();
-                dispatch(setSubjectData(response.data.data));
-                setSubjectDataState(response.data.data);
+                const [subjectData, branchDataResponse] = await Promise.all([
+                    academicServices.GetSubjects(),
+                    academicServices.GetBranch()
+                ])
+
+                const branchData = branchDataResponse.data.data.map((data: any) => ({
+                    value: data.id,
+                    label: `${data.id} - ${data.name}`
+                }))
+
+                dispatch(setSubjectData(subjectData.data.data));
+                setSubjectDataState(subjectData.data.data);
+                setBranchDataState(branchData)
                 setLoading(false);
             } catch (error) {
                 console.log(error);
                 setLoading(false);
             }
         })();
-    }, [dispatch]);
+    }, [dispatch,]);
 
     if (loading) {
         return (
@@ -100,6 +124,16 @@ const AttendanceReport = () => {
             <div className="flex gap-x-10 items-center">
                 <div className="mt-10">
                     <Dropdown
+                        List={branchData}
+                        label={"Branch"}
+                        defaultValue={selectedBranch}
+                        helperText="Branch"
+                        dropdownHandler={handleBranchChange}
+                        width={250}
+                    />
+                </div>
+                <div className="mt-10">
+                    <Dropdown
                         List={sem}
                         label={"Sem"}
                         defaultValue={selectedSem?.value}
@@ -112,7 +146,7 @@ const AttendanceReport = () => {
                     <Dropdown
                         List={subjectData.length ? subjectData : []}
                         label={"Subject"}
-                        defaultValue={selectedSubject?.value}
+                        defaultValue={selectedSubject}
                         helperText="Subject"
                         dropdownHandler={handleSubjectChange}
                         width={400}
