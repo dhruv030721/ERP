@@ -21,21 +21,29 @@ export default function AuthProtected({
     const authStatus = useSelector((state: RootState) => state.auth.status);
     const dispatch = useDispatch();
 
-    const getCookie = (name: string): string | null => {
-        const cookieString = document.cookie;
-        const cookies = cookieString.split("; ");
+    // const getCookie = (name: string): string | null => {
+    //     const cookieString = document.cookie;
+    //     const cookies = cookieString.split("; ");
 
-        for (const cookie of cookies) {
-            const [cookieName, cookieValue] = cookie.split("=");
-            if (cookieName === name) {
-                return decodeURIComponent(cookieValue);
-            }
-        }
-        return null;
-    };
+    //     for (const cookie of cookies) {
+    //         const [cookieName, cookieValue] = cookie.split("=");
+    //         if (cookieName === name) {
+    //             return decodeURIComponent(cookieValue);
+    //         }
+    //     }
+    //     return null;
+    // };
+
+    const getToken = () => {
+        const token = localStorage.getItem("erp_auth_token");
+        return token;
+    }
 
     const decodedData = (): UserDataType | null => {
-        const token = getCookie("erp_auth_token");
+        // From Cookie
+        // const token = getCookie("erp_auth_token");
+        // From Localstorage
+        const token = localStorage.getItem('erp_auth_token');
         if (token !== null) {
             const data = jwtDecode<UserDataType>(token);
             return data;
@@ -50,8 +58,10 @@ export default function AuthProtected({
         }
     }, []);
 
+
+
     useEffect(() => {
-        if (getCookie("erp_auth_token")) {
+        if (getToken()) {
             tokenAuth();
         } else {
             if (authentication && !authStatus) {

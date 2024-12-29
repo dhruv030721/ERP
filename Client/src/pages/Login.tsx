@@ -26,6 +26,7 @@ const Login: React.FC = () => {
                 loading: "Processing",
                 success: (response) => {
                     dispatch(login(response.data.data));
+                    localStorage.setItem('erp_auth_token', response.data.data.token);
                     navigate('/');
                     return `${response.data.message}`;
                 },

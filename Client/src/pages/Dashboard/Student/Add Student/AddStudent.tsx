@@ -47,7 +47,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
 
   const DownloadSampleExcelHandler = async () => {
     try {
-      const response = await axios.get('/api/academics/Download_Import_Student_Sample_file', { responseType: 'blob' });
+      const response = await axios.get('https://res.cloudinary.com/dij4vwbs6/raw/upload/v1735488307/student_data_i14uoc.xlsx', { responseType: 'blob' });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
@@ -62,9 +62,12 @@ const AddStudent: React.FC<AddStudentProps> = () => {
 
   return (
     <div className='mx-10 flex flex-col'>
-      <div className='flex space-x-5 p-10'>
-        <BsPersonFillAdd size={30} />
-        <h1 className='font-bold text-xl'>Add Student</h1>
+      <div className='flex-col space-y-2 px-2 py-7'>
+        <div className='flex gap-x-5'>
+          <BsPersonFillAdd size={30} />
+          <h1 className='font-bold text-xl'>Add Student</h1>
+        </div>
+        <p className='text-gray-500'>"Here, you can register new Student."</p>
       </div>
 
       <div className='mt-5'>
@@ -97,7 +100,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
           <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
             <h1 className='font-bold'>Download Sample Excel</h1>
             <div>
-              <MuiButton color='rgb(23,37,84)' btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} width='300px' height='50px'/>
+              <MuiButton color='rgb(23,37,84)' btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} width='300px' height='50px' />
             </div>
           </div>
         </div>
