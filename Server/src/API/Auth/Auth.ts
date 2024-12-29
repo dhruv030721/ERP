@@ -163,17 +163,12 @@ const login = async (req: Request, res: Response) => {
             const token = await generateToken(payload);
 
             return res
-                .cookie("erp_auth_token", token, {
-                    httpOnly: true,
-                    secure: true,
-                    sameSite: "lax", // Adjusts cross-origin policy; use 'strict' or 'none' if needed
-                    maxAge: 24 * 60 * 60 * 1000, // 1 day
-                })
                 .status(200)
                 .json({
                     success: true,
                     message: "Login Successful",
                     data: {
+                        token: token,
                         email: user.email,
                         name: username,
                         mobileNumber: user.mobileNumber,

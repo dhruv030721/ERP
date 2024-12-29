@@ -58,8 +58,6 @@ export default function AuthProtected({
         }
     }, []);
 
-
-
     useEffect(() => {
         if (getToken()) {
             tokenAuth();

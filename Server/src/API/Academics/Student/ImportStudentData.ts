@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import prisma from "../../../Utils/prisma"
-import { GetFormattedDate } from "../../../Utils/date"
 import excelToJson from 'convert-excel-to-json';
 
 export const ImportStudentdata = async (req: Request, res: Response) => {
