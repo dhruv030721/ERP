@@ -17,28 +17,22 @@ export const ImportStudentdata = async (req: Request, res: Response) => {
             sourceFile: file.path
         })
 
-        for (let i = 0; i < data['Sheet1'].length; i++) {
-            if (i >= 1) {
+        for (let i = 1; i < data['Students'].length; i++) {
 
-                // const dob = GetFormattedDate(data['Sheet1'][i]['I']);
-
-                await prisma.student.create({
-                    data: {
-                        enrollmentNo: data['Sheet1'][i]['A'].toString(),
-                        first_name: data['Sheet1'][i]['B'].toString(),
-                        middle_name: data['Sheet1'][i]['C'].toString(),
-                        last_name: data['Sheet1'][i]['D'].toString(),
-                        mobileNumber: data['Sheet1'][i]['E'].toString(),
-                        email: data['Sheet1'][i]['F'],
-                        parentMobileNumber: data['Sheet1'][i]['G'].toString(),
-                        branch: data['Sheet1'][i]['H'],
-                        sem: data['Sheet1'][i]['I'],
-                        password: data['Sheet1'][i]['J'].toString(),
-                        gender: data['Sheet1'][i]['K'].toString(),
-                        // dob: dob
-                    }
-                })
-            }
+            await prisma.student.create({
+                data: {
+                    enrollmentNo: data['Students'][i]['A'].toString(),
+                    first_name: data['Students'][i]['B'].toString(),
+                    middle_name: data['Students'][i]['C'].toString(),
+                    last_name: data['Students'][i]['D'].toString(),
+                    mobileNumber: data['Students'][i]['E'].toString(),
+                    email: data['Students'][i]['F'],
+                    parentMobileNumber: data['Students'][i]['G'].toString(),
+                    branchId: data['Students'][i]['I'].toString(),
+                    sem: data['Students'][i]['J'],
+                    gender: data['Students'][i]['K'],
+                }
+            })
         }
 
         return res.status(200).json({

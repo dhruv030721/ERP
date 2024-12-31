@@ -19,21 +19,34 @@ export const SetTimeTable = async (req: Request, res: Response) => {
             sourceFile: file.path
         })
 
-        console.log(data);
+        for (let i = 1; i < data['Timetable'].length; i++) {
 
-        for (let i = 0; i < data['Timetable_6sem'].length; i++) {
-            await prisma.timeTable.create({
-                data: {
-                    time: data['Timetable_6sem'][i]['B'].toString(),
-                    day: data['Timetable_6sem'][i]['C'].toString(),
-                    subject: data['Timetable_6sem'][i]['D'].toString(),
-                    facultyId: data['Timetable_6sem'][i]['E'].toString(),
-                    lectureType: data['Timetable_6sem'][i]['F'].toString(),
-                    batch: data['Timetable_6sem'][i]['G'] ? data['Timetable_6sem'].toString() : "",
-                    branchId: data['Timetable_6sem'][i]['H'].toString(),
-                    sem: data['Timetable_6sem'][i]['I'],
+            const faculty = await prisma.faculty.findUnique({
+                where: {
+                    mobileNumber: data['Timetable'][i]['E'].toString()
                 }
             })
+
+            // If faculty Exist
+            if (faculty) {
+                await prisma.timeTable.create({
+                    data: {
+                        time: data['Timetable'][i]['B'].toString(),
+                        day: data['Timetable'][i]['C'].toString(),
+                        subject: data['Timetable'][i]['D'].toString(),
+                        facultyId: data['Timetable'][i]['E'].toString(),
+                        lectureType: data['Timetable'][i]['F'].toString(),
+                        batch: data['Timetable'][i]['G'] ? data['Timetable'].toString() : "",
+                        branchId: data['Timetable'][i]['H'].toString(),
+                        sem: data['Timetable'][i]['I'],
+                    }
+                })
+
+                logger.info(`${data['Timetable'][i]['D'].toString()} - ${faculty.first_name} Entry Added!`)
+            } else {
+                logger.error(`${data['Timetable'][i]['E'].toString()} Not Found!`)
+            }
+
         }
 
         return res.status(200).json({

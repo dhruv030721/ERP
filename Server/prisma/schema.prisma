@@ -45,7 +45,6 @@ model User {
   id      String    @id @default(uuid())
   role    UserRole
   user_id String    @unique
-  Student Student[] @relation("student_user")
   Faculty Faculty[] @relation("faculty_user")
 }
 
@@ -61,9 +60,9 @@ model Student {
   first_name         String
   middle_name        String
   last_name          String
-  mobileNumber       String       @id
+  mobileNumber       String       @id @unique
   dob                DateTime?
-  password           String
+  password           String?
   gender             String
   email              String
   parentMobileNumber String
@@ -72,7 +71,6 @@ model Student {
   sem                Int
   Attendance         Attendance[] @relation("attendance_enrollmentno")
   branchId           String
-  User               User?        @relation("student_user", fields: [mobileNumber], references: [user_id])
   Token              Token?       @relation("student_user_token", fields: [tokenId], references: [id])
   tokenId            String?
 }

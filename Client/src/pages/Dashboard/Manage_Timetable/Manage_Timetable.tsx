@@ -58,7 +58,7 @@ const ManageTimetable = () => {
             await toast.promise(
                 academicServices.SetTimetable(file),
                 {
-                    loading: "Data Uploading.....",
+                    loading: "Data Uploading",
                     success: (response) => {
                         setExcelFileName("*Upload file in excel format");
                         event.target.value = "";
