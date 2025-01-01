@@ -115,7 +115,7 @@ const Login: React.FC = () => {
                         {/* Footer Links */}
                         <div className='flex justify-end pt-2'>
                             <Link
-                                to="forgotpassword"
+                                to="/forgotpassword"
                                 className='text-orange-500 underline font-bold text-sm md:text-md hover:scale-105 duration-100'
                             >
                                 forgot password?

@@ -68,7 +68,7 @@ const Switchboard: React.FC = () => {
   const logoutHandler = () => {
     setLoading(true);
     dispatch(logout());
-    document.cookie = 'erp_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    localStorage.removeItem("erp_auth_token")
     setLoading(false);
   };
 

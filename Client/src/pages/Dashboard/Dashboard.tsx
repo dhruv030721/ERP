@@ -76,8 +76,8 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className='min-h-screen w-full'>
-      <div className='min-h-screen md:h-[630px] flex flex-col md:flex-row items-center justify-around p-4 md:p-0'>
+    <div className='w-full'>
+      <div className='h-full md:h-[630px] flex flex-col md:flex-row items-center justify-around p-4 md:p-0'>
         {/* Profile Section */}
         {/* <div className='w-full md:w-[30%] p-4 md:p-8 flex flex-col justify-center items-center rounded-lg bg-transparent space-y-3 md:h-[95%]'>
           <h1 className='font-bold text-xl md:text-2xl text-center'>Coming Soon....</h1>
@@ -92,14 +92,14 @@ const Dashboard: React.FC = () => {
         {/* Dashboard Section */}
         <div className='w-full md:w-[80%] rounded-lg md:h-[95%] flex flex-col space-y-5 p-2 md:p-5 font-poppins'>
           <h2 className='font-black text-lg md:text-xl text-center'>Dashboard</h2>
-          
+
           <div className='px-2 md:px-10'>
             <ul className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-3 md:gap-x-10 md:gap-y-10 justify-center items-center'>
               {DashboardItems.map((item) => (
-                <SwitchItem 
-                  key={item.name} 
-                  name={item.name} 
-                  url={item.route} 
+                <SwitchItem
+                  key={item.name}
+                  name={item.name}
+                  url={item.route}
                   icon={item.icon}
                 />
               ))}

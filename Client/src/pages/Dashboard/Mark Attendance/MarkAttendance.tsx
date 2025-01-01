@@ -24,7 +24,7 @@ const MarkAttendance = () => {
 
     const TimetableData: any = useSelector((state: RootState) => state.academic.Timetable);
     const dispatch = useDispatch();
-    const employeeId: any = useSelector((state: RootState) => state.auth.userData?.employeeId);
+    const facultyMobileNumber: any = useSelector((state: RootState) => state.auth.userData?.mobileNumber);
 
     const DateHandler = (date: Dayjs | null) => {
         setDateValue(date);
@@ -110,14 +110,14 @@ const MarkAttendance = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await academicServices.GetTimetable(employeeId);
+                const response = await academicServices.GetTimetable(facultyMobileNumber);
                 dispatch(setTimetable(response.data.data));
                 setLoading(false);
             } catch (error) {
                 toast.error("Failed to fetch timetable.", toastDesign);
             }
         })();
-    }, [dispatch, employeeId]);
+    }, [dispatch, facultyMobileNumber]);
 
     return (
         isLoading ? (

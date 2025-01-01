@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import App from './App'
-import { Dashboard, Switchboard, Login, AddStudent, MarkAttendance, AttendanceReport, Subject, AddFaculty, GeneratePassword, AssignSubject, ManageTimetable } from './pages'
+import { Dashboard, Switchboard, Login, AddStudent, MarkAttendance, AttendanceReport, Subject, AddFaculty, GeneratePassword, AssignSubject, ManageTimetable, ForgotPassword } from './pages'
 import { AuthProtected } from './components'
 import { Toaster } from 'react-hot-toast'
 import store from './slices/store'
@@ -24,6 +24,7 @@ const router = createBrowserRouter(
         <Route path='manage_timetable' element={<ManageTimetable />} />
       </Route>
       <Route path='/login' element={<Login />} />
+      <Route path='/forgotpassword' element={<ForgotPassword />} />
       <Route path='/generate_password/:token' element={<GeneratePassword />} />
     </>
   )

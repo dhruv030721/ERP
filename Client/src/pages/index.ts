@@ -10,5 +10,6 @@ import AddFaculty from "./Dashboard/Faculty/AddFaculty.tsx";
 import GeneratePassword from "./GeneratePassword.tsx";
 import AssignSubject from "./Dashboard/Assign Subject/AssignSubject.tsx";
 import ManageTimetable from "./Dashboard/Manage_Timetable/Manage_Timetable.tsx";
+import ForgotPassword from "./ForgotPassword.tsx";
 
-export { Switchboard, Dashboard, Admission, Login, AddStudent, MarkAttendance, AttendanceReport, Subject, AddFaculty, GeneratePassword, AssignSubject, ManageTimetable };
+export { Switchboard, Dashboard, Admission, Login, AddStudent, MarkAttendance, AttendanceReport, Subject, AddFaculty, GeneratePassword, AssignSubject, ManageTimetable, ForgotPassword };
