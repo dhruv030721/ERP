@@ -288,6 +288,20 @@ const ForgotPassword = async (req: Request, res: Response) => {
         const response: any = await SendMail({ to: faculty?.email, title: mail_title, body });
 
         if (response) {
+
+            const presentToken = await prisma.token.findUnique({
+                where: {
+                    id: mobileNumber
+                }
+            })
+
+            if (presentToken) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Your previous password re-generation token still active!"
+                })
+            }
+
             await prisma.token.create({
                 data: {
                     id: mobileNumber,
