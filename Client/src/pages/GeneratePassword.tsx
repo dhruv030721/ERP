@@ -35,6 +35,9 @@ const GeneratePassword = () => {
             if (response.data.status === "false") {
                 throw new Error("Invalid Token");
             }
+
+            setIsExpired(false);
+            setLoading(false);
         } catch (error) {
             toast.error("Invalid or expired token", toastDesign);
             setIsExpired(true);

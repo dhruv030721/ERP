@@ -1,5 +1,6 @@
 import { AuthEndpoints } from "../Apis";
 import { apiConnector } from "../ApiConnector";
+import { mobileStepperClasses } from "@mui/material";
 
 class AuthServices {
     async login(data: any) {
@@ -41,6 +42,16 @@ class AuthServices {
         const response = await apiConnector({
             method: "POST",
             url: AuthEndpoints.GENERATE_PASSWORD_TOKEN_VERIFICATION,
+            bodyData: { mobileNumber }
+        })
+
+        return response;
+    }
+
+    async forgot_password(mobileNumber: string) {
+        const response = await apiConnector({
+            method: "POST",
+            url: AuthEndpoints.FORGOT_PASSWORD,
             bodyData: { mobileNumber }
         })
 

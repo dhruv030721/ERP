@@ -5,7 +5,6 @@ import jwt, { Secret } from "jsonwebtoken";
 import logger from "../../Utils/logger";
 import { GetFormattedDate } from "../../Utils/date";
 import SendMail from "./SendMail";
-import Faculty from "../Academics/Faculty";
 import path from "path";
 import ejs from "ejs";
 
@@ -68,8 +67,6 @@ const register = async (req: Request, res: Response) => {
         const body = await ejs.renderFile(templatePath, { user_token })
 
         const response: any = await SendMail({ to: email, title: mail_title, body })
-
-        console.log(GetFormattedDate(dob))
 
         if (response) {
 
@@ -261,5 +258,63 @@ const UpdatePassword = async (req: Request, res: Response) => {
     }
 }
 
-export default { register, login, UpdatePassword };
+const ForgotPassword = async (req: Request, res: Response) => {
+    try {
+
+        const { mobileNumber } = req.body;
+
+        if (!mobileNumber) {
+            return res.status(403).json({
+                success: false,
+                message: "Validation Error, Please check your entered email!"
+            })
+        }
+
+        const faculty = await prisma.faculty.findUnique({
+            where: {
+                mobileNumber
+            }
+        })
+
+        const user_token = await generateToken({
+            mobileNumber,
+            expires: "1h"
+        })
+
+        const mail_title = "Re-Generate your ERP account password!";
+        const templatePath = path.resolve(__dirname, "../../EmailTemplates/GeneratePassoword.ejs")
+        const body = await ejs.renderFile(templatePath, { user_token });
+
+        const response: any = await SendMail({ to: faculty?.email, title: mail_title, body });
+
+        if (response) {
+            await prisma.token.create({
+                data: {
+                    id: mobileNumber,
+                    token: user_token
+                }
+            })
+
+            return res.status(200).json({
+                success: true,
+                message: "User created successfully",
+            });
+
+        }
+
+        return res.status(401).json({
+            success: false,
+            message: "Something went wrong!"
+        });
+
+    } catch (error) {
+        logger.error(error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error!"
+        })
+    }
+}
+
+export default { register, login, UpdatePassword, ForgotPassword };
 

@@ -7,7 +7,8 @@ export const AuthEndpoints = {
     LOGIN_API: BASE_URL + "auth/login",
     REGISTER: BASE_URL + "auth/register",
     GENERATE_PASSWORD: BASE_URL + "auth/generate_password",
-    GENERATE_PASSWORD_TOKEN_VERIFICATION: BASE_URL + "auth/generate_password_link_verification"
+    GENERATE_PASSWORD_TOKEN_VERIFICATION: BASE_URL + "auth/generate_password_link_verification",
+    FORGOT_PASSWORD : BASE_URL + "auth/forgotpassword"
 }
 
 

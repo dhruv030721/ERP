@@ -8,5 +8,6 @@ router.post("/register", controller.register);
 router.post("/login", controller.login);
 router.post('/generate_password', controller.UpdatePassword)
 router.post('/generate_password_link_verification', GeneratePasswordLinkVerification)
+router.post('/forgotpassword', controller.ForgotPassword)
 
 export default router;
