@@ -1,6 +1,5 @@
 import { AuthEndpoints } from "../Apis";
 import { apiConnector } from "../ApiConnector";
-import { mobileStepperClasses } from "@mui/material";
 
 class AuthServices {
     async login(data: any) {
