@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { BsPersonFillAdd } from "react-icons/bs";
 import { IoCloudUpload, IoCloudDownload } from "react-icons/io5";
-import MuiButton from "../../../../components/MuiButton.tsx"
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import axios from "axios";
 import toast from "react-hot-toast";
 import { academicServices } from '../../../../services';
 import { toastDesign, } from '../../../../components/GlobalVariables';
+import { MuiButton, ComingSoon } from "../../../../components/index.ts"
 
 interface AddStudentProps { }
 
@@ -84,9 +84,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
       </div>
 
       {alignment === 'add-student' ? (
-        <div className='flex justify-center items-center font-bold text-2xl'>
-          <h1>Coming Soon....</h1>
-        </div>
+        <ComingSoon />
       ) : (
         <div className='flex justify-center space-x-10'>
           <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>

@@ -5,6 +5,6 @@ import Input from "./InputFields/Input";
 import Loading from "./Loading";
 import MuiButton from "./MuiButton";
 import BasicDatePicker from "./InputFields/DatePicker";
+import ComingSoon from "./ComingSoon";
 
-
-export { Header, AuthProtected, Dropdown, Input, Loading, MuiButton, BasicDatePicker };
+export { Header, AuthProtected, Dropdown, Input, Loading, MuiButton, BasicDatePicker, ComingSoon };

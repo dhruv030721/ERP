@@ -11,5 +11,6 @@ import GeneratePassword from "./GeneratePassword.tsx";
 import AssignSubject from "./Dashboard/Assign Subject/AssignSubject.tsx";
 import ManageTimetable from "./Dashboard/Manage_Timetable/Manage_Timetable.tsx";
 import ForgotPassword from "./ForgotPassword.tsx";
+import PageNotFound from "./PageNotFound.tsx";
 
-export { Switchboard, Dashboard, Admission, Login, AddStudent, MarkAttendance, AttendanceReport, Subject, AddFaculty, GeneratePassword, AssignSubject, ManageTimetable, ForgotPassword };
+export { Switchboard, Dashboard, Admission, Login, AddStudent, MarkAttendance, AttendanceReport, Subject, AddFaculty, GeneratePassword, AssignSubject, ManageTimetable, ForgotPassword, PageNotFound };

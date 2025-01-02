@@ -8,6 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { academicServices } from '../../../services';
 import { toastDesign, } from '../../../components/GlobalVariables';
+import { ComingSoon } from "../../../components/index.ts"
 
 interface AddStudentProps { }
 
@@ -102,9 +103,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
                 </div>
 
             ) : (
-                <div className='flex justify-center items-center font-bold text-2xl'>
-                    <h1>Coming Soon....</h1>
-                </div>
+                <ComingSoon />
             )}
         </div>
     );

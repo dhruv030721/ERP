@@ -6,7 +6,8 @@ const toastDesign: ToastOptions = {
         borderRadius: '10px',
         background: '#333',
         color: '#fff',
-        fontFamily: "poppins"
+        fontFamily: "poppins",
+        fontSize: 14
     },
 };
 
