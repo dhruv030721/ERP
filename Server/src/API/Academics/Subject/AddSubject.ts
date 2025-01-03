@@ -18,10 +18,10 @@ export const AddSubject = async (req: Request, res: Response) => {
             sourceFile: file.path
         })
 
-        for (let i = 1; i < data['Sheet1'].length; i++) {
+        for (let i = 2; i < data['Subjects'].length; i++) {
             if (await prisma.subject.findUnique({
                 where: {
-                    code: data['Sheet1'][i]['A']
+                    code: data['Subjects'][i]['A']
                 }
             })) {
                 return res.status(409).json({
@@ -33,10 +33,10 @@ export const AddSubject = async (req: Request, res: Response) => {
 
             await prisma.subject.create({
                 data: {
-                    code: data['Sheet1'][i]['A'],
-                    name: data['Sheet1'][i]['B'],
-                    sem: data['Sheet1'][i]['C'],
-                    branchId: data['Sheet1'][i]['D']
+                    code: data['Subjects'][i]['A'],
+                    name: data['Subjects'][i]['B'],
+                    sem: data['Subjects'][i]['C'],
+                    branchId: data['Subjects'][i]['D']
                 }
             })
         }

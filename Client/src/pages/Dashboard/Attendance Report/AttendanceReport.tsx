@@ -13,6 +13,7 @@ interface Option {
     label: string;
 }
 
+
 const AttendanceReport = () => {
     const [selectedSem, setSelectedSem] = useState<Option | null>(null);
     const [subjectData, setSubjectDataState] = useState<Option[]>([]);
@@ -23,6 +24,8 @@ const AttendanceReport = () => {
     const dispatch = useDispatch();
     const SubjectData: any = useSelector((state: RootState) => state.academic.SubjectData);
     const [loading, setLoading] = useState<boolean>(true);
+    const Data_Branch = useSelector((state: RootState) => state.academic.BranchData);
+    const Data_Subject = useSelector((state: RootState) => state.academic.SubjectData)
 
     const sem: Option[] = [
         { value: "1", label: "1" },
@@ -35,7 +38,7 @@ const AttendanceReport = () => {
         { value: "8", label: "8" },
     ];
     const month: Option[] = [
-        { value: "whole sem", label: "whole sem" },
+        { value: "semester", label: "Semester" },
         { value: "1", label: "1" },
         { value: "2", label: "2" },
         { value: "3", label: "3" },
@@ -87,25 +90,41 @@ const AttendanceReport = () => {
         (async () => {
             try {
                 const [subjectData, branchDataResponse] = await Promise.all([
-                    academicServices.GetSubjects(),
-                    academicServices.GetBranch()
-                ])
+                    Data_Subject && Data_Subject.length ? null : academicServices.GetSubjects(),
+                    // Only fetch branch data if not already present in the state
+                    Data_Branch && Data_Branch.length ? null : academicServices.GetBranch()
+                ]);
 
-                const branchData = branchDataResponse.data.data.map((data: any) => ({
-                    value: data.id,
-                    label: `${data.id} - ${data.name}`
-                }))
+                let branchData;
+                const SubjectData = subjectData && subjectData.data.data.length ? subjectData.data.data : Data_Subject;
 
-                dispatch(setSubjectData(subjectData.data.data));
-                setSubjectDataState(subjectData.data.data);
-                setBranchDataState(branchData)
+
+                if (Data_Branch && Data_Branch.length) {
+                    // Use branch data from the state
+                    branchData = Data_Branch.map((data: any) => ({
+                        value: data.id,
+                        label: `${data.id} - ${data.name}`
+                    }));
+                } else if (branchDataResponse) {
+                    // Use branch data from the API
+                    branchData = branchDataResponse.data.data.map((data: any) => ({
+                        value: data.id,
+                        label: `${data.id} - ${data.name}`
+                    }));
+                }
+
+                // Dispatch subject data to the state
+                dispatch(setSubjectData(SubjectData));
+                setSubjectDataState(SubjectData);
+                setBranchDataState(branchData || []);
                 setLoading(false);
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 setLoading(false);
             }
         })();
-    }, [dispatch,]);
+    }, [dispatch, Data_Branch, Data_Subject]);
+
 
     if (loading) {
         return (

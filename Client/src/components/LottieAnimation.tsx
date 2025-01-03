@@ -22,7 +22,7 @@ const LottieAnimation: React.FC<LottieAnimationProps> = ({ json }) => {
                 style={{
                     width: '100%',
                     height: 'auto',
-                    maxWidth: '300px', // Default for small screens
+                    maxWidth: '300px',
                 }}
             />
             <style>{`

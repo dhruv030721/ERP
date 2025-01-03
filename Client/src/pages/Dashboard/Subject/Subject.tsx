@@ -49,11 +49,11 @@ const AddStudent: React.FC<AddStudentProps> = () => {
 
     const DownloadSampleExcelHandler = async () => {
         try {
-            const response = await axios.get('https://res.cloudinary.com/dij4vwbs6/raw/upload/v1734803119/ERP/Sample%20Files/add_subject', { responseType: 'blob' });
+            const response = await axios.get('https://res.cloudinary.com/dij4vwbs6/raw/upload/v1735887701/Subject_Data_Sheet_o4xkgn.xlsx', { responseType: 'blob' });
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'add_subject.xlsx');
+            link.setAttribute('download', 'Subject Data Sheet.xlsx');
             document.body.appendChild(link);
             link.click();
             toast.success("File Download Successfully", toastDesign);

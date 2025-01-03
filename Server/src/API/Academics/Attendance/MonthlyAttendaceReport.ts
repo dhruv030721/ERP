@@ -70,8 +70,7 @@ export const MonthlyAttendanceReport = async (req: Request, res: Response) => {
             },
             select: {
                 enrollmentNo: true,
-                first_name: true,
-                last_name: true
+                name: true
             }
         });
 
@@ -146,8 +145,7 @@ export const MonthlyAttendanceReport = async (req: Request, res: Response) => {
             verticalCenter = tableTop + (rowHeight / 2) - (textHeight / 2); // Calculate vertical center for each row
             doc.font("Helvetica").fontSize(fontSize).text(`${data.enrollmentNo}`, enrollmentColumnLeft, verticalCenter, { width: 100, align: 'center' });
             doc.rect(enrollmentColumnLeft, tableTop, 100, rowHeight).stroke();
-            const name = data.first_name + " " + data.last_name
-            doc.font("Helvetica").fontSize(fontSize).text(`${name[0] + " " + name[name.length - 1]}`, nameColumnLeft + 10, verticalCenter, { width: 150, align: 'left' });
+            doc.font("Helvetica").fontSize(fontSize).text(data.name, nameColumnLeft + 10, verticalCenter, { width: 150, align: 'left' });
             doc.rect(nameColumnLeft, tableTop, 150, rowHeight).stroke();
 
             let totalday = days.length;
@@ -192,8 +190,6 @@ export const MonthlyAttendanceReport = async (req: Request, res: Response) => {
 
         // Finalize the PDF and end the stream
         doc.end();
-
-
 
         // Wait for the file to be fully written
         fileStream.on('finish', () => {

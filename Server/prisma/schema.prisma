@@ -57,20 +57,18 @@ model Token {
 
 model Student {
   enrollmentNo       String       @unique
-  first_name         String
-  middle_name        String
-  last_name          String
+  name               String
   mobileNumber       String       @id @unique
   dob                DateTime?
   password           String?
-  gender             String
-  email              String
-  parentMobileNumber String
+  gender             Gender?
+  email              String?
+  parentMobileNumber String?
   address            String?
   branch             Branch       @relation("student_branch", fields: [branchId], references: [id])
   sem                Int
   Attendance         Attendance[] @relation("attendance_enrollmentno")
-  branchId           String
+  branchId           Int
   Token              Token?       @relation("student_user_token", fields: [tokenId], references: [id])
   tokenId            String?
 }
@@ -82,7 +80,7 @@ model Faculty {
   mobileNumber     String          @id @unique
   dob              DateTime?
   password         String?
-  gender           String
+  gender           Gender
   email            String
   assignedSubjects AssignSubject[] @relation("assignsubject_faculty")
   TimeTable        TimeTable[]     @relation("timetable_facultyid")
@@ -99,7 +97,7 @@ model Subject {
   sem              Int
   assignedSubjects AssignSubject[] @relation("assignsubject_subject")
   Attendance       Attendance[]    @relation("attendance_subject")
-  branchId         String
+  branchId         Int
 }
 
 model AssignSubject {
@@ -110,7 +108,7 @@ model AssignSubject {
   subject     Subject     @relation("assignsubject_subject", fields: [subjectCode], references: [code])
   facultyId   String?
   faculty     Faculty?    @relation("assignsubject_faculty", fields: [facultyId], references: [mobileNumber])
-  branchId    String
+  branchId    Int
   type        LectureType @default(LECTURE)
   batch       Batch
 }
@@ -126,7 +124,7 @@ model TimeTable {
   batch       String?
   branch      Branch      @relation("timetable_branch", fields: [branchId], references: [id])
   sem         Int
-  branchId    String
+  branchId    Int
 }
 
 model Attendance {
@@ -146,7 +144,7 @@ model Attendance {
 }
 
 model Branch {
-  id            String          @id
+  id            Int             @id
   name          String
   Student       Student[]       @relation("student_branch")
   AssignSubject AssignSubject[] @relation("assignsubject_branch")

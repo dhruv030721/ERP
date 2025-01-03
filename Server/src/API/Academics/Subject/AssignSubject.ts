@@ -8,7 +8,7 @@ const validBatches = ["A", "B", "C"];
 
 interface assignSubject {
     sem: number;
-    branch: string;
+    branch: number;
     subject: number;
     faculty: string;
     type: any;

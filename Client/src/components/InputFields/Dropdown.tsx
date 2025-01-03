@@ -19,7 +19,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, Li
                 id={`outlined-select-${label}`}
                 select
                 label={label}
-                defaultValue={defaultValue}
+                defaultValue={defaultValue ?? ""}
                 helperText={helperText}
                 disabled={disabled}
                 onChange={(event) => {

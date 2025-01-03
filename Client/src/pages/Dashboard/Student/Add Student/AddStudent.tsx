@@ -47,11 +47,11 @@ const AddStudent: React.FC<AddStudentProps> = () => {
 
   const DownloadSampleExcelHandler = async () => {
     try {
-      const response = await axios.get('https://res.cloudinary.com/dij4vwbs6/raw/upload/v1735488307/student_data_i14uoc.xlsx', { responseType: 'blob' });
+      const response = await axios.get('https://res.cloudinary.com/dij4vwbs6/raw/upload/v1735888446/Student_Data_Sheet_s4yfza.xlsx', { responseType: 'blob' });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'student_data.xlsx');
+      link.setAttribute('download', 'Student Data Sheet.xlsx');
       document.body.appendChild(link);
       link.click();
       toast.success("File Download Successfully", toastDesign);

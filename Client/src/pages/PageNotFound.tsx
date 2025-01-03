@@ -9,7 +9,7 @@ const PageNotFound = () => {
     return (
         <div>
             <Header />
-            <div className="h-screen font-poppins flex flex-col items-center justify-center bg-white p-4">
+            <div className="h-[35rem] font-poppins flex flex-col items-center justify-center bg-white p-4">
                 <div className="text-center max-w-2xl mx-auto">
                     <div className="flex justify-center space-x-4 md:space-x-8 mb-4 md:mb-8">
                         <BookOpen className="w-8 h-8 md:w-12 md:h-12 text-orange-500 animate-bounce" />
@@ -17,9 +17,9 @@ const PageNotFound = () => {
                         <GraduationCap className="w-8 h-8 md:w-12 md:h-12 text-orange-500 animate-bounce delay-200" />
                     </div>
 
-                    <h1 className="text-blue-900 font-bold text-6xl md:text-9xl mb-2 md:mb-4">404</h1>
+                    <h1 className="text-blue-900 font-bold text-6xl md:text-7xl mb-2 md:mb-4">404</h1>
 
-                    <h2 className="text-xl md:text-3xl font-semibold text-blue-900 mb-4 md:mb-8 px-4">
+                    <h2 className="text-xl md:text-xl font-semibold text-blue-900 mb-4 md:mb-8 px-4">
                         Oops! Looks like this lesson is missing
                     </h2>
 

@@ -87,6 +87,7 @@ class AcademicsServices {
   }
 
   async GetSubjects() {
+    // console.log("Get Subject API Hit..............")
     const response = await apiConnector({
       method: 'GET',
       url: AcademicsEndpoints.GET_SUBJECTS
@@ -134,6 +135,7 @@ class AcademicsServices {
   }
 
   async GetBranch() {
+    // console.log("Get Branch API Hit..............")
     const response: any = await apiConnector({
       method: "GET",
       url: `${AcademicsEndpoints.GET_BRANCH}`

@@ -17,20 +17,17 @@ export const ImportStudentdata = async (req: Request, res: Response) => {
             sourceFile: file.path
         })
 
-        for (let i = 1; i < data['Students'].length; i++) {
+        console.log(data);
+
+        for (let i = 2; i < data['Students'].length; i++) {
 
             await prisma.student.create({
                 data: {
                     enrollmentNo: data['Students'][i]['A'].toString(),
-                    first_name: data['Students'][i]['B'].toString(),
-                    middle_name: data['Students'][i]['C'].toString(),
-                    last_name: data['Students'][i]['D'].toString(),
-                    mobileNumber: data['Students'][i]['E'].toString(),
-                    email: data['Students'][i]['F'],
-                    parentMobileNumber: data['Students'][i]['G'].toString(),
+                    name: data['Students'][i]['B'].toString(),
+                    mobileNumber: data['Students'][i]['C'].toString(),
                     branchId: data['Students'][i]['I'].toString(),
                     sem: data['Students'][i]['J'],
-                    gender: data['Students'][i]['K'],
                 }
             })
         }
