@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,6 +5,119 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id      String   @id @default(uuid())
+  role    UserRole
+  user_id String   @unique
+  Faculty Faculty? @relation("faculty_user")
+  Student Student? @relation("student_user")
+}
+
+model Token {
+  id      String    @id @unique
+  token   String
+  Faculty Faculty[] @relation("faculty_user_token")
+  Student Student[] @relation("student_user_token")
+}
+
+model Student {
+  enrollmentNo       String       @unique
+  mobileNumber       String       @id @unique
+  dob                DateTime?
+  password           String?
+  email              String?
+  parentMobileNumber String?
+  address            String?
+  sem                Int
+  tokenId            String?
+  name               String
+  gender             Gender?
+  branchId           Int
+  Attendance         Attendance[] @relation("attendance_enrollmentno")
+  branch             Branch       @relation("student_branch", fields: [branchId], references: [id])
+  Token              Token?       @relation("student_user_token", fields: [tokenId], references: [id])
+  User               User?        @relation("student_user", fields: [mobileNumber], references: [user_id])
+}
+
+model Faculty {
+  first_name       String
+  middle_name      String
+  last_name        String
+  mobileNumber     String          @id @unique
+  dob              DateTime?
+  password         String?
+  email            String
+  tokenId          String?
+  gender           Gender
+  assignedSubjects AssignSubject[] @relation("assignsubject_faculty")
+  Attendance       Attendance[]    @relation("attendance_facultyid")
+  User             User            @relation("faculty_user", fields: [mobileNumber], references: [user_id])
+  Token            Token?          @relation("faculty_user_token", fields: [tokenId], references: [id])
+  TimeTable        TimeTable[]     @relation("timetable_facultyid")
+}
+
+model Subject {
+  code             Int             @id @unique
+  name             String
+  sem              Int
+  branchId         Int
+  assignedSubjects AssignSubject[] @relation("assignsubject_subject")
+  Attendance       Attendance[]    @relation("attendance_subject")
+  branch           Branch          @relation("subject_branch", fields: [branchId], references: [id])
+}
+
+model AssignSubject {
+  id          String      @id @default(uuid())
+  sem         Int
+  subjectCode Int
+  facultyId   String?
+  type        LectureType @default(LECTURE)
+  batch       Batch
+  branchId    Int
+  branch      Branch      @relation("assignsubject_branch", fields: [branchId], references: [id])
+  faculty     Faculty?    @relation("assignsubject_faculty", fields: [facultyId], references: [mobileNumber])
+  subject     Subject     @relation("assignsubject_subject", fields: [subjectCode], references: [code])
+}
+
+model TimeTable {
+  id          String      @id @default(uuid())
+  time        String
+  day         String
+  subject     String
+  facultyId   String
+  lectureType LectureType
+  batch       String?
+  sem         Int
+  branchId    Int
+  branch      Branch      @relation("timetable_branch", fields: [branchId], references: [id])
+  faculty     Faculty     @relation("timetable_facultyid", fields: [facultyId], references: [mobileNumber])
+}
+
+model Attendance {
+  id                  String         @id @default(uuid())
+  time                String
+  date                DateTime
+  day                 String
+  sem                 Int
+  branch              String
+  subjectCode         Int
+  studentEnrollmentNo String
+  facultyEmployeeId   String
+  status              AttendanceType
+  facultyId           Faculty        @relation("attendance_facultyid", fields: [facultyEmployeeId], references: [mobileNumber])
+  enrollmentNo        Student        @relation("attendance_enrollmentno", fields: [studentEnrollmentNo], references: [enrollmentNo])
+  subject             Subject        @relation("attendance_subject", fields: [subjectCode], references: [code])
+}
+
+model Branch {
+  name          String
+  id            Int             @id
+  AssignSubject AssignSubject[] @relation("assignsubject_branch")
+  Student       Student[]       @relation("student_branch")
+  Subject       Subject[]       @relation("subject_branch")
+  TimeTable     TimeTable[]     @relation("timetable_branch")
 }
 
 enum AttendanceType {
@@ -39,115 +146,4 @@ enum Batch {
   A
   B
   C
-}
-
-model User {
-  id      String    @id @default(uuid())
-  role    UserRole
-  user_id String    @unique
-  Faculty Faculty[] @relation("faculty_user")
-}
-
-model Token {
-  id      String    @id @unique
-  Student Student[] @relation("student_user_token")
-  Faculty Faculty[] @relation("faculty_user_token")
-  token   String
-}
-
-model Student {
-  enrollmentNo       String       @unique
-  name               String
-  mobileNumber       String       @id @unique
-  dob                DateTime?
-  password           String?
-  gender             Gender?
-  email              String?
-  parentMobileNumber String?
-  address            String?
-  branch             Branch       @relation("student_branch", fields: [branchId], references: [id])
-  sem                Int
-  Attendance         Attendance[] @relation("attendance_enrollmentno")
-  branchId           Int
-  Token              Token?       @relation("student_user_token", fields: [tokenId], references: [id])
-  tokenId            String?
-}
-
-model Faculty {
-  first_name       String
-  middle_name      String
-  last_name        String
-  mobileNumber     String          @id @unique
-  dob              DateTime?
-  password         String?
-  gender           Gender
-  email            String
-  assignedSubjects AssignSubject[] @relation("assignsubject_faculty")
-  TimeTable        TimeTable[]     @relation("timetable_facultyid")
-  Attendance       Attendance[]    @relation("attendance_facultyid")
-  User             User?           @relation("faculty_user", fields: [mobileNumber], references: [user_id])
-  tokenId          String?
-  Token            Token?          @relation("faculty_user_token", fields: [tokenId], references: [id])
-}
-
-model Subject {
-  code             Int             @id @unique
-  name             String
-  branch           Branch          @relation("subject_branch", fields: [branchId], references: [id])
-  sem              Int
-  assignedSubjects AssignSubject[] @relation("assignsubject_subject")
-  Attendance       Attendance[]    @relation("attendance_subject")
-  branchId         Int
-}
-
-model AssignSubject {
-  id          String      @id @default(uuid())
-  sem         Int
-  branch      Branch      @relation("assignsubject_branch", fields: [branchId], references: [id])
-  subjectCode Int
-  subject     Subject     @relation("assignsubject_subject", fields: [subjectCode], references: [code])
-  facultyId   String?
-  faculty     Faculty?    @relation("assignsubject_faculty", fields: [facultyId], references: [mobileNumber])
-  branchId    Int
-  type        LectureType @default(LECTURE)
-  batch       Batch
-}
-
-model TimeTable {
-  id          String      @id @default(uuid())
-  time        String
-  day         String
-  subject     String
-  faculty     Faculty     @relation("timetable_facultyid", fields: [facultyId], references: [mobileNumber])
-  facultyId   String
-  lectureType LectureType
-  batch       String?
-  branch      Branch      @relation("timetable_branch", fields: [branchId], references: [id])
-  sem         Int
-  branchId    Int
-}
-
-model Attendance {
-  id                  String         @id @default(uuid())
-  time                String
-  date                DateTime
-  day                 String
-  sem                 Int
-  branch              String
-  subject             Subject        @relation("attendance_subject", fields: [subjectCode], references: [code])
-  subjectCode         Int
-  enrollmentNo        Student        @relation("attendance_enrollmentno", fields: [studentEnrollmentNo], references: [enrollmentNo])
-  studentEnrollmentNo String
-  facultyId           Faculty        @relation("attendance_facultyid", fields: [facultyEmployeeId], references: [mobileNumber])
-  facultyEmployeeId   String
-  status              AttendanceType
-}
-
-model Branch {
-  id            Int             @id
-  name          String
-  Student       Student[]       @relation("student_branch")
-  AssignSubject AssignSubject[] @relation("assignsubject_branch")
-  TimeTable     TimeTable[]     @relation("timetable_branch")
-  Subject       Subject[]       @relation("subject_branch")
 }
