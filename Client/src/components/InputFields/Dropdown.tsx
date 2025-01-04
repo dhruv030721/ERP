@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useId } from 'react';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
 interface DropdownProps {
     label: string;
-    defaultValue: string | undefined;
+    value: string | undefined;
     helperText: string;
     List: { value: string; label: string }[] | null;
     dropdownHandler: (value: string) => void;
@@ -12,14 +12,18 @@ interface DropdownProps {
     disabled?: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, List, dropdownHandler, width, disabled }) => {
+const Dropdown: React.FC<DropdownProps> = ({ label, value, helperText, List, dropdownHandler, width, disabled }) => {
+
+    const id = useId();
+
     return (
         <div>
             <TextField
+                key={id}
                 id={`outlined-select-${label}`}
                 select
                 label={label}
-                defaultValue={defaultValue ?? ""}
+                value={value ? value : ""}
                 helperText={helperText}
                 disabled={disabled}
                 onChange={(event) => {
@@ -28,11 +32,14 @@ const Dropdown: React.FC<DropdownProps> = ({ label, defaultValue, helperText, Li
                 sx={{ width: width || 'auto' }}
                 color='warning'
             >
-                {List != null ? (List.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                    </MenuItem>
-                ))) : null}
+                {List != null ? (
+                    List.map((option, index) => (
+                        <MenuItem key={`${option.value}-${index}`} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))
+                ) : null}
+
             </TextField>
         </div>
     );

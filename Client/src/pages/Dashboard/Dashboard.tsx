@@ -9,7 +9,7 @@ import { FaBookOpenReader } from "react-icons/fa6";
 import { useEffect } from 'react';
 import { academicServices } from '../../services';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBranchData } from '../../slices/academics';
+import { setBranchData, setSubjectData } from '../../slices/academics';
 import { RootState } from '../../slices/store';
 
 interface DashboardItem {
@@ -21,6 +21,7 @@ interface DashboardItem {
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
   const Data_Branch = useSelector((state: RootState) => state.academic.BranchData);
+  const Data_Subject = useSelector((state: RootState) => state.academic.SubjectData);
 
   const DashboardItems: DashboardItem[] = [
     {
@@ -72,14 +73,14 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      if (Data_Branch && Data_Branch.length != 0) {
-        dispatch(setBranchData(Data_Branch));
-      } else {
-        const response = await academicServices.GetBranch();
-        dispatch(setBranchData(response.data.data));
-      }
+      const [branchResponse, subjectResponse] = await Promise.all([
+        Data_Branch && Data_Branch.length ? null : academicServices.GetBranch(),
+        Data_Subject && Data_Subject.length ? null : academicServices.GetSubjects()
+      ])
+      if (branchResponse) dispatch(setBranchData(branchResponse.data.data));
+      if (subjectResponse) dispatch(setSubjectData(subjectResponse.data.data));
     })();
-  }, []);
+  }, [Data_Branch, Data_Subject, dispatch]);
 
   return (
     <div className='w-full'>

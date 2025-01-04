@@ -15,6 +15,9 @@ interface Option {
 
 
 const AttendanceReport = () => {
+    const [loading, setLoading] = useState<boolean>(true);
+
+
     const [selectedSem, setSelectedSem] = useState<Option | null>(null);
     const [subjectData, setSubjectDataState] = useState<Option[]>([]);
     const [branchData, setBranchDataState] = useState<Option[]>([]);
@@ -22,8 +25,14 @@ const AttendanceReport = () => {
     const [selectedBranch, setBranch] = useState<string>('');
     const [selectedSubject, setSelectedSubject] = useState<string>('');
     const dispatch = useDispatch();
+
+
+    // Dropdown enable states
+    const [isSemEnabled, setSemEnabled] = useState(false);
+    const [isSubjectEnabled, setSubjectEnabled] = useState(false);
+
+
     const SubjectData: any = useSelector((state: RootState) => state.academic.SubjectData);
-    const [loading, setLoading] = useState<boolean>(true);
     const Data_Branch = useSelector((state: RootState) => state.academic.BranchData);
     const Data_Subject = useSelector((state: RootState) => state.academic.SubjectData)
 
@@ -37,6 +46,7 @@ const AttendanceReport = () => {
         { value: "7", label: "7" },
         { value: "8", label: "8" },
     ];
+
     const month: Option[] = [
         { value: "semester", label: "Semester" },
         { value: "1", label: "1" },
@@ -59,11 +69,12 @@ const AttendanceReport = () => {
         const filteredSubjects = SubjectData.filter((subject: any) => subject.sem == value).map((sub: any) => {
             return {
                 value: sub.code,
-                label: sub.name
+                label: `${sub.code} - ${sub.name}`
             };
         });
         setSelectedSubject('');
         setSubjectDataState(filteredSubjects);
+        setSubjectEnabled(true);
     };
 
     const handleSubjectChange = (value: string) => {
@@ -84,6 +95,7 @@ const AttendanceReport = () => {
         });
         setSelectedSubject('');
         setSubjectDataState(filteredSubjects);
+        setSemEnabled(true);
     }
 
     useEffect(() => {
@@ -145,7 +157,7 @@ const AttendanceReport = () => {
                     <Dropdown
                         List={branchData}
                         label={"Branch"}
-                        defaultValue={selectedBranch}
+                        value={selectedBranch}
                         helperText="Branch"
                         dropdownHandler={handleBranchChange}
                         width={250}
@@ -155,27 +167,29 @@ const AttendanceReport = () => {
                     <Dropdown
                         List={sem}
                         label={"Sem"}
-                        defaultValue={selectedSem?.value}
+                        value={selectedSem?.value}
                         helperText="Semester"
                         dropdownHandler={handleSemChange}
                         width={100}
+                        disabled={!isSemEnabled}
                     />
                 </div>
                 <div className="mt-10">
                     <Dropdown
                         List={subjectData.length ? subjectData : []}
                         label={"Subject"}
-                        defaultValue={selectedSubject}
+                        value={selectedSubject}
                         helperText="Subject"
                         dropdownHandler={handleSubjectChange}
                         width={400}
+                        disabled={!isSubjectEnabled}
                     />
                 </div>
                 <div className="mt-10">
                     <Dropdown
                         List={month.length ? month : []}
                         label={"Month"}
-                        defaultValue={selectedMonth?.value}
+                        value={selectedMonth?.value}
                         helperText="Month"
                         dropdownHandler={handleMonthChange}
                         width={200}

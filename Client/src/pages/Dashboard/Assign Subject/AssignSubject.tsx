@@ -6,6 +6,7 @@ import toast from "react-hot-toast"
 import { toastDesign } from "../../../components/GlobalVariables"
 import { useSelector } from "react-redux"
 import { FaLongArrowAltRight } from "react-icons/fa"
+import { RootState } from "../../../slices/store"
 
 interface Option {
     value: string
@@ -34,6 +35,11 @@ const AssignSubject = () => {
         { value: "B", label: "B" },
         { value: "C", label: "C" }
     ]
+
+    // Cached State Data
+    const Data_Subject = useSelector((state: RootState) => state.academic.SubjectData);
+    const Data_Branch = useSelector((state: RootState) => state.academic.BranchData);
+
 
     // Form state
     const [selectedFaculty, setFaculty] = useState<string>('')
@@ -92,7 +98,7 @@ const AssignSubject = () => {
             data.sem == value && data.branchId == selectedBranch
         ).map((data: any) => ({
             value: data.code,
-            label: data.name
+            label: `${data.code} - ${data.name}`
         }))
         setFilteredSubject(filtered)
         setSem(value)
@@ -185,8 +191,8 @@ const AssignSubject = () => {
                 const [facultyResponse, branchResponse, subjectResponse, assignedSubjectResponse] =
                     await Promise.all([
                         academicServices.GetFaculty(),
-                        academicServices.GetBranch(),
-                        academicServices.GetSubjects(),
+                        Data_Branch && Data_Branch.length ? null : academicServices.GetBranch(),
+                        Data_Subject && Data_Subject.length ? null : academicServices.GetSubjects(),
                         academicServices.GetAssignSubject(mobileNumber)
                     ])
 
@@ -195,14 +201,17 @@ const AssignSubject = () => {
                     label: `${data.first_name} ${data.last_name}`
                 }))
 
-                const branchData = branchResponse.data.data.map((data: any) => ({
+                let BranchData = branchResponse != null ? branchResponse.data.data : Data_Branch;
+                const SubjectData = subjectResponse != null ? subjectResponse.data.data : Data_Subject;
+
+                BranchData = BranchData.map((data: any) => ({
                     value: data.id,
                     label: `${data.id} - ${data.name}`
                 }))
 
                 setFacultiesData(facultyData)
-                setBranchData(branchData)
-                setSubjectData(subjectResponse.data.data)
+                setBranchData(BranchData)
+                setSubjectData(SubjectData)
                 setAssignedSubject(assignedSubjectResponse.data.data)
             } catch (error) {
                 toast.error("Error loading data", toastDesign)
@@ -210,7 +219,7 @@ const AssignSubject = () => {
                 setLoading(false)
             }
         })()
-    }, [])
+    }, [Data_Branch, Data_Subject, mobileNumber])
 
     if (loading) {
         return <Loading message="" size="max-w-[20%]" />
@@ -226,7 +235,7 @@ const AssignSubject = () => {
                         <Dropdown
                             List={branchData}
                             label="Branch"
-                            defaultValue={selectedBranch}
+                            value={selectedBranch}
                             helperText="Branch"
                             dropdownHandler={handleBranchChange}
                             width={300}
@@ -236,7 +245,7 @@ const AssignSubject = () => {
                         <Dropdown
                             List={semData}
                             label="Sem"
-                            defaultValue={selectedSem}
+                            value={selectedSem}
                             helperText="Sem"
                             dropdownHandler={handleSemChange}
                             width={200}
@@ -247,7 +256,7 @@ const AssignSubject = () => {
                         <Dropdown
                             List={filteredSubjects}
                             label="Subject"
-                            defaultValue={selectedSubject}
+                            value={selectedSubject}
                             helperText="Subject"
                             dropdownHandler={handleSubjectChange}
                             width={350}
@@ -258,7 +267,7 @@ const AssignSubject = () => {
                         <Dropdown
                             List={facultiesData}
                             label="Faculty"
-                            defaultValue={selectedFaculty}
+                            value={selectedFaculty}
                             helperText="Faculty"
                             dropdownHandler={handleFacultyChange}
                             width={200}
@@ -269,7 +278,7 @@ const AssignSubject = () => {
                         <Dropdown
                             List={types}
                             label="Type"
-                            defaultValue={selectedType}
+                            value={selectedType}
                             helperText="Type"
                             dropdownHandler={handleTypeChange}
                             width={200}
@@ -280,7 +289,7 @@ const AssignSubject = () => {
                         <Dropdown
                             List={batch}
                             label="Batch"
-                            defaultValue={selectedBatch}
+                            value={selectedBatch}
                             helperText="Batch"
                             dropdownHandler={handleBatchChange}
                             width={200}
