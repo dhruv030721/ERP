@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8888;
 
 app.use(
     cors({
-        origin: ["http://localhost:5173", "https://specerp.jalaymovaliya.tech"],
+        origin: ["http://localhost:5173", "https://specerp.vercel.app"],
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
         credentials: true,
     })
