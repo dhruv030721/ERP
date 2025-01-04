@@ -2,6 +2,7 @@ import React, { useId } from 'react';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 
+// Dropdown Component
 interface DropdownProps {
     label: string;
     value: string | undefined;
@@ -12,12 +13,18 @@ interface DropdownProps {
     disabled?: boolean;
 }
 
-const Dropdown: React.FC<DropdownProps> = ({ label, value, helperText, List, dropdownHandler, width, disabled }) => {
-
+const Dropdown: React.FC<DropdownProps> = ({
+    label,
+    value,
+    helperText,
+    List,
+    dropdownHandler,
+    width,
+    disabled
+}) => {
     const id = useId();
 
     return (
-
         <TextField
             key={id}
             id={`outlined-select-${label}`}
@@ -29,7 +36,13 @@ const Dropdown: React.FC<DropdownProps> = ({ label, value, helperText, List, dro
             onChange={(event) => {
                 dropdownHandler(event.target.value);
             }}
-            sx={{ width: width || 'auto' }}
+            sx={{
+                width: '100%',
+                maxWidth: width || 'none',
+                '& .MuiInputBase-root': {
+                    minHeight: '56px'
+                }
+            }}
             color='warning'
         >
             {List != null ? (
@@ -39,7 +52,6 @@ const Dropdown: React.FC<DropdownProps> = ({ label, value, helperText, List, dro
                     </MenuItem>
                 ))
             ) : null}
-
         </TextField>
     );
 };

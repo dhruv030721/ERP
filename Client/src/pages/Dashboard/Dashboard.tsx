@@ -98,7 +98,7 @@ const Dashboard: React.FC = () => {
 
         {/* Dashboard Section */}
         <div className='w-full md:w-[80%] rounded-lg md:h-[95%] flex flex-col space-y-5 p-2 md:p-5 font-poppins'>
-          <h2 className='font-black text-2xl md:text-xl text-center'>Dashboard</h2>
+          <h2 className='font-black text-lg md:text-xl text-center'>Dashboard</h2>
 
           <div className='px-2 md:px-10'>
             <ul className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-3 md:gap-x-10 md:gap-y-10 justify-center items-center'>

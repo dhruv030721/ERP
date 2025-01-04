@@ -65,7 +65,7 @@ const AddFaculty = () => {
 
       <div>
         <form
-          className="grid grid-cols-3  gap-20 items-center"
+        className="flex flex-col gap-y-5 md:grid md:grid-cols-3 md:gap-20 items-center"
           onSubmit={handleSubmit(AddFacultyHandler)}
         >
           <Controller
@@ -101,7 +101,7 @@ const AddFaculty = () => {
           <BasicDatePicker label="Date of Birth" value={dob} setValue={setDob} />
           <RowRadioButtonsGroup fields={fields} value={gender} setValue={setGender} />
           <button
-            className="bg-blue-950 rounded-md py-3 text-white font-bold"
+            className="bg-blue-950 w-full rounded-md py-3 text-white font-bold"
             type="submit"
           >
             Add Faculty

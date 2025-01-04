@@ -150,10 +150,10 @@ const AttendanceReport = () => {
 
     return (
         <div className="p-10">
-            <h1 className="font-semibold text-lg">Download Attendance Report:</h1>
-            <p className="text-gray-500">"Here, you can download attendance report for subject based on month"</p>
-            <div className="flex gap-x-10 items-center">
-                <div className="mt-10">
+            <h1 className="text-center font-semibold text-lg md:text-start">Download Attendance Report:</h1>
+            <p className="text-center  text-xs md:text-start md:text-md text-gray-500">"Here, you can download attendance report for subject based on month"</p>
+            <div className="flex flex-col gap-y-4 mt-7 md:flex-row md:gap-x-10 md:items-center">
+                <div className="w-full">
                     <Dropdown
                         List={branchData}
                         label={"Branch"}
@@ -163,7 +163,7 @@ const AttendanceReport = () => {
                         width={250}
                     />
                 </div>
-                <div className="mt-10">
+                <div className="w-full">
                     <Dropdown
                         List={sem}
                         label={"Sem"}
@@ -174,7 +174,7 @@ const AttendanceReport = () => {
                         disabled={!isSemEnabled}
                     />
                 </div>
-                <div className="mt-10">
+                <div className="w-full">
                     <Dropdown
                         List={subjectData.length ? subjectData : []}
                         label={"Subject"}
@@ -185,7 +185,7 @@ const AttendanceReport = () => {
                         disabled={!isSubjectEnabled}
                     />
                 </div>
-                <div className="mt-10">
+                <div className="w-full">
                     <Dropdown
                         List={month.length ? month : []}
                         label={"Month"}
@@ -195,7 +195,7 @@ const AttendanceReport = () => {
                         width={200}
                     />
                 </div>
-                <div className="mt-5">
+                <div className="w-full">
                     <MuiButton btnName="Download Report" color="rgb(23,37,84)" type="submit" icon={<IoCloudDownload />} eventHandler={DownloadHandler} width="220px" height="50px" />
                 </div>
 

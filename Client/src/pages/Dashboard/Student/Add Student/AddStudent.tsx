@@ -62,7 +62,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
 
   return (
     <div className='mx-10 flex flex-col'>
-      <div className='flex-col space-y-2 px-2 py-7'>
+      <div className='flex-col space-y-2 px-2 py-7 items-center'>
         <div className='flex gap-x-5'>
           <BsPersonFillAdd size={30} />
           <h1 className='font-bold text-xl'>Add Student</h1>
@@ -70,7 +70,7 @@ const AddStudent: React.FC<AddStudentProps> = () => {
         <p className='text-gray-500'>"Here, you can register new Student."</p>
       </div>
 
-      <div className='mt-5'>
+      <div className='mt-5 text-center md:text-start'>
         <ToggleButtonGroup
           color="primary"
           value={alignment}
@@ -84,22 +84,40 @@ const AddStudent: React.FC<AddStudentProps> = () => {
       </div>
 
       {alignment === 'add-student' ? (
-        <ComingSoon />
+        <div className='mt-5'>
+          <ComingSoon />
+        </div>
       ) : (
-        <div className='flex justify-center space-x-10'>
-          <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
-            <h1 className='font-bold text-red-600'>{excelFileName}</h1>
-            <div>
-
-              <MuiButton color='rgb(23,37,84)' btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} width='200px' height='50px' />
-            </div>
+        <div className="mt-6 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10">
+          <div className="flex flex-col items-center space-y-4">
+            <h1 className="font-bold text-red-600 text-sm sm:text-base text-center break-all max-w-[300px]">
+              {excelFileName}
+            </h1>
+            <MuiButton
+              color='rgb(23,37,84)'
+              btnName="Upload File"
+              type="file"
+              eventHandler={ExcelsheetNameHandler}
+              icon={<IoCloudUpload />}
+              fileInputRef={fileInputRef}
+              width="110%"
+              height="50px"
+            />
           </div>
 
-          <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
-            <h1 className='font-bold'>Download Sample Excel</h1>
-            <div>
-              <MuiButton color='rgb(23,37,84)' btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} width='300px' height='50px' />
-            </div>
+          <div className="flex flex-col items-center space-y-4">
+            <h1 className="font-bold text-sm sm:text-base text-center">
+              Download Sample Excel
+            </h1>
+            <MuiButton
+              color='rgb(23,37,84)'
+              btnName="Download Sample Excel"
+              type="button"
+              eventHandler={DownloadSampleExcelHandler}
+              icon={<IoCloudDownload />}
+              width="100%"
+              height="50px"
+            />
           </div>
         </div>
       )}
