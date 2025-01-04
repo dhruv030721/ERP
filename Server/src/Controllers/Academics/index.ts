@@ -3,7 +3,7 @@ import AddStudent from './Student/index'
 import Subject from "./Subject/index"
 import Attedance from "./Attendance/index"
 import Faculty from "./Faculty/index"
-import upload from '../../Utils/upload';
+import upload from '../../Middleware/upload.middleware';
 import Timetable from "./TimeTable/index"
 
 const router = Router();

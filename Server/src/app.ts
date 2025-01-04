@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import express, { Application, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import routes from './Utils/router';
+import routes from './Router/router';
 import logger from "./Utils/logger";
 import morgan from "morgan";
 import cors from "cors";

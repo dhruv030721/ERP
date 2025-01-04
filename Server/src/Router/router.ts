@@ -1,5 +1,5 @@
-import authRouter from '../API/Auth/index'
-import academicsRouter from '../API/Academics/index';
+import authRouter from '../Controllers/Auth/index'
+import academicsRouter from '../Controllers/Academics/index';
 
 function routes(app:any) {
 

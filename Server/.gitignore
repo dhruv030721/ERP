@@ -8,3 +8,5 @@ error.log
 server.key
 server.cert
 dist
+
+src/config/serviceKey.json
