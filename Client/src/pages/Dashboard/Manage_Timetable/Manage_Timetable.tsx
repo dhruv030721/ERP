@@ -143,7 +143,7 @@ const ManageTimetable = () => {
                     <Dropdown
                         List={branchData}
                         label={"Branch"}
-                        defaultValue={selectedBranch}
+                        value={selectedBranch}
                         helperText="Branch"
                         dropdownHandler={handleBranchChange}
                         width={300}
@@ -151,7 +151,7 @@ const ManageTimetable = () => {
                     <Dropdown
                         List={semData}
                         label={"Sem"}
-                        defaultValue={selectedSem}
+                        value={selectedSem}
                         helperText="Sem"
                         dropdownHandler={handleSemChange}
                         width={300}
