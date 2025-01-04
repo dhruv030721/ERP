@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8888;
 
 app.use(
     cors({
-        origin: ["http://localhost:5173", "http://37.27.81.8:4001", "https://anasvhora.me"],
+        origin: ["http://localhost:5173", "https://specerp.jalaymovaliya.tech"],
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
         credentials: true,
     })
