@@ -1,4 +1,3 @@
-import { Storage } from '@google-cloud/storage';
 import path from 'path';
 import admin from "firebase-admin";
 
