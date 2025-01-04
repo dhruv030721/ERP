@@ -198,7 +198,7 @@ const AssignSubject = () => {
 
                 const facultyData = facultyResponse.data.data.map((data: any) => ({
                     value: data.mobileNumber,
-                    label: `${data.first_name} ${data.last_name}`
+                    label: `Prof. ${data.first_name} ${data.last_name}`
                 }))
 
                 let BranchData = branchResponse != null ? branchResponse.data.data : Data_Branch;
@@ -231,7 +231,7 @@ const AssignSubject = () => {
             <p className="text-gray-500">"Assign faculty members to subjects for the semester."</p>
             <div className="flex mt-10 gap-x-10">
                 <div className="grid grid-cols-3 gap-y-5">
-                    <div>
+                    <div className="flex justify-center">
                         <Dropdown
                             List={branchData}
                             label="Branch"
@@ -241,7 +241,7 @@ const AssignSubject = () => {
                             width={300}
                         />
                     </div>
-                    <div>
+                    <div className="flex justify-center">
                         <Dropdown
                             List={semData}
                             label="Sem"
@@ -252,29 +252,29 @@ const AssignSubject = () => {
                             disabled={!isSemEnabled}
                         />
                     </div>
-                    <div>
+                    <div className="flex justify-center">
                         <Dropdown
                             List={filteredSubjects}
                             label="Subject"
                             value={selectedSubject}
                             helperText="Subject"
                             dropdownHandler={handleSubjectChange}
-                            width={350}
+                            width={400}
                             disabled={!isSubjectEnabled}
                         />
                     </div>
-                    <div>
+                    <div className="flex justify-center" >
                         <Dropdown
                             List={facultiesData}
                             label="Faculty"
                             value={selectedFaculty}
                             helperText="Faculty"
                             dropdownHandler={handleFacultyChange}
-                            width={200}
+                            width={300}
                             disabled={!isFacultyEnabled}
                         />
                     </div>
-                    <div>
+                    <div className="flex justify-center">
                         <Dropdown
                             List={types}
                             label="Type"
@@ -285,7 +285,7 @@ const AssignSubject = () => {
                             disabled={!isTypeEnabled}
                         />
                     </div>
-                    <div>
+                    <div className="flex justify-start">
                         <Dropdown
                             List={batch}
                             label="Batch"

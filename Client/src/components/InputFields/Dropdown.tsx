@@ -17,31 +17,30 @@ const Dropdown: React.FC<DropdownProps> = ({ label, value, helperText, List, dro
     const id = useId();
 
     return (
-        <div>
-            <TextField
-                key={id}
-                id={`outlined-select-${label}`}
-                select
-                label={label}
-                value={value ? value : ""}
-                helperText={helperText}
-                disabled={disabled}
-                onChange={(event) => {
-                    dropdownHandler(event.target.value);
-                }}
-                sx={{ width: width || 'auto' }}
-                color='warning'
-            >
-                {List != null ? (
-                    List.map((option, index) => (
-                        <MenuItem key={`${option.value}-${index}`} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))
-                ) : null}
 
-            </TextField>
-        </div>
+        <TextField
+            key={id}
+            id={`outlined-select-${label}`}
+            select
+            label={label}
+            value={value ? value : ""}
+            helperText={helperText}
+            disabled={disabled}
+            onChange={(event) => {
+                dropdownHandler(event.target.value);
+            }}
+            sx={{ width: width || 'auto' }}
+            color='warning'
+        >
+            {List != null ? (
+                List.map((option, index) => (
+                    <MenuItem key={`${option.value}-${index}`} value={option.value}>
+                        {option.label}
+                    </MenuItem>
+                ))
+            ) : null}
+
+        </TextField>
     );
 };
 
