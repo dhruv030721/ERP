@@ -32,9 +32,9 @@ export const GetTimeTable = async (req: Request, res: Response) => {
 
             const newItem = {
                 ...item,
-                facultyName: faculty ? faculty.name : null,
+                facultyName: faculty ? `${faculty.first_name} ${faculty.last_name}` : null,
                 subjectCode: subject ? subject.code : null,
-                subject: subject ? subject.name : null
+                subject: subject ? subject.name : null,
             };
 
             groupedByDay[day].push(newItem);

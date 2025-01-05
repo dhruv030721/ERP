@@ -35,6 +35,7 @@ model Student {
   name               String
   gender             Gender?
   branchId           Int
+  batch              Batch
   Attendance         Attendance[] @relation("attendance_enrollmentno")
   branch             Branch       @relation("student_branch", fields: [branchId], references: [id])
   Token              Token?       @relation("student_user_token", fields: [tokenId], references: [id])
@@ -101,7 +102,6 @@ model Attendance {
   date                DateTime
   day                 String
   sem                 Int
-  branch              String
   subjectCode         Int
   studentEnrollmentNo String
   facultyEmployeeId   String
@@ -109,6 +109,8 @@ model Attendance {
   facultyId           Faculty        @relation("attendance_facultyid", fields: [facultyEmployeeId], references: [mobileNumber])
   enrollmentNo        Student        @relation("attendance_enrollmentno", fields: [studentEnrollmentNo], references: [enrollmentNo])
   subject             Subject        @relation("attendance_subject", fields: [subjectCode], references: [code])
+  branchId            Int
+  Branch              Branch         @relation("attendance_branch", fields: [branchId], references: [id])
 }
 
 model Branch {
@@ -118,6 +120,7 @@ model Branch {
   Student       Student[]       @relation("student_branch")
   Subject       Subject[]       @relation("subject_branch")
   TimeTable     TimeTable[]     @relation("timetable_branch")
+  Attendance    Attendance[]    @relation("attendance_branch")
 }
 
 enum AttendanceType {

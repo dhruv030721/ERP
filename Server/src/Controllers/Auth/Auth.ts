@@ -131,7 +131,11 @@ const login = async (req: Request, res: Response) => {
                 where: {
                     mobileNumber: mobileNumber
                 },
+                include: {
+                    User: true
+                }
             })
+
 
         if (!user) {
             return res.status(404).json({
@@ -154,7 +158,8 @@ const login = async (req: Request, res: Response) => {
             const payload = {
                 email: user.email,
                 name: username,
-                mobileNumber: user.mobileNumber
+                mobileNumber: user.mobileNumber,
+                role: user.User.role
             };
 
             const token = await generateToken(payload);

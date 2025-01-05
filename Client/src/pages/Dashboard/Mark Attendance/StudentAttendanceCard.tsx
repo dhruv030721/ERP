@@ -19,21 +19,21 @@ const StudentAttendanceCard = ({ List, attendance, onAttendanceChange }: any) =>
                         row
                         aria-labelledby="demo-radio-buttons-group-label"
                         name="radio-buttons-group"
-                        value={attendance}
+                        value={attendance || "Present"}
                         onChange={handleChange}
                     >
                         <FormControlLabel 
-                            value="Present" 
+                            value="PRESENT" 
                             control={<Radio sx={{ color: 'green', '&.Mui-checked': { color: 'green' } }} />} 
                             label="Present" 
                         />
                         <FormControlLabel 
-                            value="Absent" 
+                            value="ABSENT" 
                             control={<Radio sx={{ color: 'red', '&.Mui-checked': { color: 'red' } }} />} 
                             label="Absent" 
                         />
                         <FormControlLabel 
-                            value="Leave" 
+                            value="LEAVE" 
                             control={<Radio sx={{ color: 'blue', '&.Mui-checked': { color: 'blue' } }} />} 
                             label="On Leave" 
                         />

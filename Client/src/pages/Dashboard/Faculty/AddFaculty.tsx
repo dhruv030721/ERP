@@ -1,5 +1,5 @@
 import { BsPersonFillAdd } from "react-icons/bs";
-import { BasicDatePicker } from "../../../components/index";
+import { AccessDenied, BasicDatePicker, } from "../../../components/index";
 import { useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -7,6 +7,9 @@ import RowRadioButtonsGroup from "../../../components/InputFields/RadioGroup";
 import { authServices } from "../../../services";
 import { toastDesign } from "../../../components/GlobalVariables";
 import MaterialInput from "../../../components/InputFields/MaterialInput";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../slices/store";
+import { useNavigate } from "react-router-dom";
 
 interface RegisterFacultyInputs {
   employeeId: string;
@@ -32,7 +35,9 @@ const AddFaculty = () => {
   ];
   const [dob, setDob] = useState(null);
   const [gender, setGender] = useState("male");
+  const navigate = useNavigate();
   const { control, handleSubmit, reset } = useForm<RegisterFacultyInputs>();
+  const Data_Auth = useSelector((state: RootState) => state.auth.userData);
 
   const AddFacultyHandler: SubmitHandler<RegisterFacultyInputs> = async (data) => {
     data.dob = dob;
@@ -53,19 +58,28 @@ const AddFaculty = () => {
     );
   };
 
+  if (Data_Auth == null) {
+    navigate('/login');
+  } else {
+    if (Data_Auth.role != "ADMIN") {
+      return <AccessDenied />
+    }
+  }
+
+
   return (
     <div className="p-20">
       <div className='flex-col space-y-2 px-2 pb-10'>
         <div className='flex gap-x-5'>
           <BsPersonFillAdd size={30} />
-          <h1 className='font-bold text-xl'>Add Faculty</h1>
-        </div>
+          <h1 className='font-bold text-xl' > Add Faculty</h1 >
+        </div >
         <p className='text-gray-500'>"Here, you can register new faculty."</p>
-      </div>
+      </div >
 
       <div>
         <form
-        className="flex flex-col gap-y-5 md:grid md:grid-cols-3 md:gap-20 items-center"
+          className="flex flex-col gap-y-5 md:grid md:grid-cols-3 md:gap-20 items-center"
           onSubmit={handleSubmit(AddFacultyHandler)}
         >
           <Controller
@@ -108,8 +122,8 @@ const AddFaculty = () => {
           </button>
         </form>
       </div>
-    </div>
-  );
+    </div >
+  )
 };
 
 export default AddFaculty;

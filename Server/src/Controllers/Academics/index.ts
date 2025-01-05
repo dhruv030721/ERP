@@ -10,7 +10,7 @@ const router = Router();
 
 // <- Data fetching ->
 router.get('/get_subjects', Attedance.GetSubjects);
-router.get('/get_timetable/:employeeId', Attedance.GetTimeTable);
+router.get('/get_timetable/:mobileNumber', Attedance.GetTimeTable);
 router.post('/get_students', Attedance.GetStudents)
 router.get('/get_faculty', Faculty.GetFaculty)
 router.get('/get_branch', Attedance.GetBranch)

@@ -4,6 +4,7 @@ interface UserData {
     name: string;
     email: string,
     mobileNumber: string,
+    role: string
 }
 
 interface AuthState {

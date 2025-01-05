@@ -22,14 +22,14 @@ const MarkAttendance = () => {
     const [lectureDetails, setlectureDetails] = useState<any>({});
 
 
-    const TimetableData: any = useSelector((state: RootState) => state.academic.Timetable);
     const dispatch = useDispatch();
+
+    const TimetableData: any = useSelector((state: RootState) => state.academic.Timetable);
     const facultyMobileNumber: any = useSelector((state: RootState) => state.auth.userData?.mobileNumber);
 
     const DateHandler = (date: Dayjs | null) => {
         setDateValue(date);
         setSelectedSession(null);
-
         setStudentData([]);
         setAttendance({});
     };
@@ -44,7 +44,7 @@ const MarkAttendance = () => {
 
     const dayName = dateValue ? getDayName(dateValue.day()) : 'Invalid date';
 
-    const selectLectureHandler = async (index: any, sem: any, branch: any, subject: any, time: any, day: any, facultyId: any) => {
+    const selectLectureHandler = async (index: any, sem: any, branch: any, subject: any, time: any, day: any, facultyId: any, batch: string) => {
         setSelectedSession(index);
         setlectureDetails({
             time: time,
@@ -55,18 +55,21 @@ const MarkAttendance = () => {
             facultyId: facultyId,
             date: dateValue
         })
+
         await toast.promise(
             academicServices.GetStudents({ sem, branch }),
             {
-                loading: "Data Loading.....",
+                loading: "Data Loading",
                 success: (response) => {
-                    setStudentData(response.data.data);
-                    console.log(studentData);
-                    const initialAttendance = response.data.data.reduce((acc: any, student: any) => {
-                        acc[student.enrollmentNo] = "Present";
-                        return acc;
-                    }, {});
-                    setAttendance(initialAttendance);
+                    if (batch) {
+                        setStudentData(() =>
+                            response.data.data.filter((student: any) => student.batch === batch)
+                        );
+
+                    } else {
+                        setStudentData(response.data.data);
+                    }
+
                     return `${response.data.message}`;
                 },
                 error: (error) => {
@@ -87,9 +90,9 @@ const MarkAttendance = () => {
         await toast.promise(
             academicServices.MarkAttendance(lectureDetails, attendance),
             {
-                loading: "Attendance Marking.....",
+                loading: "Attendance Marking",
                 success: (response) => {
-
+                    console.log(response.data.result_matrix);
                     return `${response.data.message}`;
                 },
                 error: (error) => {
@@ -110,14 +113,27 @@ const MarkAttendance = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await academicServices.GetTimetable(facultyMobileNumber);
-                dispatch(setTimetable(response.data.data));
+                if (!TimetableData || TimetableData.length == 0) {
+                    const response = await academicServices.GetTimetable(facultyMobileNumber);
+                    dispatch(setTimetable(response.data.data));
+                }
                 setLoading(false);
             } catch (error) {
                 toast.error("Failed to fetch timetable.", toastDesign);
             }
         })();
-    }, [dispatch, facultyMobileNumber]);
+
+
+        if (studentData.length > 0) {
+            const initialAttendance = studentData.reduce((acc: any, student: any) => {
+                acc[student.enrollmentNo] = "PRESENT";
+                return acc;
+            }, {});
+    
+            setAttendance(initialAttendance);
+        }
+
+    }, [dispatch, facultyMobileNumber, TimetableData, studentData]);
 
     return (
         isLoading ? (
@@ -138,19 +154,20 @@ const MarkAttendance = () => {
                         </div>
                         <div className='grid grid-cols-3 gap-x-5 gap-y-5 mt-5 font-bold text-sm'>
                             {dayName === 'Sunday' || dayName === 'Saturday' ? (
-                                <h1>No Lecture!</h1>
+                                <h1 className='text-center text-xl'>No Lecture Found!</h1>
                             ) : (
                                 TimetableData[dayName]?.map((session: any, index: any) => (
                                     <div
                                         key={index}
-                                        className={`cursor-pointer border rounded-lg border-zinc-400 shadow px-8 py-2 flex flex-col justify-center ${selectedSession === index ? 'bg-blue-100' : 'hover:bg-blue-50'}`}
-                                        onClick={() => selectLectureHandler(index, session.sem, session.branch, session.subjectCode, session.time, session.day, session.facultyId)}
+                                        className={`cursor-pointer border rounded-lg border-zinc-400 shadow px-4 py-2 flex flex-col justify-center ${selectedSession === index ? 'bg-blue-100' : 'hover:bg-blue-50'}`}
+                                        onClick={() => selectLectureHandler(index, session.sem, session.branchId, session.subjectCode, session.time, session.day, session.facultyId, session.batch)}
                                     >
                                         <h1>Sem: {session.sem}</h1>
-                                        <h1>Time: {session.time}</h1>
+                                        <h1 className='text-orange-600'>Time: {session.time}</h1>
                                         <h1>{session.subject}</h1>
                                         <h1>Faculty: {session.facultyName}</h1>
-                                        {session.batch ? (<h1>Batch: {session.batch}</h1>) : null}
+                                        {session.lectureType == "LECTURE" ? (<h1>Type: {session.lectureType}</h1>) : null}
+                                        {session.lectureType == "LAB" ? (<div className='flex gap-x-5'><h1>Type: LAB</h1><h1>Batch: {session.batch}</h1></div>) : null}
                                     </div>
                                 ))
                             )}

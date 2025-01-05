@@ -9,7 +9,7 @@ import { FaBookOpenReader } from "react-icons/fa6";
 import { useEffect } from 'react';
 import { academicServices } from '../../services';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBranchData, setSubjectData } from '../../slices/academics';
+import { setBranchData, setSubjectData, setTimetable } from '../../slices/academics';
 import { RootState } from '../../slices/store';
 
 interface DashboardItem {
@@ -20,8 +20,10 @@ interface DashboardItem {
 
 const Dashboard: React.FC = () => {
   const dispatch = useDispatch();
+  const Data_Auth = useSelector((state: RootState) => state.auth.userData);
   const Data_Branch = useSelector((state: RootState) => state.academic.BranchData);
   const Data_Subject = useSelector((state: RootState) => state.academic.SubjectData);
+  const Data_Timetable = useSelector((state: RootState) => state.academic.Timetable);
 
   const DashboardItems: DashboardItem[] = [
     {
@@ -73,14 +75,16 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const [branchResponse, subjectResponse] = await Promise.all([
+      const [branchResponse, subjectResponse, timetableResponse] = await Promise.all([
         Data_Branch && Data_Branch.length ? null : academicServices.GetBranch(),
-        Data_Subject && Data_Subject.length ? null : academicServices.GetSubjects()
+        Data_Subject && Data_Subject.length ? null : academicServices.GetSubjects(),
+        Data_Timetable && Data_Timetable ? null : Data_Auth ? academicServices.GetTimetable(Data_Auth.mobileNumber) : null,
       ])
       if (branchResponse) dispatch(setBranchData(branchResponse.data.data));
       if (subjectResponse) dispatch(setSubjectData(subjectResponse.data.data));
+      if (timetableResponse) dispatch(setTimetable(timetableResponse.data.data));
     })();
-  }, [Data_Branch, Data_Subject, dispatch]);
+  }, [Data_Branch, Data_Subject, Data_Timetable, Data_Auth, dispatch]);
 
   return (
     <div className='w-full'>

@@ -227,21 +227,21 @@ const AssignSubject = () => {
 
     return (
         <div className="p-10 flex flex-col">
-            <h1 className="font-bold text-2xl">Assign Subject</h1>
-            <p className="text-gray-500">"Assign faculty members to subjects for the semester."</p>
-            <div className="flex mt-10 gap-x-10">
-                <div className="grid grid-cols-3 gap-y-5">
-                    <div className="flex justify-center">
+            <h1 className="font-bold text-2xl text-center md:text-start">Assign Subject</h1>
+            <p className="text-gray-500 text-center md:text-start">"Assign faculty members to subjects for the semester."</p>
+            <div className="flex flex-col mt-10 gap-x-10">
+                <div className="grid grid-cols-1 gap-y-5 md:grid-cols-3">
+                    <div className="flex justify-start">
                         <Dropdown
                             List={branchData}
                             label="Branch"
                             value={selectedBranch}
                             helperText="Branch"
-                            dropdownHandler={handleBranchChange}
+                        dropdownHandler={handleBranchChange}
                             width={300}
                         />
                     </div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-start">
                         <Dropdown
                             List={semData}
                             label="Sem"
@@ -252,7 +252,7 @@ const AssignSubject = () => {
                             disabled={!isSemEnabled}
                         />
                     </div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-start">
                         <Dropdown
                             List={filteredSubjects}
                             label="Subject"
@@ -263,7 +263,7 @@ const AssignSubject = () => {
                             disabled={!isSubjectEnabled}
                         />
                     </div>
-                    <div className="flex justify-center" >
+                    <div className="flex justify-start" >
                         <Dropdown
                             List={facultiesData}
                             label="Faculty"
@@ -274,7 +274,7 @@ const AssignSubject = () => {
                             disabled={!isFacultyEnabled}
                         />
                     </div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-start">
                         <Dropdown
                             List={types}
                             label="Type"
@@ -297,7 +297,7 @@ const AssignSubject = () => {
                         />
                     </div>
                 </div>
-                <div>
+                <div className="mt-5">
                     <MuiButton
                         btnName="Assign"
                         color="rgb(23,37,84)"
@@ -323,4 +323,4 @@ const AssignSubject = () => {
     )
 }
 
-export default AssignSubject
+export default AssignSubject;

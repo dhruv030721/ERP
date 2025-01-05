@@ -7,7 +7,6 @@ export const GetStudents = async (req: Request, res: Response) => {
 
         const { branch, sem } = req.body;
 
-
         if (!branch || !sem) {
             return res.status(403).json({
                 success: false,
@@ -18,12 +17,12 @@ export const GetStudents = async (req: Request, res: Response) => {
         const StudentData = await prisma.student.findMany({
             where: {
                 sem: sem,
-                branch: branch
+                branchId: branch
             }
         });
 
 
-        if (!StudentData) {
+        if (!StudentData.length) {
             return res.status(404).json({
                 success: false,
                 message: "No student data found!"
