@@ -9,12 +9,12 @@ const StudentAttendanceCard = ({ List, attendance, onAttendanceChange }: any) =>
 
     return (
         <div className=''>
-            <div key={List.enrollmentNo} className='flex border border-zinc-400 shadow rounded-md py-3 px-5 justify-between items-center'>
-                <div className='flex w-[60%]'>
-                    <h1 className='w-[20%]'>{List.enrollmentNo}</h1>
-                    <h1 className='w-[80%] truncate'>{List.name}</h1>
+            <div key={List.enrollmentNo} className='flex flex-col md:flex-row border border-zinc-400 shadow rounded-md py-3 px-5 justify-between items-center'>
+                <div className='flex flex-col w-full'>
+                    <h1 className='w-['>{List.enrollmentNo}</h1>
+                    <h1 className='truncate'>{List.name}</h1>
                 </div>
-                <div className='w-[40%] flex justify-end'>
+                <div className='w-full flex md:justify-end'>
                     <RadioGroup
                         row
                         aria-labelledby="demo-radio-buttons-group-label"
@@ -22,20 +22,20 @@ const StudentAttendanceCard = ({ List, attendance, onAttendanceChange }: any) =>
                         value={attendance || "Present"}
                         onChange={handleChange}
                     >
-                        <FormControlLabel 
-                            value="PRESENT" 
-                            control={<Radio sx={{ color: 'green', '&.Mui-checked': { color: 'green' } }} />} 
-                            label="Present" 
+                        <FormControlLabel
+                            value="PRESENT"
+                            control={<Radio sx={{ color: 'green', '&.Mui-checked': { color: 'green' } }} />}
+                            label="Present"
                         />
-                        <FormControlLabel 
-                            value="ABSENT" 
-                            control={<Radio sx={{ color: 'red', '&.Mui-checked': { color: 'red' } }} />} 
-                            label="Absent" 
+                        <FormControlLabel
+                            value="ABSENT"
+                            control={<Radio sx={{ color: 'red', '&.Mui-checked': { color: 'red' } }} />}
+                            label="Absent"
                         />
-                        <FormControlLabel 
-                            value="LEAVE" 
-                            control={<Radio sx={{ color: 'blue', '&.Mui-checked': { color: 'blue' } }} />} 
-                            label="On Leave" 
+                        <FormControlLabel
+                            value="LEAVE"
+                            control={<Radio sx={{ color: 'blue', '&.Mui-checked': { color: 'blue' } }} />}
+                            label="On Leave"
                         />
                     </RadioGroup>
                 </div>
@@ -45,4 +45,3 @@ const StudentAttendanceCard = ({ List, attendance, onAttendanceChange }: any) =>
 }
 
 export default StudentAttendanceCard;
- 

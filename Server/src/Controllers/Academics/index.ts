@@ -29,7 +29,7 @@ router.get('/Download_Timetable_Sample_file', Timetable.DownloadTimeTableSampleF
 
 // router.post("/AddStudent", AddStudent.AddNewStudent);
 router.post('/mark_attendance', Attedance.MarkAttendance);
-router.get('/attendance_report/:subject_code/:sem/:month', Attedance.MonthlyAttendanceReport);
+router.get('/attendance_report/:subject_code/:sem', Attedance.AttendanceReport);
 router.post('/assign_subject', Subject.AssignSubject)
 
 

@@ -20,6 +20,7 @@ const MarkAttendance = () => {
     const [studentData, setStudentData] = useState<any>([]);
     const [attendance, setAttendance] = useState<any>({});
     const [lectureDetails, setlectureDetails] = useState<any>({});
+    const [isLectureLoading, setLectureLoading] = useState(false);
 
 
     const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const MarkAttendance = () => {
     const dayName = dateValue ? getDayName(dateValue.day()) : 'Invalid date';
 
     const selectLectureHandler = async (index: any, sem: any, branch: any, subject: any, time: any, day: any, facultyId: any, batch: string) => {
+        setLectureLoading(true);
         setSelectedSession(index);
         setlectureDetails({
             time: time,
@@ -56,28 +58,32 @@ const MarkAttendance = () => {
             date: dateValue
         })
 
-        await toast.promise(
-            academicServices.GetStudents({ sem, branch }),
-            {
-                loading: "Data Loading",
-                success: (response) => {
-                    if (batch) {
-                        setStudentData(() =>
-                            response.data.data.filter((student: any) => student.batch === batch)
-                        );
+        try {
+            await toast.promise(
+                academicServices.GetStudents({ sem, branch }),
+                {
+                    loading: "Data Loading",
+                    success: (response) => {
+                        if (batch) {
+                            setStudentData(() =>
+                                response.data.data.filter((student: any) => student.batch === batch)
+                            );
 
-                    } else {
-                        setStudentData(response.data.data);
+                        } else {
+                            setStudentData(response.data.data);
+                        }
+
+                        return `${response.data.message}`;
+                    },
+                    error: (error) => {
+                        return `${error.response.data.message}`;
                     }
-
-                    return `${response.data.message}`;
                 },
-                error: (error) => {
-                    return `${error.response.data.message}`;
-                }
-            },
-            toastDesign
-        );
+                toastDesign
+            );
+        } finally {
+            setLectureLoading(false);
+        }
     };
 
     const cancelButtonHandler = () => {
@@ -129,7 +135,7 @@ const MarkAttendance = () => {
                 acc[student.enrollmentNo] = "PRESENT";
                 return acc;
             }, {});
-    
+
             setAttendance(initialAttendance);
         }
 
@@ -140,27 +146,27 @@ const MarkAttendance = () => {
             <Loading message='' size='max-w-[20%]' />
         ) : (
             <div className=''>
-                <div className='flex gap-x-10 pt-10 px-10'>
+                <div className='flex flex-col md:flex-row gap-x-10 pt-10 px-10'>
                     <div className=''>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DateCalendar value={dateValue} onChange={DateHandler} />
                         </LocalizationProvider>
                     </div>
                     <div className='bg-gradient-to-b from-white via-zinc-400 to-a max-h-96 w-[1px]'></div>
-                    <section>
+                    <section className='w-full'>
                         <div>
                             <h1 className='text-l font-bold'>Day: {dayName}</h1>
                             <h1 className='text-l font-bold'>Date: {dateValue ? `${dateValue.date()} / ${dateValue.month() + 1} / ${dateValue.year()}` : 'Invalid date'}</h1>
                         </div>
-                        <div className='grid grid-cols-3 gap-x-5 gap-y-5 mt-5 font-bold text-sm'>
+                        <div className='grid md:grid-cols-3 gap-x-5 gap-y-5 mt-5 font-bold text-sm'>
                             {dayName === 'Sunday' || dayName === 'Saturday' ? (
-                                <h1 className='text-center text-xl'>No Lecture Found!</h1>
+                                <h1 className='text-center text-lg font-semibold font-DmSans mt-10'>No Lecture Found!</h1>
                             ) : (
                                 TimetableData[dayName]?.map((session: any, index: any) => (
                                     <div
                                         key={index}
                                         className={`cursor-pointer border rounded-lg border-zinc-400 shadow px-4 py-2 flex flex-col justify-center ${selectedSession === index ? 'bg-blue-100' : 'hover:bg-blue-50'}`}
-                                        onClick={() => selectLectureHandler(index, session.sem, session.branchId, session.subjectCode, session.time, session.day, session.facultyId, session.batch)}
+                                        onClick={() => !isLectureLoading && selectLectureHandler(index, session.sem, session.branchId, session.subjectCode, session.time, session.day, session.facultyId, session.batch)}
                                     >
                                         <h1>Sem: {session.sem}</h1>
                                         <h1 className='text-orange-600'>Time: {session.time}</h1>
@@ -191,9 +197,9 @@ const MarkAttendance = () => {
                                 ))}
                             </div>
                             <div className='flex justify-end'>
-                                <div className='flex gap-x-5 p-10 '>
-                                    <MuiButton btnName='Cancel' type='button' color='red' eventHandler={cancelButtonHandler} />
+                                <div className='flex flex-col md:flex-row-reverse md:gap-x-5 gap-y-5 items-center p-10 w-full '>
                                     <MuiButton btnName='Mark Attendance' color='#093163' type='button' eventHandler={markAttendanceHandler} />
+                                    <MuiButton btnName='Cancel' type='button' color='red' eventHandler={cancelButtonHandler} />
                                 </div>
                             </div>
                         </>

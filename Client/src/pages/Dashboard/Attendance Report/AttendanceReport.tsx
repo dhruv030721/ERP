@@ -7,6 +7,8 @@ import { RootState } from "../../../slices/store";
 import { Loading } from "../../../components";
 import MuiButton from "../../../components/MuiButton";
 import { IoCloudDownload } from "react-icons/io5";
+import toast from "react-hot-toast";
+import { toastDesign } from "../../../components/GlobalVariables";
 
 interface Option {
     value: string;
@@ -21,7 +23,7 @@ const AttendanceReport = () => {
     const [selectedSem, setSelectedSem] = useState<Option | null>(null);
     const [subjectData, setSubjectDataState] = useState<Option[]>([]);
     const [branchData, setBranchDataState] = useState<Option[]>([]);
-    const [selectedMonth, setMonth] = useState<Option | null>(null);
+    // const [selectedMonth, setMonth] = useState<Option | null>(null);
     const [selectedBranch, setBranch] = useState<string>('');
     const [selectedSubject, setSelectedSubject] = useState<string>('');
     const dispatch = useDispatch();
@@ -47,21 +49,21 @@ const AttendanceReport = () => {
         { value: "8", label: "8" },
     ];
 
-    const month: Option[] = [
-        { value: "semester", label: "Semester" },
-        { value: "1", label: "1" },
-        { value: "2", label: "2" },
-        { value: "3", label: "3" },
-        { value: "4", label: "4" },
-        { value: "5", label: "5" },
-        { value: "6", label: "6" },
-        { value: "7", label: "7" },
-        { value: "8", label: "8" },
-        { value: "9", label: "9" },
-        { value: "10", label: "10" },
-        { value: "11", label: "11" },
-        { value: "12", label: "12" },
-    ]
+    // const month: Option[] = [
+    //     { value: "semester", label: "Semester" },
+    //     { value: "1", label: "1" },
+    //     { value: "2", label: "2" },
+    //     { value: "3", label: "3" },
+    //     { value: "4", label: "4" },
+    //     { value: "5", label: "5" },
+    //     { value: "6", label: "6" },
+    //     { value: "7", label: "7" },
+    //     { value: "8", label: "8" },
+    //     { value: "9", label: "9" },
+    //     { value: "10", label: "10" },
+    //     { value: "11", label: "11" },
+    //     { value: "12", label: "12" },
+    // ]
 
     const handleSemChange = (value: string) => {
         setSelectedSem(sem.find(option => option.value === value) || null);
@@ -81,9 +83,9 @@ const AttendanceReport = () => {
         setSelectedSubject(value)
     };
 
-    const handleMonthChange = (value: string) => {
-        setMonth(month.find(option => option.value == value) || null);
-    }
+    // const handleMonthChange = (value: string) => {
+    //     setMonth(month.find(option => option.value == value) || null);
+    // }
 
     const handleBranchChange = (value: string) => {
         setBranch(value);
@@ -97,6 +99,27 @@ const AttendanceReport = () => {
         setSubjectDataState(filteredSubjects);
         setSemEnabled(true);
     }
+
+    const DownloadHandler = async () => {
+
+        if (selectedSem && selectedSubject) {
+            await toast.promise(
+                academicServices.DownloadReport(parseInt(selectedSubject), parseInt(selectedSem.value)),
+                {
+                    loading: "Report Downloading",
+                    success: () => {
+                        return "Report Downloaded Successfully!"
+                    },
+                    error: (error) => {
+                        return `${error.response.data.message}`;
+                    }
+                },
+                toastDesign
+            )
+        }
+
+    }
+
 
     useEffect(() => {
         (async () => {
@@ -144,16 +167,12 @@ const AttendanceReport = () => {
         )
     }
 
-    const DownloadHandler = async () => {
-
-    }
-
     return (
         <div className="p-10">
             <h1 className="text-center font-semibold text-xl md:text-start">Download Attendance Report</h1>
             <p className="text-center  text-xs md:text-start md:text-md text-gray-500">"Here, you can download attendance report for subject based on month"</p>
             <div className="flex flex-col gap-y-4 mt-7 md:flex-row md:gap-x-5 ">
-                <div className="w-full flex md:justify-center">
+                <div className="w-full flex md:justify-start">
                     <Dropdown
                         List={branchData}
                         label={"Branch"}
@@ -163,7 +182,7 @@ const AttendanceReport = () => {
                         width={250}
                     />
                 </div>
-                <div className="w-full flex md:justify-center">
+                <div className="w-full flex md:justify-start">
                     <Dropdown
                         List={sem}
                         label={"Sem"}
@@ -174,7 +193,7 @@ const AttendanceReport = () => {
                         disabled={!isSemEnabled}
                     />
                 </div>
-                <div className="w-full flex md:justify-center">
+                <div className="w-full flex md:justify-start">
                     <Dropdown
                         List={subjectData.length ? subjectData : []}
                         label={"Subject"}
@@ -185,7 +204,7 @@ const AttendanceReport = () => {
                         disabled={!isSubjectEnabled}
                     />
                 </div>
-                <div className="w-full flex md:justify-center">
+                {/* <div className="w-full flex md:justify-center">
                     <Dropdown
                         List={month.length ? month : []}
                         label={"Month"}
@@ -194,8 +213,8 @@ const AttendanceReport = () => {
                         dropdownHandler={handleMonthChange}
                         width={200}
                     />
-                </div>
-                <div className="w-full">
+                </div> */}
+                <div className="w-full md:ml-5">
                     <MuiButton btnName="Download Report" color="rgb(23,37,84)" type="submit" icon={<IoCloudDownload />} eventHandler={DownloadHandler} width="220px" height="50px" />
                 </div>
 

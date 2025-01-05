@@ -98,10 +98,11 @@ class AcademicsServices {
   }
 
 
-  async DownloadReport(subjectCode: number, sem: number, month: number) {
+  async DownloadReport(subjectCode: number, sem: number) {
     const response: any = await apiConnector({
       method: 'GET',
-      url: `${AcademicsEndpoints.DOWNLOAD_REPORT + '/' + subjectCode + '/' + sem + '/' + month}`
+      url: `${AcademicsEndpoints.DOWNLOAD_REPORT + '/' + subjectCode + '/' + sem}`,
+      responseType: 'blob'
     })
 
     // Create a new Blob object using the response data
@@ -112,7 +113,7 @@ class AcademicsServices {
 
     // Set the download attribute with a filename
     link.href = window.URL.createObjectURL(blob);
-    link.download = 'MonthlyAttendanceReport.pdf';
+    link.download = `${sem}_${subjectCode}_${Date.now()}.pdf`;
 
     // Append the link to the body
     document.body.appendChild(link);

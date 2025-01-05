@@ -20,6 +20,7 @@ export const MarkAttendance = async (req: Request<{}, {}, AttendanceRequestBody>
     try {
         const { subject, facultyId, time, day, attendance, branch, sem, date } = req.body;
 
+        console.log(date)
 
         if (!subject || !facultyId || !time || !day || !attendance || !branch || !sem) {
             return res.status(403).json({
@@ -37,13 +38,10 @@ export const MarkAttendance = async (req: Request<{}, {}, AttendanceRequestBody>
             errors: [] as string[]
         }
 
-        console.log(`totalAttendance: ${totalAttendance}`)
-        console.log(`Batches: ${batches}`)
-
         for (let batchIndex = 0; batchIndex < batches; batchIndex++) {
             const start = batchIndex * BATCH_SIZE;
             const end = Math.min(start + BATCH_SIZE, totalAttendance);
-            const currentBatch = attendanceEntries.slice(start, end); // Slice the array of entries
+            const currentBatch = attendanceEntries.slice(start, end); 
 
             await prisma.$transaction(async (tx) => {
                 for (const [studentEnrollmentNo, status] of currentBatch) {

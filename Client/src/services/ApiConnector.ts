@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, Method } from "axios";
+import axios, { AxiosRequestConfig, Method, ResponseType } from "axios";
 
 export const axiosInstance = axios.create({});
 
@@ -8,6 +8,7 @@ interface ApiConnectorParams {
   bodyData?: unknown;
   headers?: Record<string, string>;
   params?: Record<string, unknown>;
+  responseType?: ResponseType;  // Add this line
 }
 
 export const apiConnector = ({
@@ -16,6 +17,7 @@ export const apiConnector = ({
   bodyData,
   headers,
   params,
+  responseType,  // Add this line
 }: ApiConnectorParams) => {
   const config: AxiosRequestConfig = {
     method,
@@ -23,6 +25,7 @@ export const apiConnector = ({
     data: bodyData || undefined,
     headers: headers || undefined,
     params: params || undefined,
+    responseType: responseType || undefined,  // Add this line
   };
 
   return axiosInstance(config);
