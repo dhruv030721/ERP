@@ -1,6 +1,6 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Dropdown, MuiButton } from "../../../components";
+import { AccessDenied, Dropdown, MuiButton } from "../../../components";
 import { academicServices } from "../../../services";
 import { FaEye } from "react-icons/fa6";
 import { IoCloudDownload, IoCloudUpload } from "react-icons/io5";
@@ -8,6 +8,9 @@ import { useRef } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { toastDesign } from "../../../components/GlobalVariables";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../slices/store";
+import { useNavigate } from "react-router-dom";
 
 
 interface Option {
@@ -34,6 +37,10 @@ const ManageTimetable = () => {
     const [branchData, setBranchData] = useState<Option[]>([]);
     const [excelFileName, setExcelFileName] = useState("*Upload file in excel format")
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const navigate = useNavigate();
+
+    const Data_Auth = useSelector((state: RootState) => state.auth.userData);
 
     const handleChange = (_event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
         setAlignment(newAlignment);
@@ -121,6 +128,14 @@ const ManageTimetable = () => {
             setBranchData(branchData);
         })();
     }, [])
+
+    if (Data_Auth == null) {
+        navigate('/login');
+      } else {
+        if (Data_Auth.role != "ADMIN") {
+          return <AccessDenied />
+        }
+      }
 
     return (
         <div className='p-10'>

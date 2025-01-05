@@ -7,7 +7,10 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { academicServices } from '../../../../services';
 import { toastDesign, } from '../../../../components/GlobalVariables';
-import { MuiButton, ComingSoon } from "../../../../components/index.ts"
+import { MuiButton, ComingSoon, AccessDenied } from "../../../../components/index.ts"
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../slices/store.ts';
+import { useNavigate } from 'react-router-dom';
 
 interface AddStudentProps { }
 
@@ -15,6 +18,9 @@ const AddStudent: React.FC<AddStudentProps> = () => {
   const [alignment, setAlignment] = useState('add-student');
   const [excelFileName, setExcelFileName] = useState("*Upload file in excel format");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const Data_Auth = useSelector((state: RootState) => state.auth.userData);
+
+  const navigate = useNavigate();
 
   const handleChange = (_event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment);
@@ -57,6 +63,14 @@ const AddStudent: React.FC<AddStudentProps> = () => {
       toast.success("File Download Successfully", toastDesign);
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  if (Data_Auth == null) {
+    navigate('/login');
+  } else {
+    if (Data_Auth.role != "ADMIN") {
+      return <AccessDenied />
     }
   }
 
