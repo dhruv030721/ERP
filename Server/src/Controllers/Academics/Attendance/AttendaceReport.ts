@@ -2,23 +2,32 @@ import { Request, Response } from "express";
 import prisma from "../../../Utils/prisma";
 import PdfDocument from "pdfkit";
 import { format } from "date-fns";
+import { LectureType } from "@prisma/client";
 
 interface reportParam {
     subject_code: number;
     sem: number;
-    month: number;
+    type: LectureType,
+    batch: string
 }
 
 export const AttendanceReport = async (req: Request, res: Response) => {
     try {
-        const { subject_code, sem }: reportParam = req.params as unknown as reportParam;
+        const { subject_code, sem, type, batch }: reportParam = req.params as unknown as reportParam;
         console.log('Received params:', { subject_code, sem }); // Debug log
 
-        if (!subject_code || !sem) {
+        if (!subject_code || !sem || !type) {
             return res.status(407).json({
                 success: false,
                 message: "Validation Error!"
             });
+        }
+
+        if (type == "LAB" && batch == null) {
+            return res.status(407).json({
+                success: false,
+                message: "Validation Error!"
+            })
         }
 
         const subjectCode = Number(subject_code);

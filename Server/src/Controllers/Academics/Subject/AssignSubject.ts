@@ -20,15 +20,22 @@ export const AssignSubject = async (req: Request, res: Response) => {
         const { branch, faculty, sem, subject, type, batch }: assignSubject = req.body;
 
         // Check for missing fields
-        if (!branch || !faculty || !sem || !subject || !batch) {
-            return res.status(400).json({
+        if (!branch || !faculty || !sem || !subject) {
+            return res.status(407).json({
                 success: false,
                 message: "Validation failed, Provide all fields!"
             });
         }
 
+        if (type == "LAB" && !batch) {
+            return res.status(407).json({
+                success: false,
+                message: "Batch is required! if session type is LAB"
+            })
+        }
+
         // Validate batch value
-        if (!validBatches.includes(batch)) {
+        if (type == "LAB" && !validBatches.includes(batch)) {
             return res.status(400).json({
                 success: false,
                 message: `Invalid batch value! Valid values are: ${validBatches.join(", ")}`
@@ -41,6 +48,7 @@ export const AssignSubject = async (req: Request, res: Response) => {
                 branchId: branch,
                 facultyId: faculty,
                 subjectCode: subject,
+                batch: type === "LAB" ? batch : null
             }
         });
 

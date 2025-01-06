@@ -22,6 +22,12 @@ model Token {
   Student Student[] @relation("student_user_token")
 }
 
+model Course {
+  id     String   @id @default(uuid())
+  name   String
+  Branch Branch[] @relation("course_branches")
+}
+
 model Student {
   enrollmentNo       String       @unique
   mobileNumber       String       @id @unique
@@ -75,7 +81,7 @@ model AssignSubject {
   subjectCode Int
   facultyId   String?
   type        LectureType @default(LECTURE)
-  batch       Batch
+  batch       Batch?
   branchId    Int
   branch      Branch      @relation("assignsubject_branch", fields: [branchId], references: [id])
   faculty     Faculty?    @relation("assignsubject_faculty", fields: [facultyId], references: [mobileNumber])
@@ -103,6 +109,8 @@ model Attendance {
   day                 String
   sem                 Int
   subjectCode         Int
+  type                LectureType
+  batch               Batch?
   studentEnrollmentNo String
   facultyEmployeeId   String
   status              AttendanceType
@@ -121,6 +129,8 @@ model Branch {
   Subject       Subject[]       @relation("subject_branch")
   TimeTable     TimeTable[]     @relation("timetable_branch")
   Attendance    Attendance[]    @relation("attendance_branch")
+  Course        Course?         @relation("course_branches", fields: [courseId], references: [id])
+  courseId      String?
 }
 
 enum AttendanceType {
