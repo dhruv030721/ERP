@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { jwtDecode } from 'jwt-decode';
 import { login, logout, UserDataType } from '../../slices/auth';
 import { RootState } from '../../slices/store';
+import { resetAcademicState } from '../../slices/academics';
 
 interface SwitchListItem {
   name: string;
@@ -68,7 +69,8 @@ const Switchboard: React.FC = () => {
   const logoutHandler = () => {
     setLoading(true);
     dispatch(logout());
-    localStorage.removeItem("erp_auth_token")
+    dispatch(resetAcademicState());
+    localStorage.removeItem("erp_auth_token");
     setLoading(false);
   };
 
@@ -120,12 +122,12 @@ const Switchboard: React.FC = () => {
                 {SwitchList.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <SwitchItem 
-                      name={item.name} 
-                      key={item.name} 
-                      icon={<Icon size={25} className='drop-shadow-lg md:text-3xl' />} 
-                      url={item.url} 
-                      bgcolor={item.bgcolor} 
+                    <SwitchItem
+                      name={item.name}
+                      key={item.name}
+                      icon={<Icon size={25} className='drop-shadow-lg md:text-3xl' />}
+                      url={item.url}
+                      bgcolor={item.bgcolor}
                     />
                   );
                 })}

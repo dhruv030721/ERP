@@ -2,29 +2,29 @@ import { Request, Response } from "express";
 import prisma from "../../../Utils/prisma";
 import PdfDocument from "pdfkit";
 import { format } from "date-fns";
-import { LectureType } from "@prisma/client";
+import { LectureType, Batch } from "@prisma/client";
 
 interface reportParam {
     subject_code: number;
     sem: number;
     type: LectureType,
-    batch: string
+    batch: Batch
 }
 
 export const AttendanceReport = async (req: Request, res: Response) => {
     try {
-        const { subject_code, sem, type, batch }: reportParam = req.params as unknown as reportParam;
-        console.log('Received params:', { subject_code, sem }); // Debug log
+
+        const { subject_code, sem, type, batch }: reportParam = req.body;
 
         if (!subject_code || !sem || !type) {
-            return res.status(407).json({
+            return res.status(403).json({
                 success: false,
                 message: "Validation Error!"
             });
         }
 
         if (type == "LAB" && batch == null) {
-            return res.status(407).json({
+            return res.status(403).json({
                 success: false,
                 message: "Validation Error!"
             })
@@ -34,24 +34,47 @@ export const AttendanceReport = async (req: Request, res: Response) => {
         const semester = Number(sem);
 
         if (isNaN(subjectCode) || isNaN(semester)) {
-            return res.status(407).json({
+            return res.status(403).json({
                 success: false,
                 message: "Validation Error! subject_code and sem must be numbers."
             });
         }
 
-        // Fetch attendance data
-        const AttendanceData = await prisma.attendance.findMany({
-            where: {
-                subjectCode: subjectCode,
-                sem: semester,
-            },
-            select: {
-                date: true,
-                studentEnrollmentNo: true,
-                status: true
-            }
-        });
+        let AttendanceData;
+
+        if (type == "LAB") {
+            AttendanceData = await prisma.attendance.findMany({
+                where: {
+                    subjectCode,
+                    sem: semester,
+                    type,
+                    batch
+                },
+                select: {
+                    date: true,
+                    studentEnrollmentNo: true,
+                    status: true,
+                    enrollmentNo: true
+                }
+            })
+        } else {
+            // Fetch attendance data
+            AttendanceData = await prisma.attendance.findMany({
+                where: {
+                    subjectCode,
+                    sem: semester,
+                    type
+                },
+                select: {
+                    date: true,
+                    studentEnrollmentNo: true,
+                    status: true,
+                    enrollmentNo: true
+                }
+            });
+        }
+
+        console.log(AttendanceData);
 
         const SubjectData = await prisma.subject.findUnique({
             where: {
@@ -120,8 +143,8 @@ export const AttendanceReport = async (req: Request, res: Response) => {
         doc.font("Helvetica")
             .fillColor("Black")
             .fontSize(14)
-            .text(`Subject: ${subjectCode} - (${SubjectData?.name})`, { align: 'center' })
-            .text(`Semester: ${semester}`, { align: 'center' });
+            .text(`Subject: ${subjectCode} - (${SubjectData?.name}) (${type == "LAB" ? `Lab Batch - ${batch}` : "Lecture"})`, { align: 'center' })
+            .text(`Semester: ${semester} `, { align: 'center' });
 
         doc.moveDown();
 
@@ -172,7 +195,7 @@ export const AttendanceReport = async (req: Request, res: Response) => {
         // Student rows
         const total_present: { [key: string]: number } = {};
 
-        StudentData.forEach((data) => {
+        AttendanceData.forEach((data) => {
             // Check page overflow
             if (tableTop + rowHeight > doc.page.height - doc.page.margins.bottom) {
                 doc.addPage();
@@ -184,10 +207,10 @@ export const AttendanceReport = async (req: Request, res: Response) => {
             // Student info
             doc.font("Helvetica")
                 .fontSize(fontSize)
-                .text(`${data.enrollmentNo}`, enrollmentColumnLeft, verticalCenter, { width: 100, align: 'center' })
+                .text(`${data.enrollmentNo.enrollmentNo} `, enrollmentColumnLeft, verticalCenter, { width: 100, align: 'center' })
                 .rect(enrollmentColumnLeft, tableTop, 100, rowHeight)
                 .stroke()
-                .text(data.name, nameColumnLeft + 10, verticalCenter, { width: 250, align: 'left' })
+                .text(data.enrollmentNo.name, nameColumnLeft + 10, verticalCenter, { width: 250, align: 'left' })
                 .rect(nameColumnLeft, tableTop, 250, rowHeight)
                 .stroke();
 
@@ -197,7 +220,7 @@ export const AttendanceReport = async (req: Request, res: Response) => {
             // Attendance marks
             days.forEach((day, index) => {
                 const formattedDay = format(day, 'yyyy-MM-dd');
-                const attendanceRecord = groupedData[data.enrollmentNo]?.find(
+                const attendanceRecord = groupedData[data.enrollmentNo.enrollmentNo]?.find(
                     (record: any) => format(record.date, 'yyyy-MM-dd') === formattedDay
                 );
 
@@ -235,7 +258,7 @@ export const AttendanceReport = async (req: Request, res: Response) => {
             // Calculate and add percentage
             const average = ((presentDay / totalday) * 100).toFixed(1);
             doc.text(
-                `${average}%`,
+                `${average}% `,
                 dayColumnLeft + (days.length * columnWidth),
                 verticalCenter,
                 { width: columnWidth, align: 'center' }
@@ -265,7 +288,7 @@ export const AttendanceReport = async (req: Request, res: Response) => {
             const total = total_present[formattedDay] || 0;
 
             doc.text(
-                `${total}`,
+                `${total} `,
                 dayColumnLeft + (index * columnWidth),
                 verticalCenter,
                 { width: columnWidth, align: 'center' }

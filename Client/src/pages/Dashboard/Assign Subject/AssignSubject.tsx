@@ -4,7 +4,7 @@ import { academicServices } from "../../../services"
 import { IoPersonAdd } from "react-icons/io5"
 import toast from "react-hot-toast"
 import { toastDesign } from "../../../components/GlobalVariables"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { FaLongArrowAltRight } from "react-icons/fa"
 import { RootState } from "../../../slices/store"
 
@@ -63,6 +63,8 @@ const AssignSubject = () => {
     const [subjectData, setSubjectData] = useState<Option[]>([])
     const [filteredSubjects, setFilteredSubject] = useState<Option[]>([])
     const [AssignedSubject, setAssignedSubject] = useState<any>([])
+
+    const dispatch = useDispatch();
 
     const { mobileNumber } = useSelector((state: any) => state.auth.userData)
 
@@ -213,13 +215,15 @@ const AssignSubject = () => {
                 setBranchData(BranchData)
                 setSubjectData(SubjectData)
                 setAssignedSubject(assignedSubjectResponse.data.data)
+                dispatch(assignedSubjectResponse.data.data);
+
             } catch (error) {
                 toast.error("Error loading data", toastDesign)
             } finally {
                 setLoading(false)
             }
         })()
-    }, [Data_Branch, Data_Subject, mobileNumber])
+    }, [Data_Branch, Data_Subject, mobileNumber, dispatch])
 
     if (loading) {
         return <Loading message="" size="max-w-[20%]" />
@@ -237,7 +241,7 @@ const AssignSubject = () => {
                             label="Branch"
                             value={selectedBranch}
                             helperText="Branch"
-                        dropdownHandler={handleBranchChange}
+                            dropdownHandler={handleBranchChange}
                             width={300}
                         />
                     </div>
@@ -315,7 +319,7 @@ const AssignSubject = () => {
                     <div key={`${data.subject.code}-${data.type}-${data.batch}`} className="flex items-center justify-center gap-x-5 border-zinc-300 border shadow-sm rounded-md p-3 w-fit">
                         <h1 className="font-semibold">Sem : {data.subject.sem}</h1>
                         <FaLongArrowAltRight />
-                        <h1 className="font-semibold">Subject : {data.subject.name} : ({data.type} - {data.batch})</h1>
+                        <h1 className="font-semibold">Subject : {data.subject.name} : ({data.type} {data.type !== "LAB" ? null : `- ${data.batch}`})</h1>
                     </div>
                 ))}
             </div>

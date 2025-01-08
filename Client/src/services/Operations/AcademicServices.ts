@@ -37,10 +37,11 @@ class AcademicsServices {
     return response;
   }
 
-  async GetTimetable(employeedId: string) {
+  async GetTimetable(mobileNumber: string) {
+    console.log("Execute")
     const response = await apiConnector({
       method: 'GET',
-      url: GET_TIMETABLE + employeedId
+      url: GET_TIMETABLE + mobileNumber
     })
     return response;
 
@@ -74,6 +75,8 @@ class AcademicsServices {
       day: lectureDetails.day,
       facultyId: lectureDetails.facultyId,
       attendance: attendance,
+      type: lectureDetails.type,
+      batch: lectureDetails.batch,
       date: date.toISOString() // Convert date to ISO string if needed
     };
 
@@ -98,10 +101,21 @@ class AcademicsServices {
   }
 
 
-  async DownloadReport(subjectCode: number, sem: number) {
+  async DownloadReport(reportParams: string) {
+
+    const [subjectCode, sem, type, batch] = reportParams.split('_');
+
+    const body = {
+      subject_code: subjectCode,
+      sem,
+      type,
+      batch
+    }
+
     const response: any = await apiConnector({
-      method: 'GET',
-      url: `${AcademicsEndpoints.DOWNLOAD_REPORT + '/' + subjectCode + '/' + sem}`,
+      method: 'POST',
+      url: `${AcademicsEndpoints.DOWNLOAD_REPORT}`,
+      bodyData: body,
       responseType: 'blob'
     })
 

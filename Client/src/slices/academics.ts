@@ -23,6 +23,7 @@ interface AcademicState {
     StudentData: StudentData | null;
     SubjectData: Subject[] | null;
     BranchData: Branch[] | null;
+    AssignSubjectData: AssignSubject[] | null;
 }
 
 interface StudentData {
@@ -38,6 +39,24 @@ interface Subject {
     sem: number
 }
 
+export interface AssignSubject {
+    facultyId: string,
+    type: string,
+    batch: string,
+    id: string
+    subjectCode: number,
+    subject: Subject,
+    branchId: number,
+    sem: number
+}
+
+interface Subject {
+    branchId: number,
+    code: number,
+    sem: number,
+    name: string
+}
+
 export interface Branch {
     id: number,
     name: string
@@ -47,7 +66,8 @@ const initialState: AcademicState = {
     Timetable: null,
     StudentData: null,
     SubjectData: null,
-    BranchData: null
+    BranchData: null,
+    AssignSubjectData: null
 };
 
 const academicSlice = createSlice({
@@ -56,6 +76,7 @@ const academicSlice = createSlice({
     reducers: {
         setTimetable: (state, action: PayloadAction<TimeTable>) => {
             state.Timetable = action.payload;
+            console.log("set timetable:", state.Timetable);
         },
 
         setStudentData: (state, action: PayloadAction<StudentData>) => {
@@ -68,11 +89,23 @@ const academicSlice = createSlice({
 
         setBranchData: (state, action: PayloadAction<Branch[]>) => {
             state.BranchData = action.payload;
+        },
+
+        setAssignSubject: (state, action: PayloadAction<AssignSubject[]>) => {
+            state.AssignSubjectData = action.payload;
+        },
+
+        resetAcademicState: (state) => {
+            state.Timetable = null;
+            state.StudentData = null;
+            state.SubjectData = null;
+            state.BranchData = null;
+            console.log("reset reducer:", state.Timetable);
         }
 
     },
 });
 
-export const { setTimetable, setStudentData, setSubjectData, setBranchData } = academicSlice.actions;
+export const { setTimetable, setStudentData, setSubjectData, setBranchData, setAssignSubject, resetAcademicState } = academicSlice.actions;
 
 export default academicSlice.reducer;

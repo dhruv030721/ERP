@@ -21,11 +21,12 @@ const MarkAttendance = () => {
     const [attendance, setAttendance] = useState<any>({});
     const [lectureDetails, setlectureDetails] = useState<any>({});
     const [isLectureLoading, setLectureLoading] = useState(false);
+    const [TimetableData, setTimetableData] = useState<any>({});
 
 
     const dispatch = useDispatch();
 
-    const TimetableData: any = useSelector((state: RootState) => state.academic.Timetable);
+    const Data_Timetable: any = useSelector((state: RootState) => state.academic.Timetable);
     const facultyMobileNumber: any = useSelector((state: RootState) => state.auth.userData?.mobileNumber);
 
     const DateHandler = (date: Dayjs | null) => {
@@ -45,7 +46,7 @@ const MarkAttendance = () => {
 
     const dayName = dateValue ? getDayName(dateValue.day()) : 'Invalid date';
 
-    const selectLectureHandler = async (index: any, sem: any, branch: any, subject: any, time: any, day: any, facultyId: any, batch: string) => {
+    const selectLectureHandler = async (index: any, sem: any, branch: any, subject: any, time: any, day: any, facultyId: any, batch: string, lectureType: string) => {
         setLectureLoading(true);
         setSelectedSession(index);
         setlectureDetails({
@@ -55,7 +56,9 @@ const MarkAttendance = () => {
             subject: subject,
             day: day,
             facultyId: facultyId,
-            date: dateValue
+            date: dateValue,
+            batch,
+            type: lectureType
         })
 
         try {
@@ -119,15 +122,19 @@ const MarkAttendance = () => {
     useEffect(() => {
         (async () => {
             try {
-                if (!TimetableData || TimetableData.length == 0) {
+                if (!Data_Timetable || Data_Timetable.length == 0) {
                     const response = await academicServices.GetTimetable(facultyMobileNumber);
                     dispatch(setTimetable(response.data.data));
+                    setTimetableData(response.data.data);
+                } else {
+                    setTimetableData(Data_Timetable);
                 }
                 setLoading(false);
             } catch (error) {
                 toast.error("Failed to fetch timetable.", toastDesign);
             }
         })();
+
 
 
         if (studentData.length > 0) {
@@ -139,7 +146,7 @@ const MarkAttendance = () => {
             setAttendance(initialAttendance);
         }
 
-    }, [dispatch, facultyMobileNumber, TimetableData, studentData]);
+    }, [dispatch, facultyMobileNumber, Data_Timetable, studentData]);
 
     return (
         isLoading ? (
@@ -159,14 +166,14 @@ const MarkAttendance = () => {
                             <h1 className='text-l font-bold'>Date: {dateValue ? `${dateValue.date()} / ${dateValue.month() + 1} / ${dateValue.year()}` : 'Invalid date'}</h1>
                         </div>
                         <div className='grid md:grid-cols-3 gap-x-5 gap-y-5 mt-5 font-bold text-sm'>
-                            {dayName === 'Sunday' || dayName === 'Saturday' ? (
+                            {dayName === 'Sunday' || dayName === 'Saturday' || Object.entries(TimetableData).length == 0 ? (
                                 <h1 className='text-center text-lg font-semibold font-DmSans mt-10'>No Lecture Found!</h1>
                             ) : (
                                 TimetableData[dayName]?.map((session: any, index: any) => (
                                     <div
                                         key={index}
-                                        className={`cursor-pointer border rounded-lg border-zinc-400 shadow px-4 py-2 flex flex-col justify-center ${selectedSession === index ? 'bg-blue-100' : 'hover:bg-blue-50'}`}
-                                        onClick={() => !isLectureLoading && selectLectureHandler(index, session.sem, session.branchId, session.subjectCode, session.time, session.day, session.facultyId, session.batch)}
+                                        className={`cursor-pointer border rounded-lg border-zinc-400 shadow px-4 py-2 flex flex-col justify-center ${selectedSession === index ? 'bg-orange-50' : 'hover:bg-orange-50'}`}
+                                        onClick={() => !isLectureLoading && selectLectureHandler(index, session.sem, session.branchId, session.subjectCode, session.time, session.day, session.facultyId, session.batch, session.lectureType)}
                                     >
                                         <h1>Sem: {session.sem}</h1>
                                         <h1 className='text-orange-600'>Time: {session.time}</h1>
@@ -197,7 +204,7 @@ const MarkAttendance = () => {
                                 ))}
                             </div>
                             <div className='flex justify-end'>
-                                <div className='flex flex-col md:flex-row-reverse md:gap-x-5 gap-y-5 items-center p-10 w-full '>
+                                <div className='flex flex-col md:flex-row-reverse md:gap-x-5 gap-y-5 items-center p-10 w-full  '>
                                     <MuiButton btnName='Mark Attendance' color='#093163' type='button' eventHandler={markAttendanceHandler} />
                                     <MuiButton btnName='Cancel' type='button' color='red' eventHandler={cancelButtonHandler} />
                                 </div>
