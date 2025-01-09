@@ -109,7 +109,7 @@ const Switchboard: React.FC = () => {
           </div>
 
           {/* Divider - Hidden on mobile */}
-          <div className='hidden md:block bg-gradient-to-b from-white via-zinc-400 to-white h-[90%] w-[1px]'></div>
+          <div className='hidden md:block bg-gradient-to-b from-white via-zinc-400 to-white h-[90%] w-[2px]'></div>
 
           {/* Mobile Divider */}
           <div className='my-6 md:hidden bg-gradient-to-r from-white via-zinc-400 to-white h-[1px] w-full'></div>

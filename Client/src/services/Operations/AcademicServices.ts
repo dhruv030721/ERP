@@ -1,4 +1,3 @@
-
 import { apiConnector } from '../ApiConnector';
 import { AcademicsEndpoints } from '../Apis';
 
@@ -38,7 +37,6 @@ class AcademicsServices {
   }
 
   async GetTimetable(mobileNumber: string) {
-    console.log("Execute")
     const response = await apiConnector({
       method: 'GET',
       url: GET_TIMETABLE + mobileNumber
@@ -65,7 +63,6 @@ class AcademicsServices {
   async MarkAttendance(lectureDetails: any, attendance: any) {
     // Create a new Date object to avoid mutating the original date
     const date = new Date(lectureDetails.date);
-    date.setUTCHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to 0
 
     const body = {
       sem: lectureDetails.sem,

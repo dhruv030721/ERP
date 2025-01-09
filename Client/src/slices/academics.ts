@@ -76,7 +76,6 @@ const academicSlice = createSlice({
     reducers: {
         setTimetable: (state, action: PayloadAction<TimeTable>) => {
             state.Timetable = action.payload;
-            console.log("set timetable:", state.Timetable);
         },
 
         setStudentData: (state, action: PayloadAction<StudentData>) => {
@@ -100,7 +99,6 @@ const academicSlice = createSlice({
             state.StudentData = null;
             state.SubjectData = null;
             state.BranchData = null;
-            console.log("reset reducer:", state.Timetable);
         }
 
     },
