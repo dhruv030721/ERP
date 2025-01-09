@@ -37,6 +37,27 @@ export const MarkAttendance = async (req: Request<{}, {}, AttendanceRequestBody>
             })
         }
 
+        const AttendanceData = await prisma.attendance.findMany({
+            where: {
+                day,
+                date,
+                time,
+                branchId: parseInt(branch),
+                sem,
+                type,
+                subjectCode: subject,
+                facultyEmployeeId: facultyId
+            }
+        })
+
+
+        if (AttendanceData) {
+            return res.status(409).json({
+                success: false,
+                message: "Attendance is already marked!"
+            })
+        }
+
         const attendanceEntries = Object.entries(attendance);
         const totalAttendance = attendanceEntries.length;
         const batches = Math.ceil(totalAttendance / BATCH_SIZE);
@@ -45,6 +66,9 @@ export const MarkAttendance = async (req: Request<{}, {}, AttendanceRequestBody>
             failed: 0,
             errors: [] as string[]
         }
+
+
+
 
         for (let batchIndex = 0; batchIndex < batches; batchIndex++) {
             const start = batchIndex * BATCH_SIZE;

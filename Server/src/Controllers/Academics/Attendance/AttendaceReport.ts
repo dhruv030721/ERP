@@ -4,30 +4,30 @@ import PdfDocument from "pdfkit";
 import { format } from "date-fns";
 import { LectureType, Batch } from "@prisma/client";
 
-interface reportParam {
+interface ReportParam {
     subject_code: number;
     sem: number;
-    type: LectureType,
-    batch: Batch
+    type: LectureType;
+    batch: Batch;
+}
+
+interface StudentAttendance {
+    [key: string]: {
+        name: string;
+        attendance: { [date: string]: 'P' | 'A' | 'L' };
+    };
 }
 
 export const AttendanceReport = async (req: Request, res: Response) => {
     try {
+        const { subject_code, sem, type, batch }: ReportParam = req.body;
 
-        const { subject_code, sem, type, batch }: reportParam = req.body;
-
-        if (!subject_code || !sem || !type) {
+        // Validation checks
+        if (!subject_code || !sem || !type || (type === "LAB" && !batch)) {
             return res.status(403).json({
                 success: false,
                 message: "Validation Error!"
             });
-        }
-
-        if (type == "LAB" && batch == null) {
-            return res.status(403).json({
-                success: false,
-                message: "Validation Error!"
-            })
         }
 
         const subjectCode = Number(subject_code);
@@ -40,79 +40,49 @@ export const AttendanceReport = async (req: Request, res: Response) => {
             });
         }
 
-        let AttendanceData;
-
-        if (type == "LAB") {
-            AttendanceData = await prisma.attendance.findMany({
-                where: {
-                    subjectCode,
-                    sem: semester,
-                    type,
-                    batch
-                },
-                select: {
-                    date: true,
-                    studentEnrollmentNo: true,
-                    status: true,
-                    enrollmentNo: true
-                }
-            })
-        } else {
-            // Fetch attendance data
-            AttendanceData = await prisma.attendance.findMany({
-                where: {
-                    subjectCode,
-                    sem: semester,
-                    type
-                },
-                select: {
-                    date: true,
-                    studentEnrollmentNo: true,
-                    status: true,
-                    enrollmentNo: true
-                }
-            });
-        }
-
-        console.log(AttendanceData);
-
-        const SubjectData = await prisma.subject.findUnique({
+        // Fetch attendance data
+        const attendanceData = await prisma.attendance.findMany({
             where: {
-                code: subjectCode
-            }
-        })
-
-        console.log('Attendance Data count:', AttendanceData.length); // Debug log
-
-        // Extract unique dates
-        const uniqueDates = Array.from(new Set(AttendanceData.map(record => format(record.date, 'yyyy-MM-dd'))));
-        const days = uniqueDates.map(dateStr => new Date(dateStr));
-        console.log('Unique dates count:', days.length); // Debug log
-
-        const StudentData = await prisma.student.findMany({
-            where: {
-                sem: semester
+                subjectCode,
+                sem: semester,
+                type,
+                ...(type === "LAB" && { batch })
             },
-            select: {
-                enrollmentNo: true,
-                name: true
+            include: {
+                enrollmentNo: true
+            },
+            orderBy: {
+                date: 'asc'
             }
         });
-        console.log('Student Data count:', StudentData.length); // Debug log
 
-        const groupedData = AttendanceData.reduce((acc: any, record: any) => {
-            const enrollmentNo = record.studentEnrollmentNo;
-            if (!acc[enrollmentNo]) {
-                acc[enrollmentNo] = [];
+        const subjectData = await prisma.subject.findUnique({
+            where: { code: subjectCode }
+        });
+
+        // Process attendance data
+        const uniqueDates = Array.from(new Set(attendanceData.map(record => 
+            format(record.date, 'yyyy-MM-dd')
+        ))).sort();
+        
+        // Organize data by student
+        const studentAttendance: StudentAttendance = {};
+        attendanceData.forEach(record => {
+            const enrollmentNo = record.enrollmentNo.enrollmentNo;
+            if (!studentAttendance[enrollmentNo]) {
+                studentAttendance[enrollmentNo] = {
+                    name: record.enrollmentNo.name,
+                    attendance: {}
+                };
             }
-            acc[enrollmentNo].push(record);
-            return acc;
-        }, {});
+            const dateStr = format(record.date, 'yyyy-MM-dd');
+            studentAttendance[enrollmentNo].attendance[dateStr] = 
+                record.status === "PRESENT" ? 'P' : 
+                record.status === "ABSENT" ? 'A' : 'L';
+        });
 
-        // Buffer approach for PDF generation
+        // PDF Generation
         const chunks: Buffer[] = [];
-
-        // Create PDF document
         const doc = new PdfDocument({
             size: 'A3',
             margin: 20,
@@ -120,184 +90,140 @@ export const AttendanceReport = async (req: Request, res: Response) => {
             bufferPages: true
         });
 
-        // Handle document chunks
-        doc.on('data', (chunk) => chunks.push(Buffer.from(chunk)));
-
-        // Handle document end
+        doc.on('data', chunk => chunks.push(Buffer.from(chunk)));
         doc.on('end', () => {
             const pdfBuffer = Buffer.concat(chunks);
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader(
-                'Content-Disposition',
-                `attachment; filename=AttendanceReport_${subjectCode}_${Date.now()}.pdf`
-            );
+            res.setHeader('Content-Disposition', 
+                `attachment; filename=AttendanceReport_${subjectCode}_${Date.now()}.pdf`);
             res.send(pdfBuffer);
         });
 
-        // Add report title and metadata
-        doc.fillColor("Black")
-            .font("Helvetica-Bold")
-            .fontSize(16)
-            .text("Attendance Report", { align: 'center' });
-
-        doc.font("Helvetica")
-            .fillColor("Black")
-            .fontSize(14)
-            .text(`Subject: ${subjectCode} - (${SubjectData?.name}) (${type == "LAB" ? `Lab Batch - ${batch}` : "Lecture"})`, { align: 'center' })
-            .text(`Semester: ${semester} `, { align: 'center' });
-
-        doc.moveDown();
-
-        // Table constants
+        // Table Settings
         const columnWidth = 45;
         const rowHeight = 20;
         const fontSize = 10;
-        const textHeight = fontSize;
-
-        // Table header
-        let tableTop = doc.y + 10;
         const tableLeft = 20;
-        const enrollmentColumnLeft = tableLeft;
-        const nameColumnLeft = enrollmentColumnLeft + 100;
-        const dayColumnLeft = nameColumnLeft + 250;
+        const enrollmentColumnWidth = 100;
+        const nameColumnWidth = 250;
+        let currentY = 20;  // Start position for the first page
 
-        let verticalCenter = tableTop + (rowHeight / 2) - (textHeight / 2);
+        // Document Header (only on first page)
+        doc.fillColor("Black")
+            .font("Helvetica-Bold")
+            .fontSize(16)
+            .text("Attendance Report", { align: 'center' })
+            .fontSize(14)
+            .text(`Subject: ${subjectCode} - (${subjectData?.name}) ${type === "LAB" ? `Lab Batch - ${batch}` : "Lecture"}`, { align: 'center' })
+            .text(`Semester: ${semester}`, { align: 'center' })
+            .moveDown();
 
-        // Draw header cells
-        doc.font("Helvetica-Bold")
-            .fontSize(fontSize);
+        currentY = doc.y + 10;  // Update starting position after headers
 
-        // Enrollment header
-        doc.text("Enrollment No.", enrollmentColumnLeft, verticalCenter, { width: 100, align: 'center' })
-            .rect(enrollmentColumnLeft, tableTop, 100, rowHeight)
-            .stroke();
+        // Draw Table Headers (only on first page)
+        const drawHeaders = () => {
+            doc.font("Helvetica-Bold").fontSize(fontSize);
+            let currentX = tableLeft;
 
-        // Name header
-        doc.text("Name", nameColumnLeft, verticalCenter, { width: 300, align: 'center' })
-            .rect(nameColumnLeft, tableTop, 250, rowHeight)
-            .stroke();
+            // Enrollment and Name headers
+            doc.rect(currentX, currentY, enrollmentColumnWidth, rowHeight).stroke()
+               .text("Enrollment No.", currentX, currentY + 5, { width: enrollmentColumnWidth, align: 'center' });
+            currentX += enrollmentColumnWidth;
 
-        // Date headers
-        days.forEach((day, index) => {
-            const formattedDay = format(day, 'dd-MM');
-            doc.text(formattedDay, dayColumnLeft + (index * columnWidth), verticalCenter, { width: columnWidth, align: 'center' })
-                .rect(dayColumnLeft + (index * columnWidth), tableTop, columnWidth, rowHeight)
-                .stroke();
-        });
+            doc.rect(currentX, currentY, nameColumnWidth, rowHeight).stroke()
+               .text("Name", currentX, currentY + 5, { width: nameColumnWidth, align: 'center' });
+            currentX += nameColumnWidth;
 
-        // Percentage header
-        doc.text("%", dayColumnLeft + (days.length * columnWidth), verticalCenter, { width: columnWidth, align: 'center' })
-            .rect(dayColumnLeft + (days.length * columnWidth), tableTop, columnWidth, rowHeight)
-            .stroke();
-
-        tableTop += rowHeight;
-
-        // Student rows
-        const total_present: { [key: string]: number } = {};
-
-        AttendanceData.forEach((data) => {
-            // Check page overflow
-            if (tableTop + rowHeight > doc.page.height - doc.page.margins.bottom) {
-                doc.addPage();
-                tableTop = doc.page.margins.top;
-            }
-
-            verticalCenter = tableTop + (rowHeight / 2) - (textHeight / 2);
-
-            // Student info
-            doc.font("Helvetica")
-                .fontSize(fontSize)
-                .text(`${data.enrollmentNo.enrollmentNo} `, enrollmentColumnLeft, verticalCenter, { width: 100, align: 'center' })
-                .rect(enrollmentColumnLeft, tableTop, 100, rowHeight)
-                .stroke()
-                .text(data.enrollmentNo.name, nameColumnLeft + 10, verticalCenter, { width: 250, align: 'left' })
-                .rect(nameColumnLeft, tableTop, 250, rowHeight)
-                .stroke();
-
-            let totalday = days.length;
-            let presentDay = 0;
-
-            // Attendance marks
-            days.forEach((day, index) => {
-                const formattedDay = format(day, 'yyyy-MM-dd');
-                const attendanceRecord = groupedData[data.enrollmentNo.enrollmentNo]?.find(
-                    (record: any) => format(record.date, 'yyyy-MM-dd') === formattedDay
-                );
-
-                const attendanceMark = attendanceRecord
-                    ? attendanceRecord.status === "PRESENT"
-                        ? 'P'
-                        : attendanceRecord.status === "ABSENT"
-                            ? 'A'
-                            : 'L'
-                    : 'A';
-
-                if (attendanceMark === 'P') {
-                    presentDay++;
-                    total_present[formattedDay] = (total_present[formattedDay] || 0) + 1;
-                }
-
-                // Set color based on status
-                doc.fillColor(
-                    attendanceMark === 'P' ? 'green' :
-                        attendanceMark === 'A' ? 'red' : 'blue'
-                );
-
-                doc.text(
-                    attendanceMark,
-                    dayColumnLeft + (index * columnWidth),
-                    verticalCenter,
-                    { width: columnWidth, align: 'center' }
-                )
-                    .rect(dayColumnLeft + (index * columnWidth), tableTop, columnWidth, rowHeight)
-                    .stroke();
-
-                doc.fillColor('black');
+            // Date headers
+            uniqueDates.forEach(date => {
+                doc.rect(currentX, currentY, columnWidth, rowHeight).stroke()
+                   .text(format(new Date(date), 'dd-MM'), currentX, currentY + 5, 
+                         { width: columnWidth, align: 'center' });
+                currentX += columnWidth;
             });
 
-            // Calculate and add percentage
-            const average = ((presentDay / totalday) * 100).toFixed(1);
-            doc.text(
-                `${average}% `,
-                dayColumnLeft + (days.length * columnWidth),
-                verticalCenter,
-                { width: columnWidth, align: 'center' }
-            )
-                .rect(dayColumnLeft + (days.length * columnWidth), tableTop, columnWidth, rowHeight)
-                .stroke();
+            // Percentage header
+            doc.rect(currentX, currentY, columnWidth, rowHeight).stroke()
+               .text("%", currentX, currentY + 5, { width: columnWidth, align: 'center' });
 
-            tableTop += rowHeight;
-        });
+            currentY += rowHeight;
+        };
 
-        // Total present row
-        verticalCenter = tableTop + (rowHeight / 2) - (textHeight / 2);
+        // Draw Content
+        const drawContent = () => {
+            const dailyPresent: { [key: string]: number } = {};
+            
+            Object.entries(studentAttendance).forEach(([enrollmentNo, data]) => {
+                if (currentY + rowHeight > doc.page.height - 50) {
+                    doc.addPage();
+                    currentY = 20;  // Start from top on new pages
+                }
 
-        doc.font("Helvetica-Bold")
-            .fontSize(fontSize)
-            .text(
-                "Total Present:",
-                enrollmentColumnLeft,
-                verticalCenter,
-                { width: 350, align: 'center' }
-            )
-            .rect(enrollmentColumnLeft, tableTop, 350, rowHeight)
-            .stroke();
+                let currentX = tableLeft;
+                doc.font("Helvetica").fontSize(fontSize);
 
-        days.forEach((day, index) => {
-            const formattedDay = format(day, 'yyyy-MM-dd');
-            const total = total_present[formattedDay] || 0;
+                // Enrollment and Name
+                doc.rect(currentX, currentY, enrollmentColumnWidth, rowHeight).stroke()
+                   .text(enrollmentNo, currentX, currentY + 5, 
+                         { width: enrollmentColumnWidth, align: 'center' });
+                currentX += enrollmentColumnWidth;
 
-            doc.text(
-                `${total} `,
-                dayColumnLeft + (index * columnWidth),
-                verticalCenter,
-                { width: columnWidth, align: 'center' }
-            )
-                .rect(dayColumnLeft + (index * columnWidth), tableTop, columnWidth, rowHeight)
-                .stroke();
-        });
+                doc.rect(currentX, currentY, nameColumnWidth, rowHeight).stroke()
+                   .text(data.name, currentX + 5, currentY + 5, 
+                         { width: nameColumnWidth - 10, align: 'left' });
+                currentX += nameColumnWidth;
 
-        // End the document
+                // Attendance marks
+                let presentCount = 0;
+                uniqueDates.forEach(date => {
+                    const status = data.attendance[date] || 'A';
+                    if (status === 'P') {
+                        presentCount++;
+                        dailyPresent[date] = (dailyPresent[date] || 0) + 1;
+                    }
+
+                    doc.fillColor(status === 'P' ? 'green' : status === 'A' ? 'red' : 'blue')
+                       .rect(currentX, currentY, columnWidth, rowHeight).stroke()
+                       .text(status, currentX, currentY + 5, 
+                            { width: columnWidth, align: 'center' });
+                    currentX += columnWidth;
+                });
+
+                // Percentage
+                const percentage = ((presentCount / uniqueDates.length) * 100).toFixed(1);
+                doc.fillColor('black')
+                   .rect(currentX, currentY, columnWidth, rowHeight).stroke()
+                   .text(`${percentage}%`, currentX, currentY + 5, 
+                         { width: columnWidth, align: 'center' });
+
+                currentY += rowHeight;
+            });
+
+            // Total Present Row
+            if (currentY + rowHeight > doc.page.height - 50) {
+                doc.addPage();
+                currentY = 20;
+            }
+
+            let currentX = tableLeft;
+            doc.font("Helvetica-Bold").fontSize(fontSize);
+            
+            doc.rect(currentX, currentY, enrollmentColumnWidth + nameColumnWidth, rowHeight).stroke()
+               .text("Total Present:", currentX, currentY + 5, 
+                     { width: enrollmentColumnWidth + nameColumnWidth, align: 'center' });
+            currentX += enrollmentColumnWidth + nameColumnWidth;
+
+            uniqueDates.forEach(date => {
+                doc.rect(currentX, currentY, columnWidth, rowHeight).stroke()
+                   .text(`${dailyPresent[date] || 0}`, currentX, currentY + 5, 
+                         { width: columnWidth, align: 'center' });
+                currentX += columnWidth;
+            });
+        };
+
+        // Draw the table only once
+        drawHeaders();
+        drawContent();
         doc.end();
 
     } catch (error: any) {
