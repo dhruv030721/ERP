@@ -160,7 +160,7 @@ const MarkAttendance = () => {
                         <CalendarSection dateValue={dateValue} DateHandler={DateHandler} />
                         <div className="space-y-6">
                             {/* Schedule Section */}
-                            <Card className='h-96 overflow-y-scroll mx-5 md:overflow-hidden'>
+                            <Card className='mx-5'>
                                 <CardContent className="p-6">
                                     <div className="flex items-center gap-3 mb-6">
                                         <Calendar className="w-5 h-5 text-primary" />
@@ -172,7 +172,7 @@ const MarkAttendance = () => {
                                         </div>
                                     </div>
 
-                                    <div className="grid md:grid-cols-3 gap-4">
+                                    <div className="flex overflow-x-scroll px-4 py-2 w-72 gap-4">
                                         {dayName === 'Sunday' || dayName === 'Saturday' || Object.entries(TimetableData).length === 0 ? (
                                             <div className="md:col-span-3 flex flex-col items-center justify-center py-12 text-gray-500">
                                                 <Calendar className="w-12 h-12 mb-3 text-gray-400" />
