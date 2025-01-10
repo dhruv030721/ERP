@@ -1,12 +1,12 @@
 import React from 'react'
-import Header from './components/Header/Header'
-import { Outlet } from 'react-router-dom'
+// import Header from './components/Header/Header'
+import { Switchboard } from "@/pages"
 
 const App: React.FC = () => {
   return (
     <div className='font-poppins'>
-      <Header />
-      <Outlet />
+      {/* <Header /> */}
+      <Switchboard />
     </div>
   )
 }

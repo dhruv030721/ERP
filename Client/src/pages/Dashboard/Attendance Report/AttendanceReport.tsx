@@ -70,8 +70,6 @@ const AttendanceReport = () => {
         const value = event.target.value;
         setBranch(value);
 
-        console.log(AssignSubjectData)
-
         const filteredAssignSubjectData = AssignSubjectData.filter(
             (subject: AssignSubject) => subject.branchId === parseInt(value)
         ).map((assignSubject: AssignSubject) => ({
@@ -150,7 +148,7 @@ const AttendanceReport = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+        <div className="bg-gray-50 p-4 md:p-8">
             <Card className="max-w-4xl mx-auto">
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold tracking-tight">

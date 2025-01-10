@@ -51,7 +51,7 @@ export const MarkAttendance = async (req: Request<{}, {}, AttendanceRequestBody>
         })
 
 
-        if (AttendanceData) {
+        if (AttendanceData.length) {
             return res.status(409).json({
                 success: false,
                 message: "Attendance is already marked!"

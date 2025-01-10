@@ -1,7 +1,4 @@
 import { useState, useEffect } from 'react';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import dayjs, { Dayjs } from 'dayjs';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../slices/store';
@@ -10,8 +7,11 @@ import { setTimetable } from '../../../slices/academics';
 import toast from 'react-hot-toast';
 import { Loading } from '../../../components';
 import { toastDesign } from '../../../components/GlobalVariables';
-import StudentAttendanceCard from "./StudentAttendanceCard.tsx"
-import MuiButton from '../../../components/MuiButton.tsx';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Calendar, Users } from 'lucide-react';
+import StudentAttendanceCard from './StudentAttendanceCard';
+import CalendarSection from './Calender';
 
 const MarkAttendance = () => {
     const [dateValue, setDateValue] = useState<Dayjs | null>(dayjs());
@@ -152,67 +152,133 @@ const MarkAttendance = () => {
         isLoading ? (
             <Loading message='' size='max-w-[20%]' />
         ) : (
-            <div className=''>
-                <div className='flex flex-col md:flex-row gap-x-10 pt-10 px-10'>
-                    <div className=''>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DateCalendar value={dateValue} onChange={DateHandler} />
-                        </LocalizationProvider>
-                    </div>
-                    <div className='bg-gradient-to-b from-white via-zinc-400 to-a max-h-96 w-[1px]'></div>
-                    <section className='w-full'>
-                        <div>
-                            <h1 className='text-l font-bold'>Day: {dayName}</h1>
-                            <h1 className='text-l font-bold'>Date: {dateValue ? `${dateValue.date()} / ${dateValue.month() + 1} / ${dateValue.year()}` : 'Invalid date'}</h1>
-                        </div>
-                        <div className='grid md:grid-cols-3 gap-x-5 gap-y-5 mt-5 font-bold text-sm'>
-                            {dayName === 'Sunday' || dayName === 'Saturday' || Object.entries(TimetableData).length == 0 ? (
-                                <h1 className='text-center text-lg font-semibold font-DmSans mt-10'>No Lecture Found!</h1>
-                            ) : (
-                                TimetableData[dayName]?.map((session: any, index: any) => (
-                                    <div
-                                        key={index}
-                                        className={`cursor-pointer border rounded-lg border-zinc-400 shadow px-4 py-2 flex flex-col justify-center ${selectedSession === index ? 'bg-orange-50' : 'hover:bg-orange-50'}`}
-                                        onClick={() => !isLectureLoading && selectLectureHandler(index, session.sem, session.branchId, session.subjectCode, session.time, session.day, session.facultyId, session.batch, session.lectureType)}
-                                    >
-                                        <h1>Sem: {session.sem}</h1>
-                                        <h1 className='text-orange-600'>Time: {session.time}</h1>
-                                        <h1>{session.subject}</h1>
-                                        <h1>Faculty: {session.facultyName}</h1>
-                                        {session.lectureType == "LECTURE" ? (<h1>Type: {session.lectureType}</h1>) : null}
-                                        {session.lectureType == "LAB" ? (<div className='flex gap-x-5'><h1>Type: LAB</h1><h1>Batch: {session.batch}</h1></div>) : null}
+            <div className="bg-gray-50 overflow-y-hidden">
+                <div className="w-7xl mx-auto px-4 ">
+                    <div className="grid lg:grid-cols-[300px,2fr] mb-5 gap-8">
+
+                        {/* Calendar Section */}
+                        <CalendarSection dateValue={dateValue} DateHandler={DateHandler} />
+                        <div className="space-y-6">
+                            {/* Schedule Section */}
+                            <Card className='h-full'>
+                                <CardContent className="p-6">
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <Calendar className="w-5 h-5 text-primary" />
+                                        <div>
+                                            <h2 className="font-semibold text-lg">{dayName}</h2>
+                                            <p className="text-gray-600 text-sm">
+                                                {dateValue ? `${dateValue.date()} / ${dateValue.month() + 1} / ${dateValue.year()}` : 'Invalid date'}
+                                            </p>
+                                        </div>
                                     </div>
-                                ))
-                            )}
+
+                                    <div className="grid md:grid-cols-3 gap-4">
+                                        {dayName === 'Sunday' || dayName === 'Saturday' || Object.entries(TimetableData).length === 0 ? (
+                                            <div className="md:col-span-3 flex flex-col items-center justify-center py-12 text-gray-500">
+                                                <Calendar className="w-12 h-12 mb-3 text-gray-400" />
+                                                <p className="font-medium">No Lectures Scheduled</p>
+                                            </div>
+                                        ) : (
+                                            TimetableData[dayName]?.map((session: any, index: number) => (
+                                                <Card
+                                                    key={index}
+                                                    className={`transition-all cursor-pointer ${selectedSession === index
+                                                        ? 'ring-2 ring-primary ring-offset-2'
+                                                        : 'hover:shadow-md'
+                                                        }`}
+                                                    onClick={() => !isLectureLoading && selectLectureHandler(
+                                                        index,
+                                                        session.sem,
+                                                        session.branchId,
+                                                        session.subjectCode,
+                                                        session.time,
+                                                        session.day,
+                                                        session.facultyId,
+                                                        session.batch,
+                                                        session.lectureType
+                                                    )}
+                                                >
+                                                    <CardContent className="p-4">
+                                                        <div className="space-y-2">
+                                                            <div className="flex justify-between items-center">
+                                                                <span className="text-sm font-medium">Semester {session.sem}</span>
+                                                                <span className="text-primary text-sm">{session.time}</span>
+                                                            </div>
+                                                            <h3 className="font-medium truncate">{session.subject}</h3>
+                                                            <p className="text-sm text-gray-600">Prof. {session.facultyName}</p>
+                                                            {session.lectureType && (
+                                                                <div className="flex items-center gap-2 text-sm">
+                                                                    <span className="px-2 py-1 rounded-md bg-orange-100 text-black border border-orange-400">
+                                                                        {session.lectureType}
+                                                                    </span>
+                                                                    {session.lectureType === "LAB" && session.batch && (
+                                                                        <span className="px-2 py-1 rounded-md bg-orange-100 text-black border border-orange-400">
+                                                                            Batch {session.batch}
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </CardContent>
+                                                </Card>
+                                            ))
+                                        )}
+                                    </div>
+                                </CardContent>
+                            </Card>
+
                         </div>
-                    </section>
-                </div>
-                <div className='p-10 flex flex-col gap-y-3 font-bold'>
-                    <h1 className='text-2xl '>Students : </h1>
-                    {selectedSession && studentData.length === 0 ? (
-                        <h1>No lecture selected!</h1>
-                    ) : studentData.length > 0 ? (
-                        <>
-                            <div className='flex gap-y-3 flex-col'>
-                                {studentData.map((student: any) => (
-                                    <StudentAttendanceCard
-                                        key={student.enrollmentNo}
-                                        List={student}
-                                        attendance={attendance[student.enrollmentNo]}
-                                        onAttendanceChange={handleAttendanceChange}
-                                    />
-                                ))}
+                    </div>
+                    {/* Students Section */}
+                    <Card className='w-full overflow-x-hidden'>
+                        <CardContent className="p-6">
+                            <div className="flex items-center gap-3 mb-6">
+                                <Users className="w-5 h-5 text-primary" />
+                                <h2 className="text-lg font-semibold">Students</h2>
                             </div>
-                            <div className='flex justify-end'>
-                                <div className='flex flex-col md:flex-row-reverse md:gap-x-5 gap-y-5 items-center p-10 w-full  '>
-                                    <MuiButton btnName='Mark Attendance' color='#093163' type='button' eventHandler={markAttendanceHandler} />
-                                    <MuiButton btnName='Cancel' type='button' color='red' eventHandler={cancelButtonHandler} />
+
+                            {selectedSession && studentData.length === 0 ? (
+                                <div className="flex flex-col items-center justify-center py-12 text-gray-500">
+                                    <Users className="w-12 h-12 mb-3 text-gray-400" />
+                                    <p className="font-medium">No lecture selected</p>
                                 </div>
-                            </div>
-                        </>
-                    ) : (
-                        <h1>No students available for the selected session.</h1>
-                    )}
+                            ) : studentData.length > 0 ? (
+                                <div className="space-y-6 h-64 overflow-y-scroll">
+                                    <div className="space-y-4 px-5">
+                                        {studentData.map((student: any) => (
+                                            <StudentAttendanceCard
+                                                key={student.enrollmentNo}
+                                                List={student}
+                                                attendance={attendance[student.enrollmentNo]}
+                                                onAttendanceChange={handleAttendanceChange}
+                                            />
+                                        ))}
+                                        <div className="flex justify-end gap-4 pt-6">
+                                            <Button
+                                                variant="outline"
+                                                onClick={cancelButtonHandler}
+                                                className="min-w-[120px]"
+                                            >
+                                                Cancel
+                                            </Button>
+                                            <Button
+                                                onClick={markAttendanceHandler}
+                                                className="min-w-[120px]"
+                                            >
+                                                Mark Attendance
+                                            </Button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center py-12 text-gray-500">
+                                    <Users className="w-12 h-12 mb-3 text-gray-400" />
+                                    <p className="font-medium">No students available for the selected session</p>
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
         )

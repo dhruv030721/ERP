@@ -1,47 +1,90 @@
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { Card } from '@/components/ui/card';
+import { User } from 'lucide-react';
 
-const StudentAttendanceCard = ({ List, attendance, onAttendanceChange }: any) => {
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onAttendanceChange(List.enrollmentNo, (event.target as HTMLInputElement).value);
+interface StudentAttendanceCardProps {
+    List: {
+        enrollmentNo: number;
+        name: string;
+    },
+    attendance: string,
+    onAttendanceChange: CallableFunction
+}
+
+const StudentAttendanceCard = ({ List, attendance, onAttendanceChange }: StudentAttendanceCardProps) => {
+    const handleChange = (event: any) => {
+        onAttendanceChange(List.enrollmentNo, event.target.value);
+    };
+
+    const getStatusColor = (value: string) => {
+        switch (value) {
+            case 'PRESENT':
+                return 'text-emerald-600';
+            case 'ABSENT':
+                return 'text-red-600';
+            case 'LEAVE':
+                return 'text-blue-600';
+            default:
+                return 'text-gray-600';
+        }
     };
 
     return (
-        <div className=''>
-            <div key={List.enrollmentNo} className='flex flex-col md:flex-row border border-zinc-400 shadow rounded-md py-3 px-5 justify-between items-center'>
-                <div className='flex flex-col w-full'>
-                    <h1 className='w-['>{List.enrollmentNo}</h1>
-                    <h1 className='truncate'>{List.name}</h1>
+        <Card className="hover:shadow-md transition-shadow duration-200">
+            <div className="flex flex-col sm:flex-row items-center gap-4 p-4">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                        <User className="w-5 h-5 text-gray-600" />
+                    </div>
+                    <div className="min-w-0">
+                        <p className="font-medium text-sm text-gray-900">{List.enrollmentNo}</p>
+                        <p className="truncate text-sm text-gray-600">{List.name}</p>
+                    </div>
                 </div>
-                <div className='w-full flex md:justify-end'>
+
+                <div className="w-full sm:w-auto sm:ml-auto">
                     <RadioGroup
                         row
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        name="radio-buttons-group"
-                        value={attendance || "Present"}
+                        aria-label="attendance-status"
+                        name="attendance-status"
+                        value={attendance || "PRESENT"}
                         onChange={handleChange}
+                        className="flex flex-wrap justify-center sm:justify-end gap-2"
                     >
-                        <FormControlLabel
-                            value="PRESENT"
-                            control={<Radio sx={{ color: 'green', '&.Mui-checked': { color: 'green' } }} />}
-                            label="Present"
-                        />
-                        <FormControlLabel
-                            value="ABSENT"
-                            control={<Radio sx={{ color: 'red', '&.Mui-checked': { color: 'red' } }} />}
-                            label="Absent"
-                        />
-                        <FormControlLabel
-                            value="LEAVE"
-                            control={<Radio sx={{ color: 'blue', '&.Mui-checked': { color: 'blue' } }} />}
-                            label="On Leave"
-                        />
+                        {[
+                            { value: 'PRESENT', label: 'Present', color: '#059669' },
+                            { value: 'ABSENT', label: 'Absent', color: '#DC2626' },
+                            { value: 'LEAVE', label: 'On Leave', color: '#2563EB' }
+                        ].map((option) => (
+                            <FormControlLabel
+                                key={option.value}
+                                value={option.value}
+                                control={
+                                    <Radio
+                                        sx={{
+                                            padding: '6px',
+                                            color: option.color,
+                                            '&.Mui-checked': {
+                                                color: option.color
+                                            }
+                                        }}
+                                    />
+                                }
+                                label={
+                                    <span className={`text-sm font-medium ${getStatusColor(option.value)}`}>
+                                        {option.label}
+                                    </span>
+                                }
+                                className="m-0"
+                            />
+                        ))}
                     </RadioGroup>
                 </div>
             </div>
-        </div>
-    )
-}
+        </Card>
+    );
+};
 
 export default StudentAttendanceCard;

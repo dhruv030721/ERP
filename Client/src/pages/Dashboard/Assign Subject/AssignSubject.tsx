@@ -218,6 +218,7 @@ const AssignSubject = () => {
                 dispatch(assignedSubjectResponse.data.data);
 
             } catch (error) {
+                console.log(error)
                 toast.error("Error loading data", toastDesign)
             } finally {
                 setLoading(false)

@@ -27,7 +27,7 @@ const Login: React.FC = () => {
                 success: (response) => {
                     dispatch(login(response.data.data));
                     localStorage.setItem('erp_auth_token', response.data.data.token);
-                    navigate('/');
+                    navigate('/academics/dashboard');
                     return `${response.data.message}`;
                 },
                 error: (error) => {
