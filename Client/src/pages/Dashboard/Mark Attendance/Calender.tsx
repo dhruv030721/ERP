@@ -9,8 +9,8 @@ interface CalendarSectionProps {
 }
 
 const CalendarSection = ({ dateValue, DateHandler }: CalendarSectionProps) => (
-    <Card className="w-[320px] h-full">
-        <CardContent className="p-0">
+    <Card className="w-[320px] h-full mx-auto mt-5 md:mt-0">
+        <CardContent className="">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateCalendar
                     value={dateValue}
@@ -27,7 +27,7 @@ const CalendarSection = ({ dateValue, DateHandler }: CalendarSectionProps) => (
                             paddingRight: '24px',
                             justifyContent: 'center',
                             '& .MuiPickersCalendarHeader-label': {
-                                fontFamily: 'Poppins, sans-serif',
+                                fontFamily: 'Poppins, sans-serif',  
                                 fontWeight: 800,
                             },
                         },

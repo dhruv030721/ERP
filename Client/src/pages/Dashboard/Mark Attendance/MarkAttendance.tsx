@@ -153,14 +153,14 @@ const MarkAttendance = () => {
             <Loading message='' size='max-w-[20%]' />
         ) : (
             <div className="bg-gray-50 overflow-y-hidden">
-                <div className="w-7xl mx-auto px-4 ">
+                <div className="w-7xl mx-auto md:px-4 ">
                     <div className="grid lg:grid-cols-[300px,2fr] mb-5 gap-8">
 
                         {/* Calendar Section */}
                         <CalendarSection dateValue={dateValue} DateHandler={DateHandler} />
                         <div className="space-y-6">
                             {/* Schedule Section */}
-                            <Card className='h-full'>
+                            <Card className='h-96 overflow-y-scroll md:overflow-hidden'>
                                 <CardContent className="p-6">
                                     <div className="flex items-center gap-3 mb-6">
                                         <Calendar className="w-5 h-5 text-primary" />
@@ -230,51 +230,55 @@ const MarkAttendance = () => {
                         </div>
                     </div>
                     {/* Students Section */}
-                    <Card className='w-full overflow-x-hidden'>
-                        <CardContent className="p-6">
+                    <Card className="w-full overflow-x-hidden">
+                        <CardContent className="p-4 md:p-6">
                             <div className="flex items-center gap-3 mb-6">
                                 <Users className="w-5 h-5 text-primary" />
                                 <h2 className="text-lg font-semibold">Students</h2>
                             </div>
 
                             {selectedSession && studentData.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-                                    <Users className="w-12 h-12 mb-3 text-gray-400" />
-                                    <p className="font-medium">No lecture selected</p>
+                                <div className="flex flex-col items-center justify-center py-8 md:py-12 text-gray-500">
+                                    <Users className="w-10 h-10 md:w-12 md:h-12 mb-3 text-gray-400" />
+                                    <p className="font-medium text-center">No lecture selected</p>
                                 </div>
                             ) : studentData.length > 0 ? (
-                                <div className="space-y-6 h-64 overflow-y-scroll">
-                                    <div className="space-y-4 px-5">
-                                        {studentData.map((student: any) => (
-                                            <StudentAttendanceCard
-                                                key={student.enrollmentNo}
-                                                List={student}
-                                                attendance={attendance[student.enrollmentNo]}
-                                                onAttendanceChange={handleAttendanceChange}
-                                            />
-                                        ))}
-                                        <div className="flex justify-end gap-4 pt-6">
+                                <div className="flex flex-col h-[calc(100vh-24rem)] md:h-64">
+                                    <div className="flex-1 overflow-y-auto px-2 md:px-5 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+                                        <div className="space-y-3 md:space-y-4 pb-4">
+                                            {studentData.map((student: any) => (
+                                                <StudentAttendanceCard
+                                                    key={student.enrollmentNo}
+                                                    List={student}
+                                                    attendance={attendance[student.enrollmentNo]}
+                                                    onAttendanceChange={handleAttendanceChange}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="sticky bottom-0 bg-white pt-4 border-t mt-4">
+                                        <div className="flex flex-col sm:flex-row justify-end gap-3">
                                             <Button
                                                 variant="outline"
                                                 onClick={cancelButtonHandler}
-                                                className="min-w-[120px]"
+                                                className="w-full sm:w-auto min-w-[120px]"
                                             >
                                                 Cancel
                                             </Button>
                                             <Button
                                                 onClick={markAttendanceHandler}
-                                                className="min-w-[120px]"
+                                                className="w-full sm:w-auto min-w-[120px]"
                                             >
                                                 Mark Attendance
                                             </Button>
                                         </div>
                                     </div>
-
                                 </div>
                             ) : (
-                                <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-                                    <Users className="w-12 h-12 mb-3 text-gray-400" />
-                                    <p className="font-medium">No students available for the selected session</p>
+                                <div className="flex flex-col items-center justify-center py-8 md:py-12 text-gray-500">
+                                    <Users className="w-10 h-10 md:w-12 md:h-12 mb-3 text-gray-400" />
+                                    <p className="font-medium text-center">No students available for the selected session</p>
                                 </div>
                             )}
                         </CardContent>
