@@ -149,7 +149,7 @@ const AttendanceReport = () => {
 
     return (
         <div className="bg-gray-50 p-4 md:p-8">
-            <Card className="max-w-4xl mx-auto">
+            <Card className="max-w-4xl p-6 mx-auto">
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold tracking-tight">
                         Download Attendance Report

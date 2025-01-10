@@ -24,7 +24,6 @@ const Sidebar = () => {
   const name = userData?.name.split(" ") || "User";
   const dispatch = useDispatch();
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
@@ -85,7 +84,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="min-h-screen font-poppins bg-gray-50 flex flex-col">
+    <div className="h-screen flex flex-col">
       {/* Mobile Header */}
       <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-zinc-200">
         <div className="flex items-center gap-3">
@@ -105,10 +104,10 @@ const Sidebar = () => {
         </button>
       </div>
 
-      <div className="flex flex-1 relative">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar for desktop */}
         <aside
-          className={`hidden lg:flex bg-white border-r border-zinc-200 transition-all duration-300 flex-col
+          className={`hidden lg:flex bg-white border-r border-zinc-200 transition-all duration-300 flex-col h-screen sticky top-0
             ${isCollapsed ? 'w-[72px]' : 'w-64'}`}
         >
           {/* User Profile Section */}
@@ -135,7 +134,7 @@ const Sidebar = () => {
           </div>
 
           {/* Navigation Items */}
-          <nav className="flex-1 py-4 flex flex-col">
+          <nav className="flex-1 py-4 flex flex-col overflow-y-auto">
             <div className="flex-1">
               {navigationItems.map((item) => (
                 isCollapsed ? (
@@ -217,7 +216,7 @@ const Sidebar = () => {
                 </div>
               </div>
             </div>
-            <nav className="py-4">
+            <nav className="py-4 overflow-y-auto h-[calc(100%-80px)]">
               {navigationItems.map((item) => (
                 <SwitchItem
                   key={item.name}
@@ -238,6 +237,13 @@ const Sidebar = () => {
           </div>
         </div>
 
+        {/* Main Content */}
+        <main className="flex-1 overflow-y-auto bg-gray-50">
+          <div className="max-w-7xl mx-auto md:p-6 pb-20 lg:pb-6">
+            <Outlet />
+          </div>
+        </main>
+
         {/* Bottom Navigation for Mobile */}
         <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 z-30">
           <div className="flex justify-around p-2">
@@ -245,7 +251,10 @@ const Sidebar = () => {
               <Link
                 key={item.name}
                 to={item.url || `/${item.name.toLowerCase()}`}
-                className={`flex flex-col items-center ${location.pathname.includes(item.url?.split("/")[1] || "undefined") ? "text-orange-700" : ""}`}
+                className={`flex flex-col items-center ${location.pathname.includes(item.url?.split("/")[1] || "undefined")
+                    ? "text-orange-700"
+                    : ""
+                  }`}
               >
                 {item.icon}
                 <span className="text-xs mt-1">{item.name}</span>
@@ -253,13 +262,6 @@ const Sidebar = () => {
             ))}
           </div>
         </div>
-
-        {/* Main Content */}
-        <main className="flex-1 md:p-6 pb-20 lg:pb-6">
-          <div className="max-w-7xl mx-auto">
-            <Outlet />
-          </div>
-        </main>
       </div>
     </div>
   );
