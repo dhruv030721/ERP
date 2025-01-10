@@ -153,14 +153,14 @@ const MarkAttendance = () => {
             <Loading message='' size='max-w-[20%]' />
         ) : (
             <div className="bg-gray-50 overflow-y-hidden">
-                <div className="w-7xl mx-auto md:px-4 ">
+                <div className="w-7xl mx-auto md:px-4">
                     <div className="grid lg:grid-cols-[300px,2fr] mb-5 gap-8">
 
                         {/* Calendar Section */}
                         <CalendarSection dateValue={dateValue} DateHandler={DateHandler} />
                         <div className="space-y-6">
                             {/* Schedule Section */}
-                            <Card className='h-96 overflow-y-scroll md:overflow-hidden'>
+                            <Card className='h-96 overflow-y-scroll mx-5 md:overflow-hidden'>
                                 <CardContent className="p-6">
                                     <div className="flex items-center gap-3 mb-6">
                                         <Calendar className="w-5 h-5 text-primary" />
@@ -243,7 +243,7 @@ const MarkAttendance = () => {
                                     <p className="font-medium text-center">No lecture selected</p>
                                 </div>
                             ) : studentData.length > 0 ? (
-                                <div className="flex flex-col h-[calc(100vh-24rem)] md:h-64">
+                                <div className="flex flex-col md:h-full">
                                     <div className="flex-1 overflow-y-auto px-2 md:px-5 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
                                         <div className="space-y-3 md:space-y-4 pb-4">
                                             {studentData.map((student: any) => (

@@ -65,7 +65,7 @@ export default function AuthProtected({
             if (authentication && !authStatus) {
                 navigate("/login");
             } else if (!authentication && authStatus) {
-                navigate("/academics/");
+                navigate("/academics/dashboard");
             }
         }
         setLoading(false);

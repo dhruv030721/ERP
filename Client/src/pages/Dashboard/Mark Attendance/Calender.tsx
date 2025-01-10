@@ -25,6 +25,7 @@ const CalendarSection = ({ dateValue, DateHandler }: CalendarSectionProps) => (
                         '& .MuiPickersCalendarHeader-root': {
                             paddingLeft: '24px',
                             paddingRight: '24px',
+                            paddingTop: '15px',
                             justifyContent: 'center',
                             '& .MuiPickersCalendarHeader-label': {
                                 fontFamily: 'Poppins, sans-serif',  
