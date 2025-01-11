@@ -1,113 +1,140 @@
 import React, { useState, useRef } from 'react';
-import { BsPersonFillAdd } from "react-icons/bs";
-import { IoCloudUpload, IoCloudDownload } from "react-icons/io5";
-import MuiButton from "../../../components/MuiButton.tsx"
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import axios from "axios";
-import toast from "react-hot-toast";
-import { academicServices } from '../../../services';
-import { toastDesign, } from '../../../components/GlobalVariables';
-import { ComingSoon } from "../../../components/index.ts"
+import { Upload, Download, BookOpen } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { toast } from "react-hot-toast";
+import { academicServices } from '@/services';
+import { toastDesign } from '@/components/GlobalVariables';
 
-interface AddStudentProps { }
-
-const AddStudent: React.FC<AddStudentProps> = () => {
-    const [alignment, setAlignment] = useState('add-subject');
-    const [excelFileName, setExcelFileName] = useState("*Upload file in excel format");
+const SubjectManager = () => {
+    const [activeTab, setActiveTab] = useState('add');
+    const [fileName, setFileName] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleChange = (_event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
-        console.log(newAlignment);
-        setAlignment(newAlignment);
-    };
-
-    const ExcelsheetNameHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
-
+    const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
-            setExcelFileName(event.target.files[0].name);
             const file = event.target.files[0];
+            setFileName(file.name);
             await toast.promise(
                 academicServices.ImportSubjectData(file),
                 {
                     loading: "Data Uploading",
                     success: (response) => {
-                        setExcelFileName("*Upload file in excel format");
+                        setFileName("*Upload file in excel format");
                         event.target.value = "";
                         return `${response.data.message}`;
                     },
                     error: (error) => {
-                        setExcelFileName("*Upload file in excel format");
-                        event.target.value = "";
+                        setFileName("*Upload file in excel format");
+                        if (event.target) event.target.value = '';
                         return `${error.response.data.message}`;
                     }
                 },
                 toastDesign
-            );
+            )
         }
-    }
+    };
 
-    const DownloadSampleExcelHandler = async () => {
+    const handleDownloadSample = async () => {
         try {
-            const response = await axios.get('https://res.cloudinary.com/dij4vwbs6/raw/upload/v1735887701/Subject_Data_Sheet_o4xkgn.xlsx', { responseType: 'blob' });
-            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const response = await fetch('https://res.cloudinary.com/dij4vwbs6/raw/upload/v1735887701/Subject_Data_Sheet_o4xkgn.xlsx');
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', 'Subject Data Sheet.xlsx');
+            link.download = 'Subject Data Sheet.xlsx';
             document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
             toast.success("File Download Successfully", toastDesign);
-        } catch (e) {
-            console.log(e);
+        } catch (error) {
+            toast.error(`Error: ${error}`);
         }
-    }
+    };
 
     return (
-        <div className='mx-10 flex flex-col'>
-            <div className='flex-col space-y-2 px-2 py-7'>
-                <div className='flex gap-x-5'>
-                    <BsPersonFillAdd size={30} />
-                    <h1 className='font-bold text-xl'>Subject</h1>
-                </div>
-                <p className='text-gray-500'>"Here, you can add subject by using excel format sheet."</p>
-            </div>
-
-            <div className='mt-5'>
-                <ToggleButtonGroup
-                    color="primary"
-                    value={alignment}
-                    exclusive
-                    onChange={handleChange}
-                    aria-label="Platform"
-                >
-                    <ToggleButton value="add-subject"><p className='normal-case font-bold font-poppins'>Add Subject</p></ToggleButton>
-                    <ToggleButton value="update-subject"><p className='normal-case font-bold font-poppins'>Update Subject</p></ToggleButton>
-                </ToggleButtonGroup>
-            </div>
-
-            {alignment === 'add-subject' ? (
-                <div className='flex justify-center space-x-10'>
-                    <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
-                        <h1 className='font-bold text-red-600'>{excelFileName}</h1>
+        <div className="p-6 max-w-4xl mx-auto ">
+            <Card>
+                <CardHeader>
+                    <div className="flex items-center gap-3">
+                        <BookOpen className="h-6 w-6" />
                         <div>
-                            <MuiButton color='rgb(23,37,84)' btnName="Upload File" type={"file"} eventHandler={ExcelsheetNameHandler} icon={<IoCloudUpload />} fileInputRef={fileInputRef} width='200px' height='50px' />
+                            <CardTitle>Subject Management</CardTitle>
+                            <CardDescription>
+                                Add or update subjects using Excel format sheets
+                            </CardDescription>
                         </div>
                     </div>
+                </CardHeader>
+                <CardContent className='p-6'>
+                    <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                        <TabsList className="grid w-full grid-cols-2 mb-8">
+                            <TabsTrigger value="add">Add Subject</TabsTrigger>
+                            <TabsTrigger value="update">Update Subject</TabsTrigger>
+                        </TabsList>
 
-                    <div className='flex flex-col space-y-5 mt-5 justify-center items-center'>
-                        <h1 className='font-bold'>Download Sample Excel</h1>
-                        <div>
-                            <MuiButton color='rgb(23,37,84)' btnName="Download Sample Excel" type="button" eventHandler={DownloadSampleExcelHandler} icon={<IoCloudDownload />} width='300px' height="50px" />
-                        </div>
-                    </div>
-                </div>
+                        <TabsContent value="add">
+                            <div className="grid md:grid-cols-2 gap-8">
+                                <div className="space-y-4">
+                                    <div className="text-center">
+                                        <h3 className="font-semibold mb-4">Upload Subject Data</h3>
+                                        {fileName && (
+                                            <Alert className="mb-4">
+                                                <AlertDescription>
+                                                    Selected file: {fileName}
+                                                </AlertDescription>
+                                            </Alert>
+                                        )}
+                                        <input
+                                            type="file"
+                                            ref={fileInputRef}
+                                            onChange={handleFileUpload}
+                                            accept=".xlsx,.xls"
+                                            className="hidden"
+                                        />
+                                        <Button
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="w-full max-w-xs"
+                                        >
+                                            <Upload className="mr-2 h-4 w-4" />
+                                            Upload File
+                                        </Button>
+                                    </div>
+                                </div>
 
-            ) : (
-                <ComingSoon />
-            )}
+                                <div className="space-y-4">
+                                    <div className="text-center">
+                                        <h3 className="font-semibold mb-4">Download Template</h3>
+                                        <Button
+                                            onClick={handleDownloadSample}
+                                            variant="outline"
+                                            className="w-full max-w-xs"
+                                        >
+                                            <Download className="mr-2 h-4 w-4" />
+                                            Download Sample Excel
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabsContent>
+
+                        <TabsContent value="update">
+                            <div className="text-center py-12">
+                                <h3 className="text-xl font-semibold text-muted-foreground">
+                                    Coming Soon
+                                </h3>
+                                <p className="text-sm text-muted-foreground mt-2">
+                                    This feature is under development
+                                </p>
+                            </div>
+                        </TabsContent>
+                    </Tabs>
+                </CardContent>
+            </Card>
         </div>
     );
-}
+};
 
-export default AddStudent;
-
+export default SubjectManager;

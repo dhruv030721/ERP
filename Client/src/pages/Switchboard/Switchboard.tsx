@@ -84,7 +84,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col  font-poppins">
       {/* Mobile Header */}
       <div className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-zinc-200">
         <div className="flex items-center gap-3">
@@ -104,11 +104,11 @@ const Sidebar = () => {
         </button>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 flex-shrink-0 overflow-hidden">
         {/* Sidebar for desktop */}
         <aside
           className={`hidden lg:flex bg-white border-r border-zinc-200 transition-all duration-300 flex-col h-screen sticky top-0
-            ${isCollapsed ? 'w-[72px]' : 'w-64'}`}
+            ${isCollapsed ? 'w-20' : 'w-64'}`}
         >
           {/* User Profile Section */}
           <div className="p-4 border-b border-zinc-200">
@@ -141,7 +141,9 @@ const Sidebar = () => {
                   <div key={item.name} className="px-2 mb-2" title={item.name}>
                     <Link
                       to={item.url || `/${item.name.toLowerCase()}`}
-                      className="flex justify-center p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                      className={`flex justify-center p-3 hover:bg-gray-50transition-colors ${location.pathname.includes(item.url?.split("/")[1] || "undefined")
+                        ? "text-orange-700"
+                        : ""} `}
                     >
                       {item.icon}
                     </Link>
@@ -216,7 +218,7 @@ const Sidebar = () => {
                 </div>
               </div>
             </div>
-            <nav className="py-4 overflow-y-auto h-[calc(100%-80px)]">
+            <nav className="py-4 overflow-hidden h-[calc(100%-80px)]">
               {navigationItems.map((item) => (
                 <SwitchItem
                   key={item.name}
@@ -226,7 +228,7 @@ const Sidebar = () => {
                   bgcolor={item.bgcolor}
                 />
               ))}
-              <div className="border-t border-zinc-200 mt-4">
+              <div className="border-t  border-zinc-200 mt-4">
                 <SwitchItem
                   name="Logout"
                   icon={<LuLogOut size={24} className="text-red-600" />}
@@ -252,8 +254,8 @@ const Sidebar = () => {
                 key={item.name}
                 to={item.url || `/${item.name.toLowerCase()}`}
                 className={`flex flex-col items-center ${location.pathname.includes(item.url?.split("/")[1] || "undefined")
-                    ? "text-orange-700"
-                    : ""
+                  ? "text-orange-700"
+                  : ""
                   }`}
               >
                 {item.icon}

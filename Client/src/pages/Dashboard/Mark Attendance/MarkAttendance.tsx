@@ -172,7 +172,7 @@ const MarkAttendance = () => {
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 overflow-y-scroll h-60 md:h-fit px-4 py-2 md:w-full gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 overflow-y-scroll h-44 md:h-fit px-4 py-2 md:w-full gap-4">
                                         {dayName === 'Sunday' || dayName === 'Saturday' || Object.entries(TimetableData).length === 0 ? (
                                             <div className="md:col-span-3 flex flex-col items-center justify-center py-12 text-gray-500">
                                                 <Calendar className="w-12 h-12 mb-3 text-gray-400" />

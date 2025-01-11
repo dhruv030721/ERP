@@ -1,5 +1,4 @@
 import { BookOpen, GraduationCap, Home, School } from "lucide-react"
-import { Header } from "../components/index"
 import { useNavigate } from "react-router-dom";
 
 const PageNotFound = () => {
@@ -8,7 +7,7 @@ const PageNotFound = () => {
 
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             <div className="h-[35rem] font-poppins flex flex-col items-center justify-center bg-white p-4">
                 <div className="text-center max-w-2xl mx-auto">
                     <div className="flex justify-center space-x-4 md:space-x-8 mb-4 md:mb-8">
@@ -24,7 +23,7 @@ const PageNotFound = () => {
                     </h2>
 
                     <button
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate('/academics/dashboard')}
                         className="inline-flex items-center px-4 md:px-6 py-2 md:py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors text-sm md:text-base"
                     >
                         <Home className="mr-2 h-4 w-4 md:h-5 md:w-5" />
