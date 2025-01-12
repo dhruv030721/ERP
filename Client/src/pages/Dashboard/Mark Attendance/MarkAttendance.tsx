@@ -139,7 +139,7 @@ const MarkAttendance = () => {
 
         if (studentData.length > 0) {
             const initialAttendance = studentData.reduce((acc: any, student: any) => {
-                acc[student.enrollmentNo] = "PRESENT";
+                acc[student.enrollmentNo] = "ABSENT";
                 return acc;
             }, {});
 

@@ -57,7 +57,7 @@ const StudentAttendanceCard = ({ List, attendance, onAttendanceChange }: Student
                         row
                         aria-label="attendance-status"
                         name="attendance-status"
-                        value={attendance || "PRESENT"}
+                        value={attendance || "ABSENT"}
                         onChange={handleChange}
                         className="flex flex-wrap justify-start sm:justify-end gap-x-4 gap-y-2"
                     >
