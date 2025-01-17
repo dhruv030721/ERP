@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Download } from 'lucide-react';
 import { toastDesign } from "../../../components/GlobalVariables";
 import { AssignSubject, setAssignSubject } from "../../../slices/academics";
+import { Button } from "@mui/material";
 
 interface Option {
     value: string;
@@ -141,7 +142,7 @@ const AttendanceReport = () => {
                 setLoading(false);
             }
         })();
-    }, [dispatch, Data_Auth, Data_Branch]);
+    }, [dispatch, Data_Auth, Data_Branch, AssignSubjectData, Data_AssignSubject]);
 
     if (loading) {
         return <Loading message="" size="max-w-[20%]" />;
@@ -149,8 +150,8 @@ const AttendanceReport = () => {
 
     return (
         <div className="bg-gray-50 p-4 md:p-8">
-            <Card className="max-w-4xl p-6 mx-auto">
-                <CardHeader>
+            <Card className="max-w-4xl px-6 mx-auto">
+                <CardHeader className="py-6 px-0">
                     <CardTitle className="text-2xl font-bold tracking-tight">
                         Download Attendance Report
                     </CardTitle>
@@ -212,14 +213,17 @@ const AttendanceReport = () => {
                             </div>
                         </div>
 
-                        <button
-                            onClick={DownloadHandler}
-                            disabled={!selectedSubject}
-                            className="w-full md:w-auto px-6 py-3 bg-blue-900 hover:bg-blue-800 text-white rounded-lg font-medium flex items-center justify-center space-x-2 transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                        >
-                            <Download className="w-5 h-5" />
-                            <span>Download Report</span>
-                        </button>
+
+                        <div className="py-5">
+                            <Button
+                                onClick={DownloadHandler}
+                                variant="outlined"
+                                className="!border !border-blue-500 !rounded-md bg-gradient-to-r from-blue-600 to-indigo-600  hover:from-blue-700 hover:to-indigo-700"
+                            >
+                                <Download className="mr-2" size={20} />
+                                Download Report
+                            </Button>
+                        </div>
                     </div>
                 </CardContent>
             </Card>

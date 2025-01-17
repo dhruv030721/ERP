@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react"
-import { Dropdown, Loading, MuiButton } from "../../../components"
 import { academicServices } from "../../../services"
 import { IoPersonAdd } from "react-icons/io5"
 import toast from "react-hot-toast"
 import { toastDesign } from "../../../components/GlobalVariables"
 import { useDispatch, useSelector } from "react-redux"
-import { FaLongArrowAltRight } from "react-icons/fa"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { RootState } from "../../../slices/store"
+import { Button } from "@mui/material"
+import { setAssignSubject } from "@/slices/academics"
+import { useNavigate } from "react-router-dom"
+import { Loading } from "@/components"
 
 interface Option {
     value: string
@@ -39,6 +45,7 @@ const AssignSubject = () => {
     // Cached State Data
     const Data_Subject = useSelector((state: RootState) => state.academic.SubjectData);
     const Data_Branch = useSelector((state: RootState) => state.academic.BranchData);
+    const Data_Auth = useSelector((state: RootState) => state.auth.userData);
 
 
     // Form state
@@ -65,6 +72,7 @@ const AssignSubject = () => {
     const [AssignedSubject, setAssignedSubject] = useState<any>([])
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { mobileNumber } = useSelector((state: any) => state.auth.userData)
 
@@ -215,7 +223,7 @@ const AssignSubject = () => {
                 setBranchData(BranchData)
                 setSubjectData(SubjectData)
                 setAssignedSubject(assignedSubjectResponse.data.data)
-                dispatch(assignedSubjectResponse.data.data);
+                dispatch(setAssignSubject(assignedSubjectResponse.data.data));
 
             } catch (error) {
                 console.log(error)
@@ -230,100 +238,194 @@ const AssignSubject = () => {
         return <Loading message="" size="max-w-[20%]" />
     }
 
+    if (Data_Auth == null) {
+        navigate('/login');
+    }
+
     return (
-        <div className="p-10 flex flex-col">
-            <h1 className="font-bold text-2xl text-center md:text-start">Assign Subject</h1>
-            <p className="text-gray-500 text-center md:text-start">"Assign faculty members to subjects for the semester."</p>
-            <div className="flex flex-col mt-10 gap-x-10">
-                <div className="grid grid-cols-1 gap-y-5 md:grid-cols-3">
-                    <div className="flex justify-start">
-                        <Dropdown
-                            List={branchData}
-                            label="Branch"
-                            value={selectedBranch}
-                            helperText="Branch"
-                            dropdownHandler={handleBranchChange}
-                            width={300}
-                        />
-                    </div>
-                    <div className="flex justify-start">
-                        <Dropdown
-                            List={semData}
-                            label="Sem"
-                            value={selectedSem}
-                            helperText="Sem"
-                            dropdownHandler={handleSemChange}
-                            width={200}
-                            disabled={!isSemEnabled}
-                        />
-                    </div>
-                    <div className="flex justify-start">
-                        <Dropdown
-                            List={filteredSubjects}
-                            label="Subject"
-                            value={selectedSubject}
-                            helperText="Subject"
-                            dropdownHandler={handleSubjectChange}
-                            width={400}
-                            disabled={!isSubjectEnabled}
-                        />
-                    </div>
-                    <div className="flex justify-start" >
-                        <Dropdown
-                            List={facultiesData}
-                            label="Faculty"
-                            value={selectedFaculty}
-                            helperText="Faculty"
-                            dropdownHandler={handleFacultyChange}
-                            width={300}
-                            disabled={!isFacultyEnabled}
-                        />
-                    </div>
-                    <div className="flex justify-start">
-                        <Dropdown
-                            List={types}
-                            label="Type"
-                            value={selectedType}
-                            helperText="Type"
-                            dropdownHandler={handleTypeChange}
-                            width={200}
-                            disabled={!isTypeEnabled}
-                        />
-                    </div>
-                    <div className="flex justify-start">
-                        <Dropdown
-                            List={batch}
-                            label="Batch"
-                            value={selectedBatch}
-                            helperText="Batch"
-                            dropdownHandler={handleBatchChange}
-                            width={200}
-                            disabled={!isBatchEnabled}
-                        />
-                    </div>
-                </div>
-                <div className="mt-5">
-                    <MuiButton
-                        btnName="Assign"
-                        color="rgb(23,37,84)"
-                        type="submit"
-                        icon={<IoPersonAdd />}
-                        eventHandler={AssignHandler}
-                        width="150px"
-                        height="50px"
-                    />
-                </div>
-            </div>
-            <div className="flex flex-col mt-10 gap-y-5">
-                <h1 className="text-xl font-bold">Assigned Subjects : </h1>
-                {AssignedSubject.map((data: any) => (
-                    <div key={`${data.subject.code}-${data.type}-${data.batch}`} className="flex items-center justify-center gap-x-5 border-zinc-300 border shadow-sm rounded-md p-3 w-fit">
-                        <h1 className="font-semibold">Sem : {data.subject.sem}</h1>
-                        <FaLongArrowAltRight />
-                        <h1 className="font-semibold">Subject : {data.subject.name} : ({data.type} {data.type !== "LAB" ? null : `- ${data.batch}`})</h1>
-                    </div>
-                ))}
-            </div>
+        <div className="p-6 max-w-7xl mx-auto space-y-8">
+
+            {Data_Auth?.role != "ADMIN" ?
+                // <AccessDenied /> 
+                <></>
+                :
+                (
+                    <Card className="border">
+                        <CardHeader>
+                            <CardTitle className="text-2xl font-bold tracking-tight">
+                                Assign Subject
+                            </CardTitle>
+                            <CardDescription className="text-gray-500">
+                                Assign faculty members to subjects for the semester
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent className="px-6 font-DmSans" >
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Branch</label>
+                                    <Select value={selectedBranch} onValueChange={handleBranchChange}>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select Branch" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {branchData.map((item) => (
+                                                <SelectItem key={item.value} value={item.value}>
+                                                    {item.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Semester</label>
+                                    <Select
+                                        value={selectedSem}
+                                        onValueChange={handleSemChange}
+                                        disabled={!isSemEnabled}
+                                    >
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select Semester" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {semData.map((item) => (
+                                                <SelectItem key={item.value} value={item.value}>
+                                                    {item.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Subject</label>
+                                    <Select
+                                        value={selectedSubject}
+                                        onValueChange={handleSubjectChange}
+                                        disabled={!isSubjectEnabled}
+                                    >
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select Subject" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {filteredSubjects.map((item) => (
+                                                <SelectItem key={item.value} value={item.value}>
+                                                    {item.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Faculty</label>
+                                    <Select
+                                        value={selectedFaculty}
+                                        onValueChange={handleFacultyChange}
+                                        disabled={!isFacultyEnabled}
+                                    >
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select Faculty" />
+                                        </SelectTrigger>
+                                        <SelectContent >
+                                            {facultiesData.map((item) => (
+                                                <SelectItem key={item.value} value={item.value}>
+                                                    {item.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-sm font-medium text-gray-700">Type</label>
+                                    <Select
+                                        value={selectedType}
+                                        onValueChange={handleTypeChange}
+                                        disabled={!isTypeEnabled}
+                                    >
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select Type" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {types.map((item) => (
+                                                <SelectItem key={item.value} value={item.value}>
+                                                    {item.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+
+                                {selectedType === "LAB" && (
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-gray-700">Batch</label>
+                                        <Select
+                                            value={selectedBatch}
+                                            onValueChange={handleBatchChange}
+                                            disabled={!isBatchEnabled}
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select Batch" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {batch.map((item) => (
+                                                    <SelectItem key={item.value} value={item.value}>
+                                                        {item.label}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="py-5">
+                                <Button
+                                    onClick={AssignHandler}
+                                    variant="outlined"
+                                    className="!border !border-blue-500 !rounded-md bg-gradient-to-r from-blue-600 to-indigo-600  hover:from-blue-700 hover:to-indigo-700"
+                                >
+                                    <IoPersonAdd className="mr-2" />
+                                    Assign Subject
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
+
+            <Card className="border pb-5 shadow-none">
+                <CardHeader>
+                    <CardTitle className="text-2xl font-semibold">Assigned Subjects</CardTitle>
+                    <CardDescription className="text-gray-500 flex gap-x-2">
+                        <p className="text-red-500 font-semibold">Notice:</p>You can download subject attendance report which subject assigned to you
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="px-6">
+                    <ScrollArea className="pr-4">
+                        <div className="space-y-4">
+                            {AssignedSubject.map((data: any) => (
+                                <div
+                                    key={`${data.subject.code}-${data.type}-${data.batch}`}
+                                    className="p-4 bg-white rounded-lg border"
+                                >
+                                    <div className="flex flex-wrap items-center gap-3">
+                                        <Badge variant="secondary" className="text-sm">
+                                            Sem {data.subject.sem}
+                                        </Badge>
+                                        <Badge variant="outline" className="text-sm truncate">
+                                            {data.subject.name}
+                                        </Badge>
+                                        <Badge variant="default" className="bg-blue-100 text-blue-800">
+                                            {data.type} {data.type === "LAB" && data.batch ? `- ${data.batch}` : ""}
+                                        </Badge>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </ScrollArea>
+                </CardContent>
+            </Card>
         </div>
     )
 }

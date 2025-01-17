@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar, Users } from 'lucide-react';
 import StudentAttendanceCard from './StudentAttendanceCard';
 import CalendarSection from './Calender';
+import { Badge } from '@/components/ui/badge';
 
 const MarkAttendance = () => {
     const [dateValue, setDateValue] = useState<Dayjs | null>(dayjs());
@@ -184,7 +185,7 @@ const MarkAttendance = () => {
                                                     key={index}
                                                     className={`transition-all cursor-pointer ${selectedSession === index
                                                         ? 'ring-2 ring-primary ring-offset-2'
-                                                        : 'hover:shadow-md'
+                                                        : ''
                                                         }`}
                                                     onClick={() => !isLectureLoading && selectLectureHandler(
                                                         index,
@@ -202,7 +203,7 @@ const MarkAttendance = () => {
                                                         <div className="space-y-2">
                                                             <div className="flex justify-between items-center">
                                                                 <span className="text-sm font-medium">Semester {session.sem}</span>
-                                                                <span className="text-primary text-sm">{session.time}</span>
+                                                                <Badge className='font-light bg-blue-100 text-black border border-blue-500'>{session.time}</Badge>
                                                             </div>
                                                             <h3 className="font-medium truncate">{session.subject}</h3>
                                                             <p className="text-sm text-gray-600">Prof. {session.facultyName}</p>
